@@ -101,6 +101,12 @@ const Wahl = (props) => {
         let newChecked = checkedEssen;
         if (checked) {
             newChecked.push(event.target.value)
+        } else{
+            for( let i = 0; i < newChecked.length; i++){
+                if ( newChecked[i] === event.target.value) {
+                    newChecked.splice(i, 1);
+                }
+            }
         }
         console.log(newChecked)
         setCheckedEssen(newChecked)
