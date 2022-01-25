@@ -1,0 +1,22 @@
+.nav {
+  background-color: var(--main-color);
+  min-height: 60px;
+  width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.navLogo {
+  height: 35px;
+}
+
+.link {
+  color: black;
+  padding: 20px;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,12 @@
+.wahlSection{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.infosContainer,
+.ortContainer {
+  font-size: 17px;
+  max-width: 330px;
+}

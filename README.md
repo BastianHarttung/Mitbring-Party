@@ -1,4 +1,4 @@
-# Doodle-Picknick
+# Mitbring-Party-Picknick
 
 Ein Doodle-Clon für die Organisation einer Mitbring-Party. Wer bringt was zum Essen mit?\
 Test the App: https://www.bastian-harttung-projekte.de/Doodle-Picknick/index.html
