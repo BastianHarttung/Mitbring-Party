@@ -1,0 +1,65 @@
+
+.table-container {
+  width: 90vw;
+  overflow: auto;
+  margin: auto;
+}
+
+.table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+.table-head {
+  background-color: white;
+  padding: 7px;
+}
+
+.table-start {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+tbody {
+  overflow: auto;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tr-eat {
+  position: sticky;
+  left: 0;
+}
+
+.table-row {
+  padding: 7px;
+  text-align: center;
+}
+
+.Salate {
+  background-color: #eaffd9;
+}
+
+.Süßes {
+  background-color: #cee3ff;
+}
+
+.Soßen {
+  background-color: #ffe6c4;
+}
+
+.tr-true {
+  background-color: #b4ffb4;
+}
+
+.tr-false {
+  background-color: #ff9c9c;
+}

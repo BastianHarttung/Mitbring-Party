@@ -10,3 +10,37 @@
   font-size: 17px;
   max-width: 330px;
 }
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px;
+}
+
+.checkboxName {
+  display: flex;
+  align-items: center;
+}
+
+.werBringts {
+  color: darkred;
+  font-family: "Behind Blue Eyes";
+  font-weight: 100;
+  margin-left: 10px;
+}
+
+.neuesEssenContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#name {
+  margin: 20px 10px;
+}
