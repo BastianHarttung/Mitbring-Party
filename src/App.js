@@ -18,9 +18,10 @@ function App() {
         '23.5.2022',
         'Das wird ein Geburtstagspicknick',
         [
-            new Essen('Salate','Kartoffelsalat', 'Bastian'),
-            new Essen('Salate','Nudelsalat', 'Sabrina'),
-            new Essen('Sonstiges','Würstchen', '')
+            new Essen('Salate', 'Kartoffelsalat', 'Bastian'),
+            new Essen('Salate', 'Nudelsalat', 'Sabrina'),
+            new Essen('Sonstiges', 'Würstchen', ''),
+            new Essen('Süßes', 'Kuchen', '')
         ])
 
     const [party, setParty] = useState(testParty)
@@ -38,7 +39,9 @@ function App() {
                     />
                     <Route path='/wahl'
                            exact={true}
-                           element={<Wahl party={party}/>}
+                           element={<Wahl party={party}
+                                          speichereEssen={(essen) => speichereEssen(essen)}
+                                          speichereAuswahl={(essenArray) => speichereAuswahl(essenArray)}/>}
                     />
                     <Route path='/uebersicht'
                            exact={true}
@@ -50,6 +53,26 @@ function App() {
 
         </BrowserRouter>
     );
+
+    function speichereEssen(essen) {
+        //console.log('speichere Essen', essen)
+        const newParty = {...party};
+        newParty.essen.push(essen)
+        setParty(newParty)
+        //console.log(party)
+    }
+
+    function speichereAuswahl(essenArray) {
+        const newParty = {...party};
+        for (let i = 0; i < newParty.essen.length; i++) {
+            for (let j = 0; j < essenArray.length; j++) {
+                if (newParty.essen[i].essenName === essenArray[j].essenName){
+                    newParty.essen[i].werBringts = essenArray[j].werBringts
+                }
+            }
+        }
+        setParty(newParty)
+    }
 
 }
 

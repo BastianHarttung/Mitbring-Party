@@ -21,7 +21,7 @@ export class Essen {
     essenName: string;
     werBringts: string;
 
-    constructor(kategorie: string, essenname: string, werBringts: string) {
+    constructor(kategorie: string, essenname: string, werBringts: string = '') {
         this.kategorie = kategorie;
         this.essenName = essenname;
         this.werBringts = werBringts

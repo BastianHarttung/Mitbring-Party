@@ -1,19 +1,26 @@
 import classes from './Wahl.module.scss'
 import {useState} from "react";
+import {Essen} from "../models/party";
 
 
 const Wahl = (props) => {
 
     const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false)
+    const [neueKategorie, setNeueKategorie] = useState('')
+    const [neuesEssen, setNeuesEssen] = useState('')
+    const [neuerName, setNeuerName] = useState('')
+    const [checkedEssen, setCheckedEssen] = useState([])
 
     return (
         <section className={classes.wahlSection}>
-            <h2 id="partyName">{props.party.partyName}</h2>
+            <h2 className={classes.partyName}>{props.party.partyName}</h2>
 
             <div className={classes.ortContainer}><b>Ort:</b><br/>
                 <div id="ort" className="ort">{props.party.ort}</div>
             </div>
-
+            <div className={classes.datumContainer}><b>Datum:</b><br/>
+                <div id="datum" className="datum">{props.party.datum}</div>
+            </div>
             <div className={classes.infosContainer}><b>Infos:</b><br/>
                 <div id="infos" className="infos">{props.party.infos}</div>
             </div>
@@ -24,7 +31,10 @@ const Wahl = (props) => {
                         <div className={classes.checkboxName}>
                             <input type="checkbox"
                                    name={ess.essenName}
+                                   value={ess.essenName}
+                                   onChange={(evt) => handleChecked(evt)}
                                    disabled={ess.werBringts ? true : false}/>
+
                             <label htmlFor={ess.essenName}>{ess.essenName}</label>
                         </div>
                         <div className={classes.werBringts}>{ess.werBringts}</div>
@@ -37,19 +47,28 @@ const Wahl = (props) => {
                         onClick={() => setNeuesEssenEingabe(!neuesEssenEingabe)}>{neuesEssenEingabe ? 'Abbrechen' : 'Neues Essen'}</button>
             </div>
 
-            <div className={classes.neuesEssenContainer}>
-                {neuesEssenEingabe ? <div>
-                    <input type="text" placeholder="Essen"/>
-                    <input type="datalist" list="kategorie" placeholder="Kategorie"/>
-                    <datalist id="kategorie">
-                        {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)
-                        }
-                    </datalist>
-                    <button onClick={() => essenHinzufügen()}>Essen hinzufügen</button>
-                </div> : ''}
-            </div>
 
-            <input id="name" type="text" name="Name" placeholder="Name"/>
+            {neuesEssenEingabe ? <div className={classes.neuesEssenContainer}>
+                <input type="text"
+                       placeholder="Essen"
+                       onChange={evt => setNeuesEssen(evt.target.value)}/>
+                <input type="datalist"
+                       list="kategorie"
+                       placeholder="Kategorie zB. Salate"
+                       onChange={evt => setNeueKategorie(evt.target.value)}/>
+                <datalist id="kategorie">
+                    {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)
+                    }
+                </datalist>
+                <button onClick={() => essenHinzufügen(neuesEssen, neueKategorie, neuerName)}>Essen hinzufügen</button>
+            </div> : ''}
+
+
+            <input id="name"
+                   type="text"
+                   name="Name"
+                   placeholder="Name"
+                   onChange={evt => setNeuerName(evt.target.value)}/>
 
             <button onClick={() => speichereAuswahl()}
                     className="speichernBtn">Speichern
@@ -57,6 +76,7 @@ const Wahl = (props) => {
 
         </section>
     )
+
 
     /**
      * Finde und filtere Kategorien
@@ -70,12 +90,28 @@ const Wahl = (props) => {
         return [...new Set(kategorieArray)]
     }
 
-    function essenHinzufügen() {
-        console.log('essen hinzu')
+    function essenHinzufügen(neuesEssen, neueKategorie, neuerName) {
+        console.log('neu', neuesEssen, neueKategorie, neuerName)
+        const essen = new Essen(neueKategorie, neuesEssen, neuerName)
+        props.speichereEssen(essen)
+    }
+
+    function handleChecked(event) {
+        const checked = event.target.checked;
+        let newChecked = checkedEssen;
+        if (checked) {
+            newChecked.push(event.target.value)
+        }
+        console.log(newChecked)
+        setCheckedEssen(newChecked)
     }
 
     function speichereAuswahl() {
-        console.log('speichere auswahl')
+        const checkEssen = checkedEssen.map((essen) => {
+            return new Essen('', essen, neuerName)
+        });
+        props.speichereAuswahl(checkEssen)
+        setCheckedEssen([])
     }
 
 }
