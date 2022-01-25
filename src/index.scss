@@ -26,10 +26,12 @@ code {
 }
 
 input[type=text],
-input[type=datalist] {
+input[type=datalist],
+input[type=date] {
+  font-family: Arial, sans-serif;
   font-size: 0.9em;
   height: 25px;
-  min-width: 200px;
+  min-width: 230px;
   border-radius: 7px;
   padding: 3px;
   margin: 5px 0px;
@@ -39,6 +41,17 @@ input[type=checkbox] {
   height: 20px;
   width: 20px;
   margin-right: 10px;
+}
+
+textarea {
+  font-family: Arial, sans-serif;
+  font-size: 0.9em;
+  min-width: 230px;
+  min-height: 70px;
+  border: 2px solid black;
+  border-radius: 7px;
+  padding: 3px;
+  margin: 5px 0px;
 }
 
 button {
