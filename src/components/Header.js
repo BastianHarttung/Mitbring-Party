@@ -1,4 +1,4 @@
-import logo from '../assets/img/logos/essen_logo.svg'
+import logo from '../assets/img/logos/essen_logo_voll.svg'
 import classes from "./Header.module.scss";
 import {Link} from "react-router-dom";
 
