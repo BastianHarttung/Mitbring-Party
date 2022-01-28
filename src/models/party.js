@@ -7,7 +7,7 @@ export class Party {
     essen;
 
     constructor(partyName, ort, datum, infos, essen = []) {
-        this.id = Math.round(Math.random() * 10000);
+        this.id = new Date(datum).getTime();  //Math.round(Math.random() * 10000);
         this.partyName = partyName;
         this.ort = ort;
         this.datum = new Date(datum).toLocaleDateString();

@@ -1,6 +1,7 @@
 import classes from "./Start.module.scss";
 import {useState} from "react";
 import {Party} from "../models/party";
+import {Link} from "react-router-dom";
 
 
 const Start = (props) => {
@@ -18,11 +19,14 @@ const Start = (props) => {
             <div><b>Party:</b></div>
             <div className={classes.partyCollectionContainer}>
                 {props.partyCollection.map((party, index) => {
-                    return <div key={index}
-                                className={classes.partyBox}>
-                        <div className={classes.date}>{party.datum}</div>
-                        <div>{party.partyName}</div>
-                    </div>
+                    return (
+                        <Link to={"wahl/" + party.id}
+                              key={index}
+                              className={classes.partyBox}>
+                            <div className={classes.date}>{party.datum}</div>
+                            <div>{party.partyName}</div>
+                        </Link>
+                    )
                 })}
             </div>
 

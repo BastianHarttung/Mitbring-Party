@@ -1,9 +1,13 @@
 import classes from './Wahl.module.scss'
 import {useState} from "react";
 import {Essen} from "../models/party";
+import {useParams} from "react-router-dom";
 
 
 const Wahl = (props) => {
+
+    const partyId = useParams();
+    const party = props.partyCollection.find((party) => party.id.toString() === partyId.id)
 
     const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false)
     const [neueKategorie, setNeueKategorie] = useState('')
@@ -13,20 +17,20 @@ const Wahl = (props) => {
 
     return (
         <section className={classes.wahlSection}>
-            <h2 className={classes.partyName}>{props.party.partyName}</h2>
+            <h2 className={classes.partyName}>{party.partyName}</h2>
 
             <div className={classes.ortContainer}><b>Ort:</b><br/>
-                <div id="ort" className="ort">{props.party.ort}</div>
+                <div id="ort" className="ort">{party.ort}</div>
             </div>
             <div className={classes.datumContainer}><b>Datum:</b><br/>
-                <div id="datum" className="datum">{props.party.datum}</div>
+                <div id="datum" className="datum">{party.datum}</div>
             </div>
             <div className={classes.infosContainer}><b>Infos:</b><br/>
-                <div id="infos" className="infos">{props.party.infos}</div>
+                <div id="infos" className="infos">{party.infos}</div>
             </div>
 
             <div id="checkbox-container" className={classes.checkboxContainer}>
-                {props.party.essen.map((ess, index) => {
+                {party.essen.map((ess, index) => {
                     return <div key={index} className={classes.checkbox}>
                         <div className={classes.checkboxName}>
                             <input type="checkbox"
@@ -83,7 +87,7 @@ const Wahl = (props) => {
      * @return {*[]} gibt ein Array zurück, dass einmalige Kategorien enthält gefunden in der party
      */
     function findKategorien() {
-        const kategorieArray = props.party.essen.reduce((kategorien, actual) => {
+        const kategorieArray = party.essen.reduce((kategorien, actual) => {
             kategorien.push(actual.kategorie);
             return kategorien
         }, [])
@@ -101,9 +105,9 @@ const Wahl = (props) => {
         let newChecked = checkedEssen;
         if (checked) {
             newChecked.push(event.target.value)
-        } else{
-            for( let i = 0; i < newChecked.length; i++){
-                if ( newChecked[i] === event.target.value) {
+        } else {
+            for (let i = 0; i < newChecked.length; i++) {
+                if (newChecked[i] === event.target.value) {
                     newChecked.splice(i, 1);
                 }
             }

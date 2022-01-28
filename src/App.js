@@ -54,9 +54,9 @@ function App() {
                            element={<Start partyCollection={partyCollection}
                                            partySpeichern={(party) => {speichereParty(party)}}/>}
                     />
-                    <Route path='/wahl'
+                    <Route path='/wahl/:id'
                            exact={true}
-                           element={<Wahl party={partyCollection[0]}
+                           element={<Wahl partyCollection={partyCollection}
                                           speichereEssen={(essen) => speichereEssen(essen)}
                                           speichereAuswahl={(essenArray) => speichereAuswahl(essenArray)}/>}
                     />
