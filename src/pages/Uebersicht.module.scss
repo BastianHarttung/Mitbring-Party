@@ -1,6 +1,7 @@
 
 .tableContainer {
   width: 90vw;
+  max-height: calc(100vh - 100px);
   overflow: auto;
   margin: auto;
 }
@@ -17,11 +18,15 @@
 }
 
 .tableStart {
+  background-color: white;
+  max-width: 120px;
   position: sticky;
   top: 0;
   left: 0;
   z-index: 5;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 tbody {
@@ -35,8 +40,11 @@ thead th {
 }
 
 .trEat {
+  background-color: white;
   position: sticky;
   left: 0;
+  padding: 7px;
+  text-align: center;
 }
 
 .tableRow {
@@ -56,10 +64,14 @@ thead th {
   background-color: #ffe6c4;
 }
 
-.tr-true {
+.trTrue {
   background-color: #b4ffb4;
+  padding: 7px;
+  text-align: center;
 }
 
-.tr-false {
+.trFalse {
   background-color: #ff9c9c;
+  padding: 7px;
+  text-align: center;
 }

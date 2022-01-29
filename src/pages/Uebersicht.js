@@ -14,6 +14,11 @@ const Uebersicht = (props) => {
                     <thead>
                     <tr id="table-head-row">
                         <th className={classes.tableStart}>{party.partyName}</th>
+                        {party.teilnehmer.map((t, index) => {
+                            return <th id={"table-name" + index}
+                                       key={index}
+                                       className={classes.tableHead}>{t}</th>
+                        })}
                     </tr>
                     </thead>
 
@@ -21,7 +26,14 @@ const Uebersicht = (props) => {
                     {party.essen.map((essen, index) => {
                         return <tr id={"tableRow" + index}
                                    key={index}>
-                            <td className={classes.tableRow}>{essen.essenName}</td>
+                            <td className={classes.trEat}>{essen.essenName}</td>
+                            {party.teilnehmer.map((teiln, indext) => {
+                                if (teiln == essen.werBringts) {
+                                    return <td key={indext} className={classes.trTrue}>ja</td>
+                                } else {
+                                    return <td key={indext} className={classes.trFalse}>nein</td>
+                                }
+                            })}
                         </tr>
                     })}
                     </tbody>

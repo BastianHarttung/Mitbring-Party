@@ -20,6 +20,10 @@ code {
   monospace;
 }
 
+#root {
+  width: 100%;
+}
+
 :root {
   --main-color: #56d013;
   --main-color-bright: #a9ea80;
@@ -41,6 +45,7 @@ input[type=checkbox] {
   height: 20px;
   width: 20px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 textarea {

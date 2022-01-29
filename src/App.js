@@ -99,12 +99,12 @@ function App() {
     function speichereAuswahl(checkedEssen, neuerName, partyObject) {
         //console.log(checkedEssen, neuerName, partyObject)
         const newPartyCollection = partyCollection.map((party) => {
-            if (party === partyObject) {
+            if (party.id === partyObject.id) {
                 const newParty = {...party}
-                newParty.persons.push(neuerName)
+                newParty.teilnehmer.push(neuerName)
                 for (let i = 0; i < newParty.essen.length; i++) {
                     for (let j = 0; j < checkedEssen.length; j++) {
-                        if (newParty.essen[i].essenName === checkedEssen[j]){
+                        if (newParty.essen[i].essenName === checkedEssen[j]) {
                             newParty.essen[i].werBringts = neuerName
                         }
                     }
@@ -112,7 +112,6 @@ function App() {
                 return newParty
             } else return party
         });
-        console.log(newPartyCollection)
         setPartyCollection(newPartyCollection)
     }
 

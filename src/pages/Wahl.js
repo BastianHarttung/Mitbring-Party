@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom";
 
 const Wahl = (props) => {
 
-    console.log(props.partyCollection)
+    //console.log(props.partyCollection)
 
     const partyId = useParams();
     const [party, setParty] = useState(props.partyCollection.find((part) => part.id.toString() === partyId.id))
@@ -36,11 +36,11 @@ const Wahl = (props) => {
                     return <div key={index} className={classes.checkbox}>
                         <div className={classes.checkboxName}>
                             <input type="checkbox"
+                                   id={ess.essenName}
                                    name={ess.essenName}
                                    value={ess.essenName}
                                    onChange={(evt) => handleChecked(evt)}
                                    disabled={ess.werBringts ? true : false}/>
-
                             <label htmlFor={ess.essenName}>{ess.essenName}</label>
                         </div>
                         <div className={classes.werBringts}>{ess.werBringts}</div>
@@ -74,6 +74,7 @@ const Wahl = (props) => {
                    type="text"
                    name="Name"
                    placeholder="Name"
+                   value={neuerName}
                    onChange={evt => setNeuerName(evt.target.value)}/>
 
             <button onClick={() => speichereAuswahl()}
@@ -120,6 +121,7 @@ const Wahl = (props) => {
 
     function speichereAuswahl() {
         props.speichereAuswahl(checkedEssen, neuerName, party)
+        setNeuerName('')
         setCheckedEssen([])
     }
 
