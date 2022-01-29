@@ -17,6 +17,15 @@
   font-size: 17px;
   width: 250px;
 }
+.ortText{
+  display: flex;
+  justify-content: space-between;
+}
+
+.datumContainer{
+  display: flex;
+  justify-content: space-between;
+}
 
 .checkboxContainer {
   display: flex;

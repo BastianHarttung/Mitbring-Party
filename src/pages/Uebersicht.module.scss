@@ -17,18 +17,12 @@
   border-collapse: collapse;
   margin: auto;
 
-  th{
+  th {
     box-shadow: inset -1px -1px 1px var(--border-table);
-    /*border-bottom: 1px solid var(--border-table);
-    border-right: 1px solid var(--border-table);*/
   }
-  tr{
-    /*border-bottom: 1px solid var(--border-table);*/
-  }
-  td{
+
+  td {
     box-shadow: inset -1px -1px 1px var(--border-table);
-    /*border-bottom: 1px solid var(--border-table);
-    border-right: 1px solid var(--border-table);*/
   }
 }
 

@@ -3,7 +3,7 @@ import {Essen, Party} from "../models/party";
 
 export const emptyParty = new Party('', '', '', '', [])
 export const testPartyCollection = [
-    new Party('Fondue 2021', 'Hip', '2021-12-25', 'Das alljährliche Fondue.',
+    new Party('Fondue 2021', 'Hilpoltstein, Bahnhofstr.', '2021-12-25', 'Das alljährliche Fondue.',
         [
             new Essen('Salate', 'Kartoffelsalat', 'Bastian'),
             new Essen('Salate', 'Tomatensalat', 'Sabrina'),

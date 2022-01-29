@@ -24,12 +24,25 @@ const Wahl = (props) => {
         <section className={classes.wahlSection}>
             <h3 className={classes.partyName}>{party.partyName}</h3>
 
-            <div className={classes.ortContainer}><b>Ort:</b><br/>
-                <div id="ort" className="ort">{party.ort}</div>
-            </div>
             <div className={classes.datumContainer}><b>Datum:</b><br/>
                 <div id="datum" className="datum">{party.datum}</div>
             </div>
+
+            <div className={classes.ortContainer}>
+                <div className={classes.ortText}>
+                    <div><b>Ort:</b></div>
+                    <div id="ort" className="ort">{party.ort}</div>
+                </div>
+                <iframe
+                    width="250"
+                    height="350"
+                    style={{border: 0}}
+                    loading="lazy"
+                    allowFullScreen
+                    src={"https://www.google.com/maps/embed/v1/place?key=AIzaSyBkByBFCkuTfpHfwfY6vdezmyQmk42tZJU&q=" + party.ort}>
+                </iframe>
+            </div>
+
             <div className={classes.infosContainer}><b>Infos:</b><br/>
                 <div id="infos" className="infos">{party.infos}</div>
             </div>
