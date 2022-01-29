@@ -53,7 +53,10 @@ const Wahl = (props) => {
 
             <div id="essenBtnContainer">
                 <button id="essenBtn"
-                        onClick={() => setNeuesEssenEingabe(!neuesEssenEingabe)}>{neuesEssenEingabe ? 'Abbrechen' : 'Neues Essen'}</button>
+                        onClick={() => {
+                            setAusfuellen(false);
+                            setNeuesEssenEingabe(!neuesEssenEingabe)
+                        }}>{neuesEssenEingabe ? 'Abbrechen' : 'Neues Essen'}</button>
             </div>
 
 
@@ -77,7 +80,7 @@ const Wahl = (props) => {
                 <input id="name"
                        type="text"
                        name="Name"
-                       placeholder="Name"
+                       placeholder="Dein Name"
                        value={neuerName}
                        onChange={evt => setNeuerName(evt.target.value)}/>
                 <button onClick={() => speichereAuswahl()}
