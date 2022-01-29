@@ -11,9 +11,9 @@ import {Essen, Party} from "./models/party";
 
 function App() {
 
-    const emptyParty = new Party( '', '', '', '', [])
+    const emptyParty = new Party('', '', '', '', [])
     const partyCollection = [
-        new Party( 'Fondue 2021', 'Hip', '2021-12-25', 'Das alljährliche Fondue.',
+        new Party('Fondue 2021', 'Hip', '2021-12-25', 'Das alljährliche Fondue.',
             [
                 new Essen('Salate', 'Kartoffelsalat', 'Bastian'),
                 new Essen('Salate', 'Tomatensalat', 'Sabrina'),
@@ -42,17 +42,20 @@ function App() {
 
     const [party, setParty] = useState(testParty)
 
+    const [activeId, setActiveId] = useState(partyCollection[partyCollection.length - 1].id)
+
     return (
         <BrowserRouter>
 
-            <Header/>
+            <Header activeId={activeId}/>
 
             <div className="page-container">
                 <Routes>
                     <Route path='/'
                            exact={true}
                            element={<Start partyCollection={partyCollection}
-                                           partySpeichern={(party) => {speichereParty(party)}}/>}
+                                           partySpeichern={(party) => speichereParty(party)}
+                                           idSpeichern={(id) => setActiveId(id)}/>}
                     />
                     <Route path='/wahl/:id'
                            exact={true}
@@ -60,9 +63,9 @@ function App() {
                                           speichereEssen={(essen) => speichereEssen(essen)}
                                           speichereAuswahl={(essenArray) => speichereAuswahl(essenArray)}/>}
                     />
-                    <Route path='/uebersicht'
+                    <Route path='/uebersicht/:id'
                            exact={true}
-                           element={<Uebersicht/>}
+                           element={<Uebersicht partyCollection={partyCollection}/>}
                     />
                 </Routes>
             </div>
@@ -71,7 +74,7 @@ function App() {
         </BrowserRouter>
     );
 
-    function speichereParty(party){
+    function speichereParty(party) {
         console.log(party)
         partyCollection.push(party)
     }

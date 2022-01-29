@@ -21,6 +21,7 @@ const Start = (props) => {
                 {props.partyCollection.map((party, index) => {
                     return (
                         <Link to={"wahl/" + party.id}
+                              onClick={() => props.idSpeichern(party.id)}
                               key={index}
                               className={classes.partyBox}>
                             <div className={classes.date}>{party.datum}</div>
