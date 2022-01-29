@@ -5,6 +5,7 @@ export class Party {
     datum;
     infos;
     essen;
+    persons;
 
     constructor(partyName, ort, datum, infos, essen = []) {
         this.id = new Date(datum).getTime();  //Math.round(Math.random() * 10000);
@@ -13,7 +14,19 @@ export class Party {
         this.datum = new Date(datum).toLocaleDateString();
         this.infos = infos;
         this.essen = essen;
+        this.persons = [];
+        this.addPersons()
     }
+
+    addPersons() {
+        for (let i = 0; i < this.essen.length; i++) {
+            if(this.essen[i].werBringts){
+                this.persons.push(this.essen[i].werBringts)
+            }
+        }
+        this.persons = [...new Set(this.persons)]
+    }
+
 }
 
 export class Essen {

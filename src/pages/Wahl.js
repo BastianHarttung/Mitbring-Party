@@ -6,8 +6,10 @@ import {useParams} from "react-router-dom";
 
 const Wahl = (props) => {
 
+    console.log(props.partyCollection)
+
     const partyId = useParams();
-    const party = props.partyCollection.find((party) => party.id.toString() === partyId.id)
+    const [party, setParty] = useState(props.partyCollection.find((part) => part.id.toString() === partyId.id))
 
     const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false)
     const [neueKategorie, setNeueKategorie] = useState('')
@@ -95,7 +97,7 @@ const Wahl = (props) => {
     }
 
     function essenHinzufügen(neuesEssen, neueKategorie, neuerName) {
-        console.log('neu', neuesEssen, neueKategorie, neuerName)
+        //console.log('neu', neuesEssen, neueKategorie, neuerName)
         const essen = new Essen(neueKategorie, neuesEssen, neuerName)
         props.speichereEssen(essen)
     }
@@ -112,15 +114,12 @@ const Wahl = (props) => {
                 }
             }
         }
-        console.log(newChecked)
+        //console.log(newChecked)
         setCheckedEssen(newChecked)
     }
 
     function speichereAuswahl() {
-        const checkEssen = checkedEssen.map((essen) => {
-            return new Essen('', essen, neuerName)
-        });
-        props.speichereAuswahl(checkEssen)
+        props.speichereAuswahl(checkedEssen, neuerName, party)
         setCheckedEssen([])
     }
 

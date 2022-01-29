@@ -1,17 +1,19 @@
-.wahlSection{
+.wahlSection {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.partyName{
+.partyName {
+  max-width: 300px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .infosContainer,
 .ortContainer,
-.datumContainer{
+.datumContainer {
   font-size: 17px;
   width: 250px;
 }

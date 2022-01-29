@@ -1,5 +1,5 @@
 
-.table-container {
+.tableContainer {
   width: 90vw;
   overflow: auto;
   margin: auto;
@@ -11,12 +11,12 @@
   margin: auto;
 }
 
-.table-head {
+.tableHead {
   background-color: white;
   padding: 7px;
 }
 
-.table-start {
+.tableStart {
   position: sticky;
   top: 0;
   left: 0;
@@ -34,12 +34,12 @@ thead th {
   z-index: 1;
 }
 
-.tr-eat {
+.trEat {
   position: sticky;
   left: 0;
 }
 
-.table-row {
+.tableRow {
   padding: 7px;
   text-align: center;
 }
