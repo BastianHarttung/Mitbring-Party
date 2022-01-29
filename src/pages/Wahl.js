@@ -18,6 +18,7 @@ const Wahl = (props) => {
     const [checkedEssen, setCheckedEssen] = useState([])
 
     const [auswahlGespeichert, setAuswahlGespeichert] = useState(false)
+    const [ausfuellen, setAusfuellen] = useState(false)
 
     return (
         <section className={classes.wahlSection}>
@@ -69,6 +70,7 @@ const Wahl = (props) => {
                     }
                 </datalist>
                 <button onClick={() => essenHinzufügen(neuesEssen, neueKategorie, neuerName)}>Essen hinzufügen</button>
+                {ausfuellen ? <div className={classes.ausfuellen}>Bitte vollständig ausfüllen!</div> : ''}
             </div> : ''}
 
             <div className={classes.nameSpeichernContainer}>
@@ -101,9 +103,14 @@ const Wahl = (props) => {
     }
 
     function essenHinzufügen(neuesEssen, neueKategorie, neuerName) {
-        //console.log('neu', neuesEssen, neueKategorie, neuerName)
-        const essen = new Essen(neueKategorie, neuesEssen, neuerName)
-        props.speichereEssen(essen)
+        console.log('neu', neuesEssen, neueKategorie, neuerName)
+        if (neuesEssen && neueKategorie) {
+            const essen = new Essen(neueKategorie, neuesEssen, neuerName)
+            props.speichereEssen(essen)
+            setAusfuellen(false)
+        } else {
+            setAusfuellen(true)
+        }
     }
 
     function handleChecked(event) {
