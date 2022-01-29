@@ -17,9 +17,11 @@ const Wahl = (props) => {
     const [neuerName, setNeuerName] = useState('')
     const [checkedEssen, setCheckedEssen] = useState([])
 
+    const [auswahlGespeichert, setAuswahlGespeichert] = useState(false)
+
     return (
         <section className={classes.wahlSection}>
-            <h2 className={classes.partyName}>{party.partyName}</h2>
+            <h3 className={classes.partyName}>{party.partyName}</h3>
 
             <div className={classes.ortContainer}><b>Ort:</b><br/>
                 <div id="ort" className="ort">{party.ort}</div>
@@ -69,17 +71,18 @@ const Wahl = (props) => {
                 <button onClick={() => essenHinzufügen(neuesEssen, neueKategorie, neuerName)}>Essen hinzufügen</button>
             </div> : ''}
 
-
-            <input id="name"
-                   type="text"
-                   name="Name"
-                   placeholder="Name"
-                   value={neuerName}
-                   onChange={evt => setNeuerName(evt.target.value)}/>
-
-            <button onClick={() => speichereAuswahl()}
-                    className="speichernBtn">Speichern
-            </button>
+            <div className={classes.nameSpeichernContainer}>
+                <input id="name"
+                       type="text"
+                       name="Name"
+                       placeholder="Name"
+                       value={neuerName}
+                       onChange={evt => setNeuerName(evt.target.value)}/>
+                <button onClick={() => speichereAuswahl()}
+                        className="speichernBtn">Auswahl speichern
+                </button>
+                {auswahlGespeichert ? <div className={classes.auswahlGespeichert}>Auswahl gespeichert</div> : ''}
+            </div>
 
         </section>
     )
@@ -121,8 +124,9 @@ const Wahl = (props) => {
 
     function speichereAuswahl() {
         props.speichereAuswahl(checkedEssen, neuerName, party)
-        setNeuerName('')
         setCheckedEssen([])
+        setAuswahlGespeichert(true)
+        setTimeout(() => setAuswahlGespeichert(false), 2500)
     }
 
 }

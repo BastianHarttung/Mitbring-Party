@@ -7,12 +7,12 @@ const Uebersicht = (props) => {
     const party = props.partyCollection.find((party) => party.id.toString() === partyId.id)
 
     return (
-        <section>
+        <section className={classes.uebersichtSection}>
             <div className={classes.tableContainer}>
                 <table id="table" className={classes.table}>
 
                     <thead>
-                    <tr id="table-head-row">
+                    <tr>
                         <th className={classes.tableStart}>{party.partyName}</th>
                         {party.teilnehmer.map((t, index) => {
                             return <th id={"table-name" + index}
