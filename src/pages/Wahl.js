@@ -19,7 +19,7 @@ const Wahl = (props) => {
 
     const [auswahlGespeichert, setAuswahlGespeichert] = useState(false)
     const [ausfuellen, setAusfuellen] = useState(false)
-    
+
 
     return (
         <section className={classes.wahlSection}>

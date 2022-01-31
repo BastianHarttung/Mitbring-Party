@@ -10,8 +10,8 @@ const Header = (props) => {
                     <img className={classes.navLogo} src={logo} alt="Picknick"/>
                 </Link>
                 <div>
-                    <Link to={"/wahl/" + props.activeId} className={classes.link}>Wahl</Link>
-                    <Link to={"/uebersicht/" + props.activeId} className={classes.link}>Übersicht</Link>
+                    <Link to={"wahl/" + props.activeId} className={classes.link}>Wahl</Link>
+                    <Link to={"uebersicht/" + props.activeId} className={classes.link}>Übersicht</Link>
                 </div>
             </nav>
         </div>

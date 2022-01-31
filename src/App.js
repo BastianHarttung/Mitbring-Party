@@ -18,7 +18,7 @@ function App() {
     const [activeId, setActiveId] = useState(partyCollection[partyCollection.length - 1].id)
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={'/MitbringParty'}>
 
             <Header activeId={activeId}/>
 
@@ -30,17 +30,17 @@ function App() {
                                            partySpeichern={(party) => speichereParty(party)}
                                            idSpeichern={(id) => setActiveId(id)}/>}
                     />
-                    <Route path='/wahl/:id'
+                    <Route path='wahl/:id'
                            exact={true}
                            element={<Wahl partyCollection={partyCollection}
                                           speichereEssen={(essen) => speichereEssen(essen)}
                                           speichereAuswahl={(checkedEssen, neuerName, partyObject) => speichereAuswahl(checkedEssen, neuerName, partyObject)}/>}
                     />
-                    <Route path='/uebersicht/:id'
+                    <Route path='uebersicht/:id'
                            exact={true}
                            element={<Uebersicht partyCollection={partyCollection}/>}
                     />
-                    <Route path='/admin/:id'
+                    <Route path='admin/:id'
                            exact={true}
                            element={<Admin partyCollection={partyCollection}/>}
                     />
