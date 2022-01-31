@@ -19,6 +19,7 @@ const Wahl = (props) => {
 
     const [auswahlGespeichert, setAuswahlGespeichert] = useState(false)
     const [ausfuellen, setAusfuellen] = useState(false)
+    
 
     return (
         <section className={classes.wahlSection}>
@@ -39,7 +40,7 @@ const Wahl = (props) => {
                     style={{border: 0}}
                     loading="lazy"
                     allowFullScreen
-                    src={"https://www.google.com/maps/embed/v1/place?key=AIzaSyBkByBFCkuTfpHfwfY6vdezmyQmk42tZJU&q=" + party.ort}>
+                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_Key}&q=${party.ort}`}>
                 </iframe>
             </div>
 

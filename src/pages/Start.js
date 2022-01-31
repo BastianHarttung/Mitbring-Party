@@ -2,7 +2,6 @@ import classes from "./Start.module.scss";
 import {useState} from "react";
 import {Party} from "../models/party";
 import {Link} from "react-router-dom";
-import edit from "../assets/img/icons/edit.svg"
 
 
 const Start = (props) => {
