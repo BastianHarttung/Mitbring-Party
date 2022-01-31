@@ -11,7 +11,13 @@ export class Party {
         this.id = new Date(datum).getTime();  //Math.round(Math.random() * 10000);
         this.partyName = partyName;
         this.ort = ort;
-        this.datum = new Date(datum).toLocaleDateString();
+        this.datum = new Date(datum).toLocaleDateString("de-DE",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        );
         this.infos = infos;
         this.essen = essen;
         this.teilnehmer = [];
@@ -20,7 +26,7 @@ export class Party {
 
     addPersons() {
         for (let i = 0; i < this.essen.length; i++) {
-            if(this.essen[i].werBringts){
+            if (this.essen[i].werBringts) {
                 this.teilnehmer.push(this.essen[i].werBringts)
             }
         }
