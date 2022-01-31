@@ -9,6 +9,27 @@
   margin-bottom: 16px;
 }
 
+.partyContainer {
+  position: relative;
+}
+
+.editLink {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px;
+
+  svg {
+    height: 25px;
+
+    &:hover {
+      fill: var(--main-color);
+    }
+  }
+
+
+}
+
 .partyBox {
   color: black;
   max-width: 250px;
@@ -17,8 +38,9 @@
   border: 2px solid rgba(0, 0, 0);
   border-radius: 7px;
   text-decoration: none;
-  padding: 7px;
+  padding: 7px 30px 7px 7px;
   margin: 8px 0px;
+  transition: background-color 130ms ease-in-out;
   cursor: pointer;
 
   &:hover {

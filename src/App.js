@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Wahl from "./pages/Wahl";
 import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
+import Admin from "./pages/Admin";
 
 import {testPartyCollection} from "./mockup/testConstants";
 
@@ -38,6 +39,10 @@ function App() {
                     <Route path='/uebersicht/:id'
                            exact={true}
                            element={<Uebersicht partyCollection={partyCollection}/>}
+                    />
+                    <Route path='/admin/:id'
+                           exact={true}
+                           element={<Admin partyCollection={partyCollection}/>}
                     />
                 </Routes>
             </div>
