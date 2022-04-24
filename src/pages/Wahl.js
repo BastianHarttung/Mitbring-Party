@@ -2,14 +2,16 @@ import classes from './Wahl.module.scss'
 import {useState} from "react";
 import {Essen} from "../models/party";
 import {useParams} from "react-router-dom";
+import globalStore from "../stores/global-store";
+import {observer} from "mobx-react";
+import PicArrowDown from "../assets/img/icons/caret-down.svg"
 
+const Wahl = () => {
 
-const Wahl = (props) => {
-
-    //console.log(props.partyCollection)
+    const {partyCollection, speichereEssen, speichereAuswahl} = globalStore
 
     const partyId = useParams();
-    const [party, setParty] = useState(props.partyCollection.find((part) => part.id.toString() === partyId.id))
+    const party = partyCollection.find((part) => part.id.toString() === partyId.id);
 
     const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false)
     const [neueKategorie, setNeueKategorie] = useState('')
@@ -30,18 +32,23 @@ const Wahl = (props) => {
             </div>
 
             <div className={classes.ortContainer}>
-                <div className={classes.ortText}>
-                    <div><b>Ort:</b></div>
-                    <div id="ort" className="ort">{party.ort}</div>
-                </div>
-                <iframe
-                    width="250"
-                    height="350"
-                    style={{border: 0}}
-                    loading="lazy"
-                    allowFullScreen
-                    src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_Key}&q=${party.ort}`}>
-                </iframe>
+                <details>
+                    <summary className={classes.ortText}>
+                        <div><b>Ort:</b></div>
+                        <div className={classes.ortArrowContainer}>
+                            <div id="ort" className={classes.ort}>{party.ort}</div>
+                            <img src={PicArrowDown} alt="open"/>
+                        </div>
+                    </summary>
+                    <iframe
+                        width="250"
+                        height="250"
+                        style={{border: 0}}
+                        loading="lazy"
+                        allowFullScreen
+                        src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_Key}&q=${party.ort}`}>
+                    </iframe>
+                </details>
             </div>
 
             <div className={classes.infosContainer}><b>Infos:</b><br/>
@@ -97,7 +104,7 @@ const Wahl = (props) => {
                        placeholder="Dein Name"
                        value={neuerName}
                        onChange={evt => setNeuerName(evt.target.value)}/>
-                <button onClick={() => speichereAuswahl()}
+                <button onClick={auswahlSpeichern}
                         className="speichernBtn">Auswahl speichern
                 </button>
                 {auswahlGespeichert ? <div className={classes.auswahlGespeichert}>Auswahl gespeichert</div> : ''}
@@ -123,7 +130,7 @@ const Wahl = (props) => {
         console.log('neu', neuesEssen, neueKategorie, neuerName)
         if (neuesEssen && neueKategorie) {
             const essen = new Essen(neueKategorie, neuesEssen, neuerName)
-            props.speichereEssen(essen)
+            speichereEssen(essen)
             setAusfuellen(false)
         } else {
             setAusfuellen(true)
@@ -142,12 +149,11 @@ const Wahl = (props) => {
                 }
             }
         }
-        //console.log(newChecked)
         setCheckedEssen(newChecked)
     }
 
-    function speichereAuswahl() {
-        props.speichereAuswahl(checkedEssen, neuerName, party)
+    function auswahlSpeichern() {
+        speichereAuswahl(checkedEssen, neuerName, party)
         setCheckedEssen([])
         setAuswahlGespeichert(true)
         setTimeout(() => setAuswahlGespeichert(false), 2500)
@@ -155,4 +161,4 @@ const Wahl = (props) => {
 
 }
 
-export default Wahl
+export default observer(Wahl)

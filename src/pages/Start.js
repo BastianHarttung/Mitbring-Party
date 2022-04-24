@@ -2,9 +2,13 @@ import classes from "./Start.module.scss";
 import {useState} from "react";
 import {Party} from "../models/party";
 import {Link} from "react-router-dom";
+import globalStore from "../stores/global-store";
+import {observer} from "mobx-react";
 
 
-const Start = (props) => {
+const Start = () => {
+
+    const {partyCollection, speicherActiveId, speichereParty} = globalStore;
 
     const [isNewParty, setIsNewParty] = useState(false)
 
@@ -13,17 +17,29 @@ const Start = (props) => {
     const [datum, setDatum] = useState('')
     const [info, setInfo] = useState('')
 
+    function partySpeichern() {
+        speichereParty(new Party(partyName, ort, datum, info))
+        inputFelderLöschen();
+    }
+
+    function inputFelderLöschen() {
+        setPartyName('');
+        setOrt('');
+        setDatum('');
+        setInfo('')
+    }
+
     return (
         <section className={classes.startSection}>
 
             <div><b>Party:</b></div>
             <div className={classes.partyCollectionContainer}>
-                {props.partyCollection.map((party, index) => {
+                {partyCollection.map((party, index) => {
                     return (
                         <div key={index}
                              className={classes.partyContainer}>
                             <Link to={"/wahl/" + party.id}
-                                  onClick={() => props.idSpeichern(party.id)}
+                                  onClick={() => speicherActiveId(party.id)}
                                   className={classes.partyBox}>
                                 <div className={classes.date}>{party.datum}</div>
                                 <div>{party.partyName}</div>
@@ -44,7 +60,7 @@ const Start = (props) => {
             <button onClick={() => setIsNewParty(!isNewParty)}>
                 {isNewParty ? 'Abbrechen' : 'Neue Party'}</button>
 
-            {isNewParty ? <div className={classes.newPartyContainer}>
+            {isNewParty && <div className={classes.newPartyContainer}>
                 <input type="text"
                        placeholder="Party Name"
                        value={partyName}
@@ -61,18 +77,12 @@ const Start = (props) => {
                           placeholder="Infos"
                           value={info}
                           onChange={(e) => setInfo(e.target.value)}/>
-                <button onClick={() => {
-                    props.partySpeichern(new Party(partyName, ort, datum, info))
-                    setPartyName('');
-                    setOrt('');
-                    setDatum('');
-                    setInfo('')
-                }}>Speichern
+                <button onClick={partySpeichern}>Speichern
                 </button>
-            </div> : ''}
+            </div>}
 
         </section>
     )
 }
 
-export default Start
+export default observer(Start)

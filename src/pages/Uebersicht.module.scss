@@ -17,13 +17,22 @@
   border-collapse: collapse;
   margin: auto;
 
-  th {
+  th:not(:last-child) {
     box-shadow: inset -1px -1px 1px var(--border-table);
   }
 
-  td {
-    box-shadow: inset -1px -1px 1px var(--border-table);
+  th:last-child {
+    box-shadow: inset 0px -1px 0px var(--border-table);
   }
+
+  tr:not(:last-child) {
+    border-bottom: 1px solid var(--border-table);
+  }
+
+  td:not(:last-child){
+    box-shadow: inset -1px 0px 0px var(--border-table);
+  }
+
 }
 
 .tableHead {
@@ -86,7 +95,7 @@ thead th {
 }
 
 .trFalse {
-  background-color: var(--false-red);
+  //background-color: var(--false-red);
   padding: 7px;
   text-align: center;
 }

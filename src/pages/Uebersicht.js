@@ -1,10 +1,12 @@
 import classes from "./Uebersicht.module.scss"
 import {useParams} from "react-router-dom";
+import globalStore from "../stores/global-store";
 
-const Uebersicht = (props) => {
+const Uebersicht = () => {
+    const {partyCollection} = globalStore;
 
     const partyId = useParams();
-    const party = props.partyCollection.find((party) => party.id.toString() === partyId.id)
+    const party = partyCollection.find((party) => party.id.toString() === partyId.id)
 
     return (
         <section className={classes.uebersichtSection}>

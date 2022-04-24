@@ -1,6 +1,5 @@
 import './App.scss';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {useState} from "react";
 
 import Header from "./components/Header";
 import Wahl from "./pages/Wahl";
@@ -8,41 +7,30 @@ import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
 
-import {testPartyCollection} from "./mockup/testConstants";
-
-
 function App() {
-
-    const [partyCollection, setPartyCollection] = useState(testPartyCollection)
-
-    const [activeId, setActiveId] = useState(partyCollection[partyCollection.length - 1].id)
 
     return (
         <BrowserRouter basename={'/MitbringParty'}>
 
-            <Header activeId={activeId}/>
+            <Header/>
 
             <div className="page-container">
                 <Routes>
                     <Route path='/'
                            exact={true}
-                           element={<Start partyCollection={partyCollection}
-                                           partySpeichern={(party) => speichereParty(party)}
-                                           idSpeichern={(id) => setActiveId(id)}/>}
+                           element={<Start/>}
                     />
                     <Route path='wahl/:id'
                            exact={true}
-                           element={<Wahl partyCollection={partyCollection}
-                                          speichereEssen={(essen) => speichereEssen(essen)}
-                                          speichereAuswahl={(checkedEssen, neuerName, partyObject) => speichereAuswahl(checkedEssen, neuerName, partyObject)}/>}
+                           element={<Wahl/>}
                     />
                     <Route path='uebersicht/:id'
                            exact={true}
-                           element={<Uebersicht partyCollection={partyCollection}/>}
+                           element={<Uebersicht/>}
                     />
                     <Route path='admin/:id'
                            exact={true}
-                           element={<Admin partyCollection={partyCollection}/>}
+                           element={<Admin/>}
                     />
                 </Routes>
             </div>
@@ -50,44 +38,6 @@ function App() {
 
         </BrowserRouter>
     );
-
-    function speichereParty(party) {
-        console.log(party)
-        partyCollection.push(party)
-    }
-
-    function speichereEssen(essen) {
-        //console.log('speichere Essen', essen)
-        /*const newParty = {...party};
-        newParty.essen.push(essen)
-        setParty(newParty)*/
-        //console.log(party)
-    }
-
-    /**
-     * Speichere Auswahl und Name
-     * @param {array} checkedEssen checked Essen
-     * @param {string} neuerName
-     * @param {object} partyObject Object of active Party
-     */
-    function speichereAuswahl(checkedEssen, neuerName, partyObject) {
-        //console.log(checkedEssen, neuerName, partyObject)
-        const newPartyCollection = partyCollection.map((party) => {
-            if (party.id === partyObject.id) {
-                const newParty = {...party}
-                newParty.teilnehmer.push(neuerName)
-                for (let i = 0; i < newParty.essen.length; i++) {
-                    for (let j = 0; j < checkedEssen.length; j++) {
-                        if (newParty.essen[i].essenName === checkedEssen[j]) {
-                            newParty.essen[i].werBringts = neuerName
-                        }
-                    }
-                }
-                return newParty
-            } else return party
-        });
-        setPartyCollection(newPartyCollection)
-    }
 
 }
 

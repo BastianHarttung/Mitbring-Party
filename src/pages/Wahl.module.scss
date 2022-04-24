@@ -17,14 +17,35 @@
   font-size: 17px;
   width: 250px;
 }
-.ortText{
+
+.datumContainer {
   display: flex;
   justify-content: space-between;
 }
 
-.datumContainer{
+// Ort
+details {
+  margin: 10px 0px;
+  transition: all 500ms ease-in-out;
+}
+
+.ortText {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  img {
+    height: 25px;
+  }
+}
+
+.ortArrowContainer {
+  display: flex;
+  align-items: center;
+}
+
+.ort {
+  margin-right: 5px;
 }
 
 .checkboxContainer {
