@@ -11,13 +11,7 @@ export class Party {
         this.id = new Date(datum).getTime();  //Math.round(Math.random() * 10000);
         this.partyName = partyName;
         this.ort = ort;
-        this.datum = new Date(datum).toLocaleDateString("de-DE",
-            {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric"
-            }
-        );
+        this.datum = datum;
         this.infos = infos;
         this.essen = essen;
         this.teilnehmer = [];

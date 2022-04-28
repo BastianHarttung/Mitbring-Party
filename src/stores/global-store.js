@@ -53,6 +53,21 @@ class GlobalStore {
         this.partyCollection = newPartyCollection;
     }
 
+    datumZuLocalString = (datum) => {
+        return new Date(datum).toLocaleDateString("de-DE",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        );
+    }
+
+    updateParty = (id) => {
+        const actualParty = this.partyCollection.filter((party) => party.id = id)
+        console.log(actualParty)
+    }
+
 }
 
 const globalStore = new GlobalStore();

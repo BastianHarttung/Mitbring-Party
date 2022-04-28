@@ -1,7 +1,8 @@
 import {Essen, Party} from "../models/party";
 
 
-export const emptyParty = new Party('', '', '', '', [])
+// export const emptyParty = new Party('', '', '', '', [])
+
 export const testPartyCollection = [
     new Party('Fondue 2021', 'Hilpoltstein, Bahnhofstr.', '2021-12-25', 'Das alljährliche Fondue.',
         [
@@ -22,14 +23,14 @@ export const testPartyCollection = [
         ])
 ]
 
-export const testParty = new Party(
-    'Fondue 2021',
-    'Hip',
-    '23.5.2022',
-    'Das wird ein Geburtstagspicknick',
-    [
-        new Essen('Salate', 'Kartoffelsalat', 'Bastian'),
-        new Essen('Salate', 'Nudelsalat', 'Sabrina'),
-        new Essen('Sonstiges', 'Würstchen', ''),
-        new Essen('Süßes', 'Kuchen', '')
-    ])
+// export const testParty = new Party(
+//     'Fondue 2021',
+//     'Hip',
+//     '23.5.2022',
+//     'Das wird ein Geburtstagspicknick',
+//     [
+//         new Essen('Salate', 'Kartoffelsalat', 'Bastian'),
+//         new Essen('Salate', 'Nudelsalat', 'Sabrina'),
+//         new Essen('Sonstiges', 'Würstchen', ''),
+//         new Essen('Süßes', 'Kuchen', '')
+//     ])

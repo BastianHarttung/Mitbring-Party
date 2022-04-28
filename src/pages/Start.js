@@ -8,7 +8,7 @@ import {observer} from "mobx-react";
 
 const Start = () => {
 
-    const {partyCollection, speicherActiveId, speichereParty} = globalStore;
+    const {partyCollection, speicherActiveId, speichereParty, datumZuLocalString} = globalStore;
 
     const [isNewParty, setIsNewParty] = useState(false)
 
@@ -41,7 +41,7 @@ const Start = () => {
                             <Link to={"/wahl/" + party.id}
                                   onClick={() => speicherActiveId(party.id)}
                                   className={classes.partyBox}>
-                                <div className={classes.date}>{party.datum}</div>
+                                <div className={classes.date}>{datumZuLocalString(party.datum)}</div>
                                 <div>{party.partyName}</div>
                             </Link>
                             <Link to={"admin/" + party.id}

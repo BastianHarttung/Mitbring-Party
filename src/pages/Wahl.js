@@ -8,7 +8,7 @@ import PicArrowDown from "../assets/img/icons/caret-down.svg"
 
 const Wahl = () => {
 
-    const {partyCollection, speichereEssen, speichereAuswahl} = globalStore
+    const {partyCollection, speichereEssen, speichereAuswahl,datumZuLocalString} = globalStore
 
     const partyId = useParams();
     const party = partyCollection.find((part) => part.id.toString() === partyId.id);
@@ -28,7 +28,7 @@ const Wahl = () => {
             <h3 className={classes.partyName}>{party.partyName}</h3>
 
             <div className={classes.datumContainer}><b>Datum:</b><br/>
-                <div id="datum" className="datum">{party.datum}</div>
+                <div id="datum" className="datum">{datumZuLocalString(party.datum)}</div>
             </div>
 
             <div className={classes.ortContainer}>
