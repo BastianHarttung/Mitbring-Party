@@ -1,5 +1,16 @@
 import {IParty} from "../interfaces/IParty";
 
+export const emptyPartyCollection: IParty[] = [
+  {
+    id: 0,
+    partyName: "",
+    ort: "",
+    datum: "",
+    infos: "",
+    essen: [],
+    teilnehmer: [],
+  }
+];
 
 export const testPartyCollection: IParty[] = [
   {
@@ -33,7 +44,7 @@ export const testPartyCollection: IParty[] = [
       },
       {
         kategorie: "Herzhaftes",
-        essenName: "Eier",
+        essenName: "Gefüllte Eier",
         werBringts: "Patrick",
       },
       {
@@ -42,7 +53,7 @@ export const testPartyCollection: IParty[] = [
         werBringts: "",
       },
     ],
-    teilnehmer: ["Julia", "Sabrina", "Patrick"],
+    teilnehmer: ["Sabrina", "Julia", "Patrick"],
   },
 
 ];

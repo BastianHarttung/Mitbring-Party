@@ -26,7 +26,6 @@ const Wahl = () => {
   const [ausfuellen, setAusfuellen] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect");
     if (!party) {
       navigate("/wrong");
     }
@@ -136,7 +135,7 @@ const Wahl = () => {
   }
 
   function essenHinzufuegen(neuesEssen, neueKategorie, neuerName) {
-    console.log("neu", neuesEssen, neueKategorie, neuerName);
+    // console.log("neu", neuesEssen, neueKategorie, neuerName);
     if (neuesEssen && neueKategorie) {
       const essen = new Essen(neueKategorie, neuesEssen, neuerName);
       speichereEssen(essen);

@@ -13,7 +13,6 @@ const Admin = (): JSX.Element => {
   const partyId = useParams();
   const navigate = useNavigate();
   const partyFind = partyCollection.find((part) => part.id.toString() === partyId.id);
-  console.log(partyFind);
 
   const handleInitialStateString = (state: TState): string => {
     if (!!partyFind) return partyFind[state];
