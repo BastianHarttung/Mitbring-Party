@@ -3,36 +3,41 @@ import {useState, useEffect} from "react";
 import {MdDelete} from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
+import {TState} from "../interfaces/Types";
+import {TStateArray} from "../interfaces/Types";
+import {IEssen} from "../interfaces/IParty";
 
-const Admin = () => {
+const Admin = (): JSX.Element => {
   const {partyCollection, updateParty} = globalStore;
 
   const partyId = useParams();
   const navigate = useNavigate();
   const partyFind = partyCollection.find((part) => part.id.toString() === partyId.id);
+  console.log(partyFind);
 
-  const handleInitialState = (state, type = "string") => {
-    if (partyFind) return partyFind[state];
-    else if (type === "array") return [];
+  const handleInitialStateString = (state: TState): string => {
+    if (!!partyFind) return partyFind[state];
     else return "";
   };
-
-  const [partyName, setPartyName] = useState(handleInitialState("partyName"));
-  const [ort, setOrt] = useState(handleInitialState("ort"));
-  const [datum, setDatum] = useState(handleInitialState("datum"));
-  const [infos, setInfos] = useState(handleInitialState("infos"));
-
-  const [essen, setEssen] = useState(handleInitialState("essen", "array"));
-
-  const handleChangeEssen = (event, index, mod) => {
-    const neuesEssenArray = essen;
-    const modEssen = neuesEssenArray[index];
-    modEssen[mod] = event.target.value;
-    setEssen([...neuesEssenArray]);
+  const handleInitialStateArray = (state: TStateArray): IEssen[] => {
+    if (!!partyFind) return partyFind[state];
+    else return [];
   };
 
-  const loescheEssen = (esse) => {
-    const neu = essen.filter((ess) => ess.essenName !== esse.essenName);
+  const [partyName, setPartyName] = useState(handleInitialStateString("partyName"));
+  const [ort, setOrt] = useState(handleInitialStateString("ort"));
+  const [datum, setDatum] = useState(handleInitialStateString("datum"));
+  const [infos, setInfos] = useState(handleInitialStateString("infos"));
+
+  const [essen, setEssen] = useState(handleInitialStateArray("essen"));
+
+  const handleChangeEssen = (event: any, index: number, mod: string) => {
+    const neu = essen;
+    setEssen(neu);
+  };
+
+  const loescheEssen = (esse: IEssen) => {
+    const neu = essen.filter((ess: IEssen) => ess.essenName !== esse.essenName);
     setEssen(neu);
   };
 
@@ -70,7 +75,7 @@ const Admin = () => {
       })}
 
       <button style={{fontSize: "1em", marginTop: "10px"}}
-              onClick={() => updateParty(partyId)}>
+              onClick={() => updateParty(+partyId)}>
         Speichern
       </button>
 

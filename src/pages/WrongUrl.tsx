@@ -1,6 +1,6 @@
 import React from "react";
 
-const WrongUrl = () => {
+const WrongUrl = (): JSX.Element => {
   return (
     <div>
       404 Falsche URL

@@ -8,7 +8,7 @@ import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
 import WrongUrl from "./pages/WrongUrl";
 
-function App() {
+function App(): JSX.Element {
 
   return (
     <BrowserRouter basename={"/MitbringParty"}>
@@ -18,19 +18,15 @@ function App() {
       <div className="page-container">
         <Routes>
           <Route path="/"
-                 exact={true}
                  element={<Start/>}
           />
           <Route path="wahl/:id"
-                 exact={true}
                  element={<Wahl/>}
           />
           <Route path="uebersicht/:id"
-                 exact={true}
                  element={<Uebersicht/>}
           />
           <Route path="admin/:id"
-                 exact={true}
                  element={<Admin/>}
           />
           <Route path="*"
