@@ -1,5 +1,4 @@
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif;
@@ -38,7 +37,7 @@ input[type=date] {
   min-width: 230px;
   border-radius: 7px;
   padding: 3px;
-  margin: 5px 0px;
+  margin: 5px 0;
 }
 
 input[type=checkbox] {
@@ -56,15 +55,15 @@ textarea {
   border: 2px solid black;
   border-radius: 7px;
   padding: 3px;
-  margin: 5px 0px;
+  margin: 5px 0;
 }
 
 button {
   background-color: var(--main-color-bright);
-  height: 30px;
-  border: 0px;
+  border: 0;
   border-radius: 7px;
   cursor: pointer;
+  padding: 8px 16px;
   transition: 130ms ease-in-out;
 }
 

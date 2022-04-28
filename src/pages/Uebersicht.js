@@ -30,7 +30,7 @@ const Uebersicht = () => {
                                    key={index}>
                             <td className={classes.trEat}>{essen.essenName}</td>
                             {party.teilnehmer.map((teiln, indext) => {
-                                if (teiln == essen.werBringts) {
+                                if (teiln === essen.werBringts) {
                                     return <td key={indext} className={classes.trTrue}>ja</td>
                                 } else {
                                     return <td key={indext} className={classes.trFalse}>nein</td>

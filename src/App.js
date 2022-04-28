@@ -1,4 +1,4 @@
-import './App.scss';
+import "./App.scss";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import Header from "./components/Header";
@@ -6,38 +6,41 @@ import Wahl from "./pages/Wahl";
 import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
+import WrongUrl from "./pages/WrongUrl";
 
 function App() {
 
-    return (
-        <BrowserRouter basename={'/MitbringParty'}>
+  return (
+    <BrowserRouter basename={"/MitbringParty"}>
 
-            <Header/>
+      <Header/>
 
-            <div className="page-container">
-                <Routes>
-                    <Route path='/'
-                           exact={true}
-                           element={<Start/>}
-                    />
-                    <Route path='wahl/:id'
-                           exact={true}
-                           element={<Wahl/>}
-                    />
-                    <Route path='uebersicht/:id'
-                           exact={true}
-                           element={<Uebersicht/>}
-                    />
-                    <Route path='admin/:id'
-                           exact={true}
-                           element={<Admin/>}
-                    />
-                </Routes>
-            </div>
+      <div className="page-container">
+        <Routes>
+          <Route path="/"
+                 exact={true}
+                 element={<Start/>}
+          />
+          <Route path="wahl/:id"
+                 exact={true}
+                 element={<Wahl/>}
+          />
+          <Route path="uebersicht/:id"
+                 exact={true}
+                 element={<Uebersicht/>}
+          />
+          <Route path="admin/:id"
+                 exact={true}
+                 element={<Admin/>}
+          />
+          <Route path="*"
+                 element={<WrongUrl/>}/>
+        </Routes>
+      </div>
 
 
-        </BrowserRouter>
-    );
+    </BrowserRouter>
+  );
 
 }
 
