@@ -10,9 +10,9 @@ import {IEssen} from "../interfaces/IParty";
 const Admin = (): JSX.Element => {
   const {partyCollection, updateParty} = globalStore;
 
-  const partyId = useParams();
+  const partyId = useParams().id || "";
   const navigate = useNavigate();
-  const partyFind = partyCollection.find((part) => part.id.toString() === partyId.id);
+  const partyFind = partyCollection.find((part) => part.id.toString() === partyId);
 
   const handleInitialStateString = (state: TState): string => {
     if (!!partyFind) return partyFind[state];
@@ -74,7 +74,15 @@ const Admin = (): JSX.Element => {
       })}
 
       <button style={{fontSize: "1em", marginTop: "10px"}}
-              onClick={() => updateParty(+partyId)}>
+              onClick={() => updateParty({
+                id: partyId,
+                partyName: partyName,
+                ort: ort,
+                datum: datum,
+                infos: infos,
+                essen: essen,
+                teilnehmer: [],
+              })}>
         Speichern
       </button>
 

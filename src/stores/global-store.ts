@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {emptyPartyCollection} from "../mockup/testConstants";
+import {emptyPartyCollection, testPartyCollection} from "../mockup/testConstants";
 import {IParty} from "../interfaces/IParty";
 import {IEssen} from "../interfaces/IParty";
 import {downloadFromServer, backend, setURL} from "../mini_backend";
@@ -9,7 +9,7 @@ class GlobalStore {
 
   partyCollection: IParty[] = emptyPartyCollection;
 
-  activeId: number = this.partyCollection[this.partyCollection.length - 1].id;
+  activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
   constructor() {
     this.initBackend();
@@ -21,13 +21,13 @@ class GlobalStore {
     setURL('https://bastian-harttung-projekte.de/MitbringParty/smallest_backend_ever');
   }
 
-  initFromServer = async () => {
+  initFromServer = async (): Promise<void> => {
     await downloadFromServer().then(response => {
-      this.partyCollection = JSON.parse(backend.getItem('partyCollection')) || {};
+      this.partyCollection = backend.getItem('partyCollection');
     })
   };
 
-  speicherActiveId = (id: number) => {
+  speicherActiveId = (id: string) => {
     this.activeId = id;
   };
 
@@ -78,9 +78,15 @@ class GlobalStore {
     );
   };
 
-  updateParty = (id: number) => {
-    const actualParty = this.partyCollection.filter((party) => party.id = id);
-    // console.log(actualParty);
+  updateParty = (neueParty: IParty) => {
+    const partyIndex = this.partyCollection.findIndex((party) => party.id === neueParty.id);
+    this.partyCollection.splice(partyIndex, 1, neueParty);
+    this.savePartyToBackend();
+    this.initFromServer();
+  };
+
+  savePartyToBackend = () => {
+    backend.setItem("partyCollection", this.partyCollection);
   };
 
 }

@@ -1,5 +1,5 @@
 export interface IParty {
-  id: number,
+  id: string,
   partyName: string,
   ort: string,
   datum: string,
