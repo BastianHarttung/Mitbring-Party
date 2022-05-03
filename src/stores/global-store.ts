@@ -2,18 +2,19 @@ import {makeAutoObservable} from "mobx";
 import {testPartyCollection} from "../mockup/testConstants";
 import {IParty} from "../interfaces/IParty";
 import {IEssen} from "../interfaces/IParty";
+import {IPartyApp} from "../interfaces/IParty";
 
 class GlobalStore {
 
   partyCollection: IParty[] = testPartyCollection;
 
-  activeId: number = this.partyCollection[this.partyCollection.length - 1].id;
+  activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  speicherActiveId = (id: number) => {
+  speichereActiveId = (id: string) => {
     this.activeId = id;
   };
 
@@ -37,22 +38,29 @@ class GlobalStore {
    * @param {object} partyObject Object of active Party
    */
   speichereAuswahl = (checkedEssen: any, neuerName: string, partyObject: IParty) => {
-    //console.log(checkedEssen, neuerName, partyObject)
     const newPartyCollection = this.partyCollection.map((party) => {
       if (party.id === partyObject.id) {
         const newParty = {...party};
-        newParty.teilnehmer.push(neuerName);
-        for (let i = 0; i < newParty.essen.length; i++) {
-          for (let j = 0; j < checkedEssen.length; j++) {
-            if (newParty.essen[i].essenName === checkedEssen[j]) {
-              newParty.essen[i].werBringts = neuerName;
-            }
-          }
-        }
+        // newParty.teilnehmer.push(neuerName);
+        // for (let i = 0; i < newParty.essen.length; i++) {
+        //   for (let j = 0; j < checkedEssen.length; j++) {
+        //     if (newParty.essen[i].essenName === checkedEssen[j]) {
+        //       newParty.essen[i].werBringts = neuerName;
+        //     }
+        //   }
+        // }
         return newParty;
       } else return party;
     });
     this.partyCollection = newPartyCollection;
+  };
+
+  addTeilnehmer = (party: IParty): IPartyApp => {
+    const teilnehmerArray = party.essen.map((ess) => {
+      return ess.werBringts;
+    });
+    const clearedTeilnehmerArray = teilnehmerArray.filter((teilnehm, index) => teilnehmerArray.indexOf(teilnehm) === index && teilnehm !== "");
+    return {...party, teilnehmer: clearedTeilnehmerArray};
   };
 
   datumZuLocalString = (datum: string) => {
@@ -65,9 +73,9 @@ class GlobalStore {
     );
   };
 
-  updateParty = (id: number) => {
-    const actualParty = this.partyCollection.filter((party) => party.id = id);
-    console.log(actualParty);
+  updatePartyBackend = (party: IParty) => {
+    const partyIndex = this.partyCollection.findIndex((part) => part.id = party.id);
+    console.log(partyIndex);
   };
 
 }

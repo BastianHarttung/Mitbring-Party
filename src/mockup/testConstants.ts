@@ -1,18 +1,27 @@
 import {IParty} from "../interfaces/IParty";
+import {IPartyApp} from "../interfaces/IParty";
 
+export const emptyParty: IPartyApp = {
+  id: "0",
+  partyName: "",
+  ort: "",
+  datum: "",
+  infos: "",
+  essen: [],
+  teilnehmer: [],
+};
 
 export const testPartyCollection: IParty[] = [
   {
-    id: 1,
+    id: "1",
     partyName: "Fondue 2022",
     ort: "Hilpoltstein",
     datum: "2022-12-25",
     infos: "Das alljährliche Weihnachtsfondue",
     essen: [],
-    teilnehmer: ["Bastian", "Julia", "Frank", "Patrick"],
   },
   {
-    id: 2,
+    id: "2",
     partyName: "Geburtstagspicknick Julia + Basti 2022",
     ort: "Rothsee",
     datum: "2022-05-28",
@@ -42,7 +51,6 @@ export const testPartyCollection: IParty[] = [
         werBringts: "",
       },
     ],
-    teilnehmer: ["Julia", "Sabrina", "Patrick"],
   },
 
 ];

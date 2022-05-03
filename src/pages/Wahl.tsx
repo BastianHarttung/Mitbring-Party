@@ -1,21 +1,23 @@
 import classes from "./Wahl.module.scss";
-import {useState} from "react";
-import {useEffect} from "react";
+import {useState, useEffect} from "react";
+import React from "react";
 import {Essen} from "../models/party";
-import {useParams} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import globalStore from "../stores/global-store";
 import {observer} from "mobx-react";
 import PicArrowDown from "../assets/img/icons/caret-down.svg";
+import {emptyParty} from "../mockup/testConstants";
+import {IParty} from "../interfaces/IParty";
 
 const Wahl = () => {
 
   const {partyCollection, speichereEssen, speichereAuswahl, datumZuLocalString} = globalStore;
 
-  const partyId = useParams();
+  const params = useParams();
   const navigate = useNavigate();
-  const party = partyCollection.find((part) => part.id.toString() === partyId.id);
+  const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
 
+  const [party, setParty] = useState<IParty>(emptyParty);
   const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false);
   const [neueKategorie, setNeueKategorie] = useState("");
   const [neuesEssen, setNeuesEssen] = useState("");
@@ -26,11 +28,12 @@ const Wahl = () => {
   const [ausfuellen, setAusfuellen] = useState(false);
 
   useEffect(() => {
-    console.log("useEffect");
-    if (!party) {
+    if (!partyFind) {
       navigate("/wrong");
+    } else {
+      setParty(partyFind);
     }
-  }, []);
+  });
 
   return (
     <section className={classes.wahlSection}>
@@ -52,6 +55,7 @@ const Wahl = () => {
           <iframe
             width="250"
             height="250"
+            title={party.ort}
             style={{border: 0}}
             loading="lazy"
             allowFullScreen
@@ -129,14 +133,14 @@ const Wahl = () => {
    */
   function findKategorien() {
     const kategorieArray = party.essen.reduce((kategorien, actual) => {
+      // @ts-ignore
       kategorien.push(actual.kategorie);
       return kategorien;
     }, []);
-    return [...new Set(kategorieArray)];
+    return kategorieArray.filter((item, index) => kategorieArray.indexOf(item) === index);
   }
 
-  function essenHinzufuegen(neuesEssen, neueKategorie, neuerName) {
-    console.log("neu", neuesEssen, neueKategorie, neuerName);
+  function essenHinzufuegen(neuesEssen: string, neueKategorie: string, neuerName: string) {
     if (neuesEssen && neueKategorie) {
       const essen = new Essen(neueKategorie, neuesEssen, neuerName);
       speichereEssen(essen);
@@ -146,10 +150,11 @@ const Wahl = () => {
     }
   }
 
-  function handleChecked(event) {
+  function handleChecked(event: React.ChangeEvent<HTMLInputElement>) {
     const checked = event.target.checked;
     let newChecked = checkedEssen;
     if (checked) {
+      // @ts-ignore
       newChecked.push(event.target.value);
     } else {
       for (let i = 0; i < newChecked.length; i++) {

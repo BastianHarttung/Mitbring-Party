@@ -8,12 +8,12 @@ import {TStateArray} from "../interfaces/Types";
 import {IEssen} from "../interfaces/IParty";
 
 const Admin = (): JSX.Element => {
-  const {partyCollection, updateParty} = globalStore;
+  const {partyCollection, updatePartyBackend} = globalStore;
 
-  const partyId = useParams();
+  const params = useParams();
+  const {id} = params;
   const navigate = useNavigate();
-  const partyFind = partyCollection.find((part) => part.id.toString() === partyId.id);
-  console.log(partyFind);
+  const partyFind = partyCollection.find((part) => part.id.toString() === id);
 
   const handleInitialStateString = (state: TState): string => {
     if (!!partyFind) return partyFind[state];
@@ -40,6 +40,19 @@ const Admin = (): JSX.Element => {
     const neu = essen.filter((ess: IEssen) => ess.essenName !== esse.essenName);
     setEssen(neu);
   };
+
+  const saveParty = () =>{
+    if(id !== undefined){
+      updatePartyBackend({
+        id,
+        partyName,
+        ort,
+        datum,
+        infos,
+        essen,
+      })
+    }
+  }
 
   useEffect(() => {
     if (!partyFind) {
@@ -75,7 +88,7 @@ const Admin = (): JSX.Element => {
       })}
 
       <button style={{fontSize: "1em", marginTop: "10px"}}
-              onClick={() => updateParty(+partyId)}>
+              onClick={saveParty}>
         Speichern
       </button>
 
