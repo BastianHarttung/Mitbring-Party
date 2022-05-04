@@ -8,7 +8,7 @@ import {observer} from "mobx-react";
 
 const Start = (): JSX.Element => {
 
-  const {partyCollection, speichereActiveId, speichereParty, datumZuLocalString} = globalStore;
+  const {partyCollection, speichereActiveId, speichereParty, datumZuLocalString,savePartyToBackend} = globalStore;
 
   const [isNewParty, setIsNewParty] = useState(false);
 
@@ -42,7 +42,7 @@ const Start = (): JSX.Element => {
                     onClick={() => speichereActiveId(party.id)}
                     className={classes.partyBox}>
                 <div className={classes.date}>{datumZuLocalString(party.datum)}</div>
-                <div>{party.partyName}</div>
+                <div className={classes.partyName}>{party.partyName}</div>
               </Link>
               <Link to={"admin/" + party.id}
                     className={classes.editLink}>
@@ -61,23 +61,23 @@ const Start = (): JSX.Element => {
         {isNewParty ? "Abbrechen" : "Neue Party"}</button>
 
       {isNewParty && <div className={classes.newPartyContainer}>
-        <input type="text"
-               placeholder="Party Name"
-               value={partyName}
-               onChange={(e) => setPartyName(e.target.value)}/>
-        <input type="text"
-               placeholder="Ort"
-               value={ort}
-               onChange={(e) => setOrt(e.target.value)}/>
-        <input type="date"
-               placeholder="Datum"
-               value={datum}
-               onChange={(e) => setDatum(e.target.value)}/>
-        <textarea placeholder="Infos"
-                  value={info}
-                  onChange={(e) => setInfo(e.target.value)}/>
-        <button onClick={partySpeichern}>Speichern
-        </button>
+          <input type="text"
+                 placeholder="Party Name"
+                 value={partyName}
+                 onChange={(e) => setPartyName(e.target.value)}/>
+          <input type="text"
+                 placeholder="Ort"
+                 value={ort}
+                 onChange={(e) => setOrt(e.target.value)}/>
+          <input type="date"
+                 placeholder="Datum"
+                 value={datum}
+                 onChange={(e) => setDatum(e.target.value)}/>
+          <textarea placeholder="Infos"
+                    value={info}
+                    onChange={(e) => setInfo(e.target.value)}/>
+          <button onClick={partySpeichern}>Speichern
+          </button>
       </div>}
 
     </section>

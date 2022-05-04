@@ -10,6 +10,16 @@ export const emptyParty: IPartyApp = {
   essen: [],
   teilnehmer: [],
 };
+export const emptyPartyCollection: IParty[] = [
+  {
+    id: "0",
+    partyName: "",
+    ort: "",
+    datum: "",
+    infos: "",
+    essen: [],
+  }
+];
 
 export const testPartyCollection: IParty[] = [
   {
@@ -22,7 +32,7 @@ export const testPartyCollection: IParty[] = [
   },
   {
     id: "2",
-    partyName: "Geburtstagspicknick Julia + Basti 2022",
+    partyName: "Geburtstags-picknick Julia + Basti 2022",
     ort: "Rothsee",
     datum: "2022-05-28",
     infos: "Wir feiern Geburtstag :)\n" +
@@ -42,7 +52,7 @@ export const testPartyCollection: IParty[] = [
       },
       {
         kategorie: "Herzhaftes",
-        essenName: "Eier",
+        essenName: "Gefüllte Eier",
         werBringts: "Patrick",
       },
       {
