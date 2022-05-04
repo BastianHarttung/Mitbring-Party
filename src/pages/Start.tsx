@@ -8,7 +8,7 @@ import {observer} from "mobx-react";
 
 const Start = (): JSX.Element => {
 
-  const {partyCollection, speichereActiveId, speichereParty, datumZuLocalString} = globalStore;
+  const {partyCollection, speichereActiveId, speichereParty, datumZuLocalString, savePartyToBackend} = globalStore;
 
   const [isNewParty, setIsNewParty] = useState(false);
 
@@ -19,10 +19,11 @@ const Start = (): JSX.Element => {
 
   function partySpeichern() {
     speichereParty(new Party(partyName, ort, datum, info));
-    inputFelderLöschen();
+    savePartyToBackend();
+    inputFelderLoeschen();
   }
 
-  function inputFelderLöschen() {
+  function inputFelderLoeschen() {
     setPartyName("");
     setOrt("");
     setDatum("");
@@ -42,7 +43,7 @@ const Start = (): JSX.Element => {
                     onClick={() => speichereActiveId(party.id)}
                     className={classes.partyBox}>
                 <div className={classes.date}>{datumZuLocalString(party.datum)}</div>
-                <div>{party.partyName}</div>
+                <div className={classes.partyName}>{party.partyName}</div>
               </Link>
               <Link to={"admin/" + party.id}
                     className={classes.editLink}>

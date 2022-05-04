@@ -33,7 +33,7 @@ const Wahl = () => {
     } else {
       setParty(partyFind);
     }
-  });
+  }, []);
 
   return (
     <section className={classes.wahlSection}>
