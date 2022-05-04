@@ -27,7 +27,7 @@ function App(): JSX.Element {
                  element={<Uebersicht/>}
           />
           <Route path="admin/:id"
-                 element={<Admin/>}
+                 element={<Admin />}
           />
           <Route path="*"
                  element={<WrongUrl/>}/>

@@ -5,7 +5,6 @@ export interface IParty {
   datum: string,
   infos: string,
   essen: IEssen[],
-  // teilnehmer?: string[],
 }
 
 export interface IPartyApp extends IParty {

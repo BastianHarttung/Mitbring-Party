@@ -3,11 +3,11 @@ import {useState, useEffect} from "react";
 import {MdDelete} from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
-import {TState} from "../interfaces/Types";
-import {TStateArray} from "../interfaces/Types";
-import {IEssen} from "../interfaces/IParty";
+import {TEssen} from "../interfaces/Types";
+import {IEssen, IParty} from "../interfaces/IParty";
 import Modal from "../components/modal";
 import {observer} from "mobx-react";
+
 
 const Admin = (): JSX.Element => {
   const {partyCollection, isAdmin, updatePartyBackend} = globalStore;
@@ -15,27 +15,44 @@ const Admin = (): JSX.Element => {
   const params = useParams();
   const {id} = params;
   const navigate = useNavigate();
-  const partyFind = partyCollection.find((part) => part.id.toString() === id);
 
-  const handleInitialStateString = (state: TState): string => {
-    if (!!partyFind) return partyFind[state];
-    else return "";
+  const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
+
+  const mapPartyFindToAdminParty = (id: string): IParty => {
+    const partyNam: string | undefined = partyCollection.find((part) => part.id === id)?.partyName;
+    const partyOrt: string | undefined = partyCollection.find((part) => part.id === id)?.ort;
+    const partyDatum: string | undefined = partyCollection.find((part) => part.id === id)?.datum;
+    const partyInfos: string | undefined = partyCollection.find((part) => part.id === id)?.infos;
+    const partyEssen: IEssen[] | undefined = partyCollection.find((part) => part.id === id)?.essen;
+
+    let essenArray: IEssen[] = [];
+    partyEssen?.forEach((ess) => essenArray.push({
+      essenName: ess.essenName,
+      kategorie: ess.kategorie,
+      werBringts: ess.werBringts,
+    }));
+    return {
+      id: id,
+      partyName: partyNam ? partyNam : "",
+      ort: partyOrt ? partyOrt : "",
+      datum: partyDatum ? partyDatum : "",
+      infos: partyInfos ? partyInfos : "",
+      essen: essenArray,
+    };
   };
-  const handleInitialStateArray = (state: TStateArray): IEssen[] => {
-    if (!!partyFind) return partyFind[state];
-    else return [];
-  };
 
-  const [partyName, setPartyName] = useState(handleInitialStateString("partyName"));
-  const [ort, setOrt] = useState(handleInitialStateString("ort"));
-  const [datum, setDatum] = useState(handleInitialStateString("datum"));
-  const [infos, setInfos] = useState(handleInitialStateString("infos"));
+  const [partyName, setPartyName] = useState("");
+  const [ort, setOrt] = useState("");
+  const [datum, setDatum] = useState("");
+  const [infos, setInfos] = useState("");
+  const [essen, setEssen] = useState<IEssen[]>([]);
 
-  const [essen, setEssen] = useState(handleInitialStateArray("essen"));
+  const [savedParty, setSavedParty] = useState(false);
 
-  const handleChangeEssen = (event: any, index: number, mod: string) => {
-    const neu = essen;
-    setEssen(neu);
+  function handleChangeEssen(event: any, index: number, mod: TEssen) {
+    let neuesEssen = [...essen];
+    neuesEssen[index][mod] = event.target.value;
+    setEssen(neuesEssen);
   };
 
   const loescheEssen = (esse: IEssen) => {
@@ -53,14 +70,27 @@ const Admin = (): JSX.Element => {
         infos,
         essen,
       });
+      setSavedParty(true);
+      setTimeout(() => setSavedParty(false), 3000);
     }
   };
 
   useEffect(() => {
-    if (!partyFind) {
+    console.log("useEffect");
+    if (!partyFind || id === undefined) {
       navigate("/wrong");
+    } else {
+      setPartyName(mapPartyFindToAdminParty(id).partyName);
+      setOrt(mapPartyFindToAdminParty(id).ort);
+      setDatum(mapPartyFindToAdminParty(id).datum);
+      setInfos(mapPartyFindToAdminParty(id).infos);
+      setEssen(mapPartyFindToAdminParty(id).essen);
     }
-  }, []);
+  }, [partyFind]);
+
+  useEffect(() => {
+    console.log("essen changed", essen);
+  }, [essen]);
 
   return (
     <div>
@@ -98,7 +128,10 @@ const Admin = (): JSX.Element => {
           Speichern
         </button>
 
+        {savedParty && <p style={{color: "red"}}>Party gespeichert</p>}
+
       </section>}
+
     </div>
   );
 };
