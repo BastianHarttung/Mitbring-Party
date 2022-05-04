@@ -1,7 +1,7 @@
 import "./App.scss";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
-import Header from "./components/Header";
+import Header from "./components/header";
 import Wahl from "./pages/Wahl";
 import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";

@@ -12,6 +12,8 @@ class GlobalStore {
 
   activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
+  isAdmin: boolean = false;
+
   constructor() {
     this.initBackend();
     this.initFromServer();
@@ -19,20 +21,25 @@ class GlobalStore {
   }
 
   initBackend = () => {
-    setURL('https://bastian-harttung-projekte.de/MitbringParty/smallest_backend_ever');
-  }
+    setURL("https://bastian-harttung-projekte.de/MitbringParty/smallest_backend_ever");
+  };
 
   initFromServer = async (): Promise<void> => {
     await downloadFromServer().then(response => {
-      this.partyCollection = backend.getItem('partyCollection');
-    })
+      this.partyCollection = backend.getItem("partyCollection");
+    });
   };
 
-  speichereActiveId = (id: string) => {
+  checkIfAdmin = (pw: string): void => {
+    if (pw === "BastiDev") this.isAdmin = true;
+    else throw new Error("Passwort falsch")
+  };
+
+  speichereActiveId = (id: string): void => {
     this.activeId = id;
   };
 
-  speichereParty = (party: IParty) => {
+  speichereParty = (party: IParty): void => {
     this.partyCollection.push(party);
   };
 

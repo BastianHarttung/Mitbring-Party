@@ -6,9 +6,11 @@ import classes from "./Admin.module.scss";
 import {TState} from "../interfaces/Types";
 import {TStateArray} from "../interfaces/Types";
 import {IEssen} from "../interfaces/IParty";
+import Modal from "../components/modal";
+import {observer} from "mobx-react";
 
 const Admin = (): JSX.Element => {
-  const {partyCollection, updatePartyBackend} = globalStore;
+  const {partyCollection, isAdmin, updatePartyBackend} = globalStore;
 
   const params = useParams();
   const {id} = params;
@@ -41,8 +43,8 @@ const Admin = (): JSX.Element => {
     setEssen(neu);
   };
 
-  const saveParty = () =>{
-    if(id !== undefined){
+  const saveParty = () => {
+    if (id !== undefined) {
       updatePartyBackend({
         id,
         partyName,
@@ -50,9 +52,9 @@ const Admin = (): JSX.Element => {
         datum,
         infos,
         essen,
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     if (!partyFind) {
@@ -61,39 +63,44 @@ const Admin = (): JSX.Element => {
   }, []);
 
   return (
-    <section className={classes.adminSection}>
-      <input type="text"
-             value={partyName}
-             onChange={(e) => setPartyName(e.target.value)}/>
-      <input type="text"
-             value={ort}
-             onChange={(e) => setOrt(e.target.value)}/>
-      <input type="date"
-             value={datum}
-             onChange={(e) => setDatum(e.target.value)}/>
-      <textarea value={infos}
-                onChange={(e) => setInfos(e.target.value)}/>
-      {essen.map((ess, index) => {
-        return (
-          <div key={index} className={classes.essenContainer}>
-            <input type="text"
-                   value={ess.essenName}
-                   onChange={(event) => handleChangeEssen(event, index, "essenName")}/>
-            <input type="text"
-                   value={ess.werBringts}
-                   onChange={(event) => handleChangeEssen(event, index, "werBringts")}/>
-            <MdDelete onClick={() => loescheEssen(ess)}/>
-          </div>
-        );
-      })}
+    <div>
 
-      <button style={{fontSize: "1em", marginTop: "10px"}}
-              onClick={saveParty}>
-        Speichern
-      </button>
+      {!isAdmin && <Modal/>}
 
-    </section>
+      {isAdmin && <section className={classes.adminSection}>
+        <input type="text"
+               value={partyName}
+               onChange={(e) => setPartyName(e.target.value)}/>
+        <input type="text"
+               value={ort}
+               onChange={(e) => setOrt(e.target.value)}/>
+        <input type="date"
+               value={datum}
+               onChange={(e) => setDatum(e.target.value)}/>
+        <textarea value={infos}
+                  onChange={(e) => setInfos(e.target.value)}/>
+        {essen.map((ess, index) => {
+          return (
+            <div key={index} className={classes.essenContainer}>
+              <input type="text"
+                     value={ess.essenName}
+                     onChange={(event) => handleChangeEssen(event, index, "essenName")}/>
+              <input type="text"
+                     value={ess.werBringts}
+                     onChange={(event) => handleChangeEssen(event, index, "werBringts")}/>
+              <MdDelete onClick={() => loescheEssen(ess)}/>
+            </div>
+          );
+        })}
+
+        <button style={{fontSize: "1em", marginTop: "10px"}}
+                onClick={saveParty}>
+          Speichern
+        </button>
+
+      </section>}
+    </div>
   );
 };
 
-export default Admin;
+export default observer(Admin);

@@ -4,12 +4,9 @@
   flex-direction: column;
   align-items: center;
 
-  input {
-    width: 97%;
-  }
-
+  input,
   textarea {
-    width: 97%;
+    width: clamp(200px, 97%, 460px);
   }
 }
 
