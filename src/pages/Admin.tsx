@@ -87,7 +87,6 @@ const Admin = (): JSX.Element => {
 
   function loescheParty():void {
     if (id) {
-      debugger;
       loeschePartyBackend(id);
     }
     navigate("/");

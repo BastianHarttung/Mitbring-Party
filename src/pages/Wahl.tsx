@@ -76,7 +76,10 @@ const Wahl = () => {
       </div>
 
       <div className={classes.infosContainer}><b>Infos:</b><br/>
-        <div id="infos" className="infos">{party.infos}</div>
+        <textarea id="infos"
+                  className="infos"
+                  value={party.infos}
+                  readOnly/>
       </div>
 
       <div id="checkbox-container" className={classes.checkboxContainer}>
