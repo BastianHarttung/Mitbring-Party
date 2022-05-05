@@ -31,11 +31,12 @@ code {
 input[type=text],
 input[type=datalist],
 input[type=date],
-input[type=time] {
+input[type=time],
+input[type=password]{
   font-family: Arial, sans-serif;
   font-size: 0.9em;
   height: 25px;
-  min-width: 230px;
+  min-width: 250px;
   border-radius: 7px;
   padding: 3px;
   margin: 5px 0;
@@ -52,8 +53,8 @@ input[type=checkbox] {
 textarea {
   font-family: Arial, sans-serif;
   font-size: 0.9em;
-  min-width: 230px;
-  min-height: 70px;
+  min-width: 250px;
+  min-height: 90px;
   border: 2px solid black;
   border-radius: 7px;
   padding: 3px;

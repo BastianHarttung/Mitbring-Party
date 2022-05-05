@@ -40,7 +40,7 @@ class GlobalStore {
 
   checkIfAdmin = (pw: string): void => {
     if (pw === "BastiDev") this.isAdmin = true;
-    else throw new Error("Passwort falsch");
+    else this.throwErrorMessage("Passwort falsch");
   };
 
   speichereActiveId = (id: string): void => {
@@ -49,6 +49,8 @@ class GlobalStore {
 
   speichereParty = (party: IParty): void => {
     this.partyCollection.push(party);
+    this.savePartyToBackend();
+    this.initFromServer();
   };
 
   speichereEssen = (id: string | undefined, essen: IEssen) => {
@@ -109,6 +111,12 @@ class GlobalStore {
   updatePartyBackend = (neueParty: IParty) => {
     const partyIndex = this.partyCollection.findIndex((party) => party.id === neueParty.id);
     this.partyCollection.splice(partyIndex, 1, neueParty);
+    this.savePartyToBackend();
+    this.initFromServer();
+  };
+
+  loeschePartyBackend = (id: string) => {
+    this.partyCollection.filter((party) => party.id !== id);
     this.savePartyToBackend();
     this.initFromServer();
   };

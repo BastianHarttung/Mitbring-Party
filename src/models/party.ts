@@ -10,8 +10,8 @@ export class Party {
   essen: IEssen[];
   teilnehmer: string[];
 
-  constructor(id: string, partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = []) {
-    this.id = id;
+  constructor(partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = []) {
+    this.id = new Date().getTime().toString();
     this.partyName = partyName;
     this.ort = ort;
     this.datum = datum;
@@ -19,10 +19,10 @@ export class Party {
     this.infos = infos;
     this.essen = essen;
     this.teilnehmer = [];
-    this.addPersons();
+    this.addTeilnehmer();
   }
 
-  addPersons() {
+  addTeilnehmer() {
     for (let i = 0; i < this.essen.length; i++) {
       if (this.essen[i].werBringts) {
         this.teilnehmer.push(this.essen[i].werBringts);

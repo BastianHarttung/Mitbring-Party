@@ -4,18 +4,14 @@ import {useState} from "react";
 import React from "react";
 
 
-const Modal = () => {
+const ModalPassword = () => {
   const {checkIfAdmin} = globalStore;
 
   const [password, setPassword] = useState("");
 
   const checkPassword = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      try {
-        checkIfAdmin(password);
-      } catch (e) {
-        alert(e);
-      }
+      checkIfAdmin(password);
     } else return;
   };
 
@@ -32,4 +28,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default ModalPassword;

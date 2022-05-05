@@ -1,19 +1,26 @@
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
 import {MdDelete} from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
 import {TEssen} from "../interfaces/Types";
 import {IEssen, IParty} from "../interfaces/IParty";
-import Modal from "../components/modal";
+import ModalPassword from "../components/modalPassword";
 import {observer} from "mobx-react";
 
 
 const Admin = (): JSX.Element => {
-  const {partyCollection, isAdmin, updatePartyBackend} = globalStore;
+  const {
+    partyCollection,
+    isAdmin,
+    updatePartyBackend,
+    loeschePartyBackend,
+  } = globalStore;
 
   const params = useParams();
   const {id} = params;
+  const navigate = useNavigate();
 
   const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
 
@@ -36,7 +43,7 @@ const Admin = (): JSX.Element => {
       partyName: partyNam ? partyNam : "",
       ort: partyOrt ? partyOrt : "",
       datum: partyDatum ? partyDatum : "",
-      zeit: partyZeit ? partyZeit :"",
+      zeit: partyZeit ? partyZeit : "",
       infos: partyInfos ? partyInfos : "",
       essen: essenArray,
     };
@@ -78,12 +85,20 @@ const Admin = (): JSX.Element => {
     }
   };
 
+  const loescheParty = () => {
+    if (id) {
+      loeschePartyBackend(id);
+    }
+    navigate("/");
+  };
+
   useEffect(() => {
     if (!partyFind || id === undefined) {
     } else {
       setPartyName(mapPartyFindToAdminParty(id).partyName);
       setOrt(mapPartyFindToAdminParty(id).ort);
       setDatum(mapPartyFindToAdminParty(id).datum);
+      setZeit(mapPartyFindToAdminParty(id).zeit);
       setInfos(mapPartyFindToAdminParty(id).infos);
       setEssen(mapPartyFindToAdminParty(id).essen);
     }
@@ -92,7 +107,7 @@ const Admin = (): JSX.Element => {
   return (
     <div>
 
-      {!isAdmin && <Modal/>}
+      {!isAdmin && <ModalPassword/>}
 
       {isAdmin && <section className={classes.adminSection}>
         <input type="text"
@@ -122,6 +137,11 @@ const Admin = (): JSX.Element => {
             </div>
           );
         })}
+
+        <button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+                onClick={loescheParty}>
+          Party löschen
+        </button>
 
         <button style={{fontSize: "1em", marginTop: "10px"}}
                 onClick={saveParty}>

@@ -20,7 +20,7 @@ const Start = (): JSX.Element => {
 
   function partySpeichern() {
     if (partyName) {
-      speichereParty(new Party(datum, partyName, ort, datum, zeit, info));
+      speichereParty(new Party(partyName, ort, datum, zeit, info));
       inputFelderLoeschen();
       setIsNewParty(false);
     } else {
@@ -32,13 +32,14 @@ const Start = (): JSX.Element => {
     setPartyName("");
     setOrt("");
     setDatum("");
+    setZeit("");
     setInfo("");
   }
 
   return (
     <section className={classes.startSection}>
 
-      <div><b>Party:</b></div>
+      <div><b>Mitbringparty:</b></div>
       <div className={classes.partyCollectionContainer}>
         {partyCollection.map((party, index) => {
           return (
