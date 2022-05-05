@@ -7,8 +7,7 @@ import globalStore from "../stores/global-store";
 import {observer} from "mobx-react";
 import PicArrowDown from "../assets/img/icons/caret-down.svg";
 import {emptyParty} from "../mockup/testConstants";
-import {IParty} from "../interfaces/IParty";
-import {IEssen} from "../interfaces/IParty";
+import {IParty, IEssen} from "../interfaces/IParty";
 
 const Wahl = () => {
 

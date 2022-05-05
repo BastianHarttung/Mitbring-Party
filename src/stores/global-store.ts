@@ -29,6 +29,12 @@ class GlobalStore {
   initFromServer = (): void => {
     downloadFromServer().then((resolve) => {
       this.partyCollection = backend.getItem("partyCollection");
+      // Sort by Date
+      this.partyCollection.sort((a, b) => {
+        if (a.datum < b.datum) return -1;
+        if (a.datum > b.datum) return 1;
+        else return 0;
+      });
     });
   };
 
