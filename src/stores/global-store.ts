@@ -116,7 +116,7 @@ class GlobalStore {
   };
 
   loeschePartyBackend = (id: string) => {
-    this.partyCollection.filter((party) => party.id !== id);
+    this.partyCollection = this.partyCollection.filter((party) => party.id !== id);
     this.savePartyToBackend();
     this.initFromServer();
   };

@@ -24,7 +24,16 @@ const Admin = (): JSX.Element => {
 
   const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
 
-  const mapPartyFindToAdminParty = (id: string): IParty => {
+  const [partyName, setPartyName] = useState("");
+  const [ort, setOrt] = useState("");
+  const [datum, setDatum] = useState("");
+  const [zeit, setZeit] = useState("");
+  const [infos, setInfos] = useState("");
+  const [essen, setEssen] = useState<IEssen[]>([]);
+
+  const [savedParty, setSavedParty] = useState(false);
+
+  function mapPartyFindToAdminParty(id: string): IParty {
     const partyNam: string | undefined = partyCollection.find((part) => part.id === id)?.partyName;
     const partyOrt: string | undefined = partyCollection.find((part) => part.id === id)?.ort;
     const partyDatum: string | undefined = partyCollection.find((part) => part.id === id)?.datum;
@@ -47,29 +56,20 @@ const Admin = (): JSX.Element => {
       infos: partyInfos ? partyInfos : "",
       essen: essenArray,
     };
-  };
+  }
 
-  const [partyName, setPartyName] = useState("");
-  const [ort, setOrt] = useState("");
-  const [datum, setDatum] = useState("");
-  const [zeit, setZeit] = useState("");
-  const [infos, setInfos] = useState("");
-  const [essen, setEssen] = useState<IEssen[]>([]);
-
-  const [savedParty, setSavedParty] = useState(false);
-
-  function handleChangeEssen(event: any, index: number, mod: TEssen) {
+  function handleChangeEssen(event: any, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
     neuesEssen[index][mod] = event.target.value;
     setEssen(neuesEssen);
   }
 
-  const loescheEssen = (esse: IEssen) => {
+  function loescheEssen(esse: IEssen): void {
     const neu = essen.filter((ess: IEssen) => ess.essenName !== esse.essenName);
     setEssen(neu);
-  };
+  }
 
-  const saveParty = () => {
+  function saveParty(): void {
     if (id !== undefined) {
       updatePartyBackend({
         id,
@@ -83,14 +83,15 @@ const Admin = (): JSX.Element => {
       setSavedParty(true);
       setTimeout(() => setSavedParty(false), 3000);
     }
-  };
+  }
 
-  const loescheParty = () => {
+  function loescheParty():void {
     if (id) {
+      debugger;
       loeschePartyBackend(id);
     }
     navigate("/");
-  };
+  }
 
   useEffect(() => {
     if (!partyFind || id === undefined) {
