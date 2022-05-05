@@ -53,26 +53,26 @@ class GlobalStore {
 
   /**
    * Speichere Auswahl und Name
-   * @param {array} checkedEssen checked Essen
+   * @param {string array} checkedEssen checked Essen
    * @param {string} neuerName
    * @param {object} partyObject Object of active Party
    */
-  speichereAuswahl = (checkedEssen: any, neuerName: string, partyObject: IParty) => {
+  speichereAuswahl = (checkedEssen: string[], neuerName: string, partyObject: IParty): void => {
     const newPartyCollection = this.partyCollection.map((party) => {
       if (party.id === partyObject.id) {
         const newParty = {...party};
-        // newParty.teilnehmer.push(neuerName);
-        // for (let i = 0; i < newParty.essen.length; i++) {
-        //   for (let j = 0; j < checkedEssen.length; j++) {
-        //     if (newParty.essen[i].essenName === checkedEssen[j]) {
-        //       newParty.essen[i].werBringts = neuerName;
-        //     }
-        //   }
-        // }
+        for (let i = 0; i < newParty.essen.length; i++) {
+          for (let j = 0; j < checkedEssen.length; j++) {
+            if (newParty.essen[i].essenName === checkedEssen[j]) {
+              newParty.essen[i].werBringts = neuerName;
+            }
+          }
+        }
         return newParty;
       } else return party;
     });
     this.partyCollection = newPartyCollection;
+    this.savePartyToBackend();
   };
 
   addTeilnehmer = (party: IParty): IPartyApp => {

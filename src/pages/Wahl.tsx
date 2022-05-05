@@ -23,7 +23,7 @@ const Wahl = () => {
   const [neueKategorie, setNeueKategorie] = useState("");
   const [neuesEssen, setNeuesEssen] = useState("");
   const [neuerName, setNeuerName] = useState("");
-  const [checkedEssen, setCheckedEssen] = useState([]);
+  const [checkedEssen, setCheckedEssen] = useState<string[]>([]);
 
   const [auswahlGespeichert, setAuswahlGespeichert] = useState(false);
   const [ausfuellen, setAusfuellen] = useState(false);
@@ -165,9 +165,10 @@ const Wahl = () => {
     const checked = event.target.checked;
     let newChecked = checkedEssen;
     if (checked) {
-      // @ts-ignore
+      // Add essen to array
       newChecked.push(event.target.value);
     } else {
+      //Delete essen from array
       for (let i = 0; i < newChecked.length; i++) {
         if (newChecked[i] === event.target.value) {
           newChecked.splice(i, 1);
@@ -179,7 +180,9 @@ const Wahl = () => {
 
   function auswahlSpeichern() {
     speichereAuswahl(checkedEssen, neuerName, party);
+    //Alle Checkboxen unchecken
     setCheckedEssen([]);
+    //Anzeige dass Auswahl gespeichert wurde
     setAuswahlGespeichert(true);
     setTimeout(() => setAuswahlGespeichert(false), 2500);
   }
