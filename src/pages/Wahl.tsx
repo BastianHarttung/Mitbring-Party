@@ -12,7 +12,13 @@ import {IEssen} from "../interfaces/IParty";
 
 const Wahl = () => {
 
-  const {partyCollection, speichereEssen, speichereAuswahl, datumZuLocalString} = globalStore;
+  const {
+    partyCollection,
+    speichereEssen,
+    speichereAuswahl,
+    datumZuLocalString,
+    throwErrorMessage,
+  } = globalStore;
 
   const params = useParams();
   const navigate = useNavigate();
@@ -179,12 +185,16 @@ const Wahl = () => {
   }
 
   function auswahlSpeichern() {
-    speichereAuswahl(checkedEssen, neuerName, party);
-    //Alle Checkboxen unchecken
-    setCheckedEssen([]);
-    //Anzeige dass Auswahl gespeichert wurde
-    setAuswahlGespeichert(true);
-    setTimeout(() => setAuswahlGespeichert(false), 2500);
+    if (!!neuerName) {
+      speichereAuswahl(checkedEssen, neuerName, party);
+      //Alle Checkboxen unchecken
+      setCheckedEssen([]);
+      //Anzeige dass Auswahl gespeichert wurde
+      setAuswahlGespeichert(true);
+      setTimeout(() => setAuswahlGespeichert(false), 2500);
+    } else {
+      throwErrorMessage("Name eingeben!");
+    }
   }
 
 };

@@ -7,11 +7,18 @@ import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
 import WrongUrl from "./pages/WrongUrl";
+import globalStore from "./stores/global-store";
+import {observer} from "mobx-react";
+import ErrorMessage from "./components/error-message";
 
 function App(): JSX.Element {
 
+  const {errorMessage} = globalStore;
+
   return (
     <BrowserRouter basename={"/MitbringParty"}>
+
+      {!!errorMessage && <ErrorMessage message={errorMessage}/>}
 
       <Header/>
 
@@ -27,7 +34,7 @@ function App(): JSX.Element {
                  element={<Uebersicht/>}
           />
           <Route path="admin/:id"
-                 element={<Admin />}
+                 element={<Admin/>}
           />
           <Route path="*"
                  element={<WrongUrl/>}/>
@@ -40,4 +47,4 @@ function App(): JSX.Element {
 
 }
 
-export default App;
+export default observer(App);

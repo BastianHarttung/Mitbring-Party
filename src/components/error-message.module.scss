@@ -1,0 +1,33 @@
+.messageContainer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+
+  .messageBox {
+    color: darkred;
+    background-color: white;
+    max-width: 70%;
+    border: 2px solid darkred;
+    border-radius: 10px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    //transition: transform 100ms linear;
+    animation: shake 500ms ease-in-out;
+    padding: 20px;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  20%, 60% {
+    transform: translateX(-10px);
+  }
+  40%, 80% {
+    transform: translateX(10px);
+  }
+}

@@ -14,6 +14,8 @@ class GlobalStore {
 
   isAdmin: boolean = false;
 
+  errorMessage: string = "";
+
   constructor() {
     this.initBackend();
     this.initFromServer();
@@ -91,6 +93,11 @@ class GlobalStore {
         year: "numeric",
       },
     );
+  };
+
+  throwErrorMessage = (message: string) => {
+    this.errorMessage = message;
+    setTimeout(() => this.errorMessage = "", 2500);
   };
 
   updatePartyBackend = (neueParty: IParty) => {
