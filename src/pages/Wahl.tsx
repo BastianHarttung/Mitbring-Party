@@ -8,6 +8,7 @@ import {observer} from "mobx-react";
 import PicArrowDown from "../assets/img/icons/caret-down.svg";
 import {emptyParty} from "../mockup/testConstants";
 import {IParty} from "../interfaces/IParty";
+import {IEssen} from "../interfaces/IParty";
 
 const Wahl = () => {
 
@@ -93,8 +94,7 @@ const Wahl = () => {
                 }}>{neuesEssenEingabe ? "Abbrechen" : "Neues Essen"}</button>
       </div>
 
-
-      {neuesEssenEingabe ? <div className={classes.neuesEssenContainer}>
+      {neuesEssenEingabe && <div className={classes.neuesEssenContainer}>
         <input type="text"
                placeholder="Essen"
                onChange={evt => setNeuesEssen(evt.target.value)}/>
@@ -106,9 +106,12 @@ const Wahl = () => {
           {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)
           }
         </datalist>
+
         <button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>Essen hinzufügen</button>
+
         {ausfuellen ? <div className={classes.ausfuellen}>Bitte vollständig ausfüllen!</div> : ""}
-      </div> : ""}
+
+      </div>}
 
       <div className={classes.nameSpeichernContainer}>
         <input id="name"
@@ -131,7 +134,7 @@ const Wahl = () => {
    * Finde und filtere Kategorien
    * @return {*[]} gibt ein Array zurück, dass einmalige Kategorien enthält gefunden in der party
    */
-  function findKategorien() {
+  function findKategorien(): string[] {
     const kategorieArray = party.essen.reduce((kategorien, actual) => {
       // @ts-ignore
       kategorien.push(actual.kategorie);
@@ -142,12 +145,20 @@ const Wahl = () => {
 
   function essenHinzufuegen(neuesEssen: string, neueKategorie: string, neuerName: string) {
     if (neuesEssen && neueKategorie) {
-      const essen = new Essen(neueKategorie, neuesEssen, neuerName);
-      speichereEssen(essen);
       setAusfuellen(false);
+      const essen: IEssen = new Essen(neueKategorie, neuesEssen, neuerName);
+      speichereEssen(params.id, essen);
+      loescheInputFelder();
+      setNeuesEssenEingabe(false);
     } else {
       setAusfuellen(true);
     }
+  }
+
+  function loescheInputFelder() {
+    setNeuesEssen("");
+    setNeueKategorie("");
+    setNeuerName("");
   }
 
   function handleChecked(event: React.ChangeEvent<HTMLInputElement>) {

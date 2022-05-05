@@ -53,7 +53,7 @@ const Admin = (): JSX.Element => {
     let neuesEssen = [...essen];
     neuesEssen[index][mod] = event.target.value;
     setEssen(neuesEssen);
-  };
+  }
 
   const loescheEssen = (esse: IEssen) => {
     const neu = essen.filter((ess: IEssen) => ess.essenName !== esse.essenName);
@@ -76,7 +76,6 @@ const Admin = (): JSX.Element => {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     if (!partyFind || id === undefined) {
       navigate("/wrong");
     } else {
@@ -87,10 +86,6 @@ const Admin = (): JSX.Element => {
       setEssen(mapPartyFindToAdminParty(id).essen);
     }
   }, [partyFind]);
-
-  useEffect(() => {
-    console.log("essen changed", essen);
-  }, [essen]);
 
   return (
     <div>
