@@ -6,6 +6,7 @@ export const emptyParty: IPartyApp = {
   partyName: "",
   ort: "",
   datum: "",
+  zeit:"",
   infos: "",
   essen: [],
   teilnehmer: [],
@@ -16,25 +17,28 @@ export const emptyPartyCollection: IParty[] = [
     partyName: "",
     ort: "",
     datum: "",
+    zeit: "",
     infos: "",
     essen: [],
-  }
+  },
 ];
 
 export const testPartyCollection: IParty[] = [
   {
-    id: "1",
+    id: "2022-12-25",
     partyName: "Fondue 2022",
     ort: "Hilpoltstein",
     datum: "2022-12-25",
+    zeit: "11:30",
     infos: "Das alljährliche Weihnachtsfondue",
     essen: [],
   },
   {
-    id: "2",
+    id: "2022-05-28",
     partyName: "Geburtstags-picknick Julia + Basti 2022",
     ort: "Rothsee",
     datum: "2022-05-28",
+    zeit:"15:00",
     infos: "Wir feiern Geburtstag :)\n" +
       "Mit einem Picknick wo jeder was mitbringen darf und die Leckereien genießen kann, die andere mitgebracht haben. \n" +
       "Lasst uns Spaß haben.\n" +

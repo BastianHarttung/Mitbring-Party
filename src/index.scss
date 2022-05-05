@@ -30,7 +30,8 @@ code {
 
 input[type=text],
 input[type=datalist],
-input[type=date] {
+input[type=date],
+input[type=time] {
   font-family: Arial, sans-serif;
   font-size: 0.9em;
   height: 25px;
@@ -43,6 +44,7 @@ input[type=date] {
 input[type=checkbox] {
   height: 20px;
   width: 20px;
+  min-width: 20px;
   margin-right: 10px;
   cursor: pointer;
 }

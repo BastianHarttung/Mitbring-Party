@@ -13,20 +13,23 @@
 
 .infosContainer,
 .ortContainer,
-.datumContainer {
+.datumContainer,
+.zeitContainer {
   font-size: 17px;
-  width: 250px;
+  width: 290px;
+  margin-bottom: 10px;
 }
 
-.datumContainer {
+.datumContainer,
+.zeitContainer {
   display: flex;
   justify-content: space-between;
 }
 
 // Ort
-details {
-  margin: 10px 0px;
-}
+//details {
+//  margin: 0;
+//}
 
 .ortText {
   display: flex;
@@ -54,6 +57,7 @@ details {
 }
 
 .checkbox {
+  width: 290px;
   display: flex;
   justify-content: space-between;
   align-items: center;

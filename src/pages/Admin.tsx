@@ -14,7 +14,6 @@ const Admin = (): JSX.Element => {
 
   const params = useParams();
   const {id} = params;
-  const navigate = useNavigate();
 
   const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
 
@@ -22,6 +21,7 @@ const Admin = (): JSX.Element => {
     const partyNam: string | undefined = partyCollection.find((part) => part.id === id)?.partyName;
     const partyOrt: string | undefined = partyCollection.find((part) => part.id === id)?.ort;
     const partyDatum: string | undefined = partyCollection.find((part) => part.id === id)?.datum;
+    const partyZeit: string | undefined = partyCollection.find((part) => part.id === id)?.zeit;
     const partyInfos: string | undefined = partyCollection.find((part) => part.id === id)?.infos;
     const partyEssen: IEssen[] | undefined = partyCollection.find((part) => part.id === id)?.essen;
 
@@ -36,6 +36,7 @@ const Admin = (): JSX.Element => {
       partyName: partyNam ? partyNam : "",
       ort: partyOrt ? partyOrt : "",
       datum: partyDatum ? partyDatum : "",
+      zeit: partyZeit ? partyZeit :"",
       infos: partyInfos ? partyInfos : "",
       essen: essenArray,
     };
@@ -44,6 +45,7 @@ const Admin = (): JSX.Element => {
   const [partyName, setPartyName] = useState("");
   const [ort, setOrt] = useState("");
   const [datum, setDatum] = useState("");
+  const [zeit, setZeit] = useState("");
   const [infos, setInfos] = useState("");
   const [essen, setEssen] = useState<IEssen[]>([]);
 
@@ -67,6 +69,7 @@ const Admin = (): JSX.Element => {
         partyName,
         ort,
         datum,
+        zeit,
         infos,
         essen,
       });
@@ -77,7 +80,6 @@ const Admin = (): JSX.Element => {
 
   useEffect(() => {
     if (!partyFind || id === undefined) {
-      navigate("/wrong");
     } else {
       setPartyName(mapPartyFindToAdminParty(id).partyName);
       setOrt(mapPartyFindToAdminParty(id).ort);
@@ -102,6 +104,9 @@ const Admin = (): JSX.Element => {
         <input type="date"
                value={datum}
                onChange={(e) => setDatum(e.target.value)}/>
+        <input type="time"
+               value={zeit}
+               onChange={(e) => setZeit(e.target.value)}/>
         <textarea value={infos}
                   onChange={(e) => setInfos(e.target.value)}/>
         {essen.map((ess, index) => {

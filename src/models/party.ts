@@ -1,17 +1,21 @@
-export class Party {
-  id;
-  partyName;
-  ort;
-  datum;
-  infos;
-  essen;
-  teilnehmer;
+import {IEssen} from "../interfaces/IParty";
 
-  constructor(id, partyName, ort, datum, infos, essen = []) {
+export class Party {
+  id: string;
+  partyName: string;
+  ort: string;
+  datum: string;
+  zeit: string;
+  infos: string;
+  essen: IEssen[];
+  teilnehmer: string[];
+
+  constructor(id: string, partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = []) {
     this.id = id;
     this.partyName = partyName;
     this.ort = ort;
     this.datum = datum;
+    this.zeit = zeit;
     this.infos = infos;
     this.essen = essen;
     this.teilnehmer = [];
@@ -24,17 +28,18 @@ export class Party {
         this.teilnehmer.push(this.essen[i].werBringts);
       }
     }
+    // @ts-ignore
     this.teilnehmer = [...new Set(this.teilnehmer)];
   }
 
 }
 
 export class Essen {
-  kategorie;
-  essenName;
-  werBringts;
+  kategorie: string;
+  essenName: string;
+  werBringts: string;
 
-  constructor(kategorie, essenname, werBringts = "") {
+  constructor(kategorie: string, essenname: string, werBringts: string = "") {
     this.kategorie = kategorie;
     this.essenName = essenname;
     this.werBringts = werBringts;

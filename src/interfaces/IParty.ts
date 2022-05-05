@@ -3,6 +3,7 @@ export interface IParty {
   partyName: string,
   ort: string,
   datum: string,
+  zeit:string,
   infos: string,
   essen: IEssen[],
 }

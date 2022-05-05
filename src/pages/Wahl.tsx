@@ -21,7 +21,6 @@ const Wahl = () => {
   } = globalStore;
 
   const params = useParams();
-  // const navigate = useNavigate();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
 
   const [party, setParty] = useState<IParty>(emptyParty);
@@ -49,6 +48,10 @@ const Wahl = () => {
 
       <div className={classes.datumContainer}><b>Datum:</b><br/>
         <div id="datum" className="datum">{datumZuLocalString(party.datum)}</div>
+      </div>
+
+      <div className={classes.zeitContainer}><b>Zeit:</b><br/>
+        <div id="zeit" className="zeit">{party.zeit} Uhr</div>
       </div>
 
       <div className={classes.ortContainer}>
