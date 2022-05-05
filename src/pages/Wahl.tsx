@@ -2,7 +2,7 @@ import classes from "./Wahl.module.scss";
 import {useState, useEffect} from "react";
 import React from "react";
 import {Essen} from "../models/party";
-import {useParams, useNavigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import globalStore from "../stores/global-store";
 import {observer} from "mobx-react";
 import PicArrowDown from "../assets/img/icons/caret-down.svg";
@@ -14,6 +14,7 @@ const Wahl = () => {
 
   const {
     partyCollection,
+    speichereActiveId,
     speichereEssen,
     speichereAuswahl,
     datumZuLocalString,
@@ -21,10 +22,11 @@ const Wahl = () => {
   } = globalStore;
 
   const params = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
 
   const [party, setParty] = useState<IParty>(emptyParty);
+
   const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false);
   const [neueKategorie, setNeueKategorie] = useState("");
   const [neuesEssen, setNeuesEssen] = useState("");
@@ -35,12 +37,12 @@ const Wahl = () => {
   const [ausfuellen, setAusfuellen] = useState(false);
 
   useEffect(() => {
-    if (!partyFind) {
-      navigate("/wrong");
-    } else {
-      setParty(partyFind);
+    if (params.id) {
+      speichereActiveId(params.id);
     }
-  }, []);
+    setParty(partyFind ? partyFind : emptyParty);
+  }, [partyFind]);
+
 
   return (
     <section className={classes.wahlSection}>

@@ -26,8 +26,8 @@ class GlobalStore {
     setURL("https://bastian-harttung-projekte.de/MitbringParty/smallest_backend_ever");
   };
 
-  initFromServer = async (): Promise<void> => {
-    await downloadFromServer().then(response => {
+  initFromServer = (): void => {
+    downloadFromServer().then((resolve) => {
       this.partyCollection = backend.getItem("partyCollection");
     });
   };

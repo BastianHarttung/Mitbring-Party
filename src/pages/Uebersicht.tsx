@@ -1,6 +1,5 @@
 import classes from "./Uebersicht.module.scss";
 import {useParams} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
 import globalStore from "../stores/global-store";
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
@@ -8,20 +7,25 @@ import {emptyParty} from "../mockup/testConstants";
 import {IPartyApp} from "../interfaces/IParty";
 
 const Uebersicht = () => {
-  const {partyCollection, addTeilnehmer} = globalStore;
+  const {
+    partyCollection,
+    addTeilnehmer,
+    speichereActiveId,
+  } = globalStore;
 
   const params = useParams();
-  const navigate = useNavigate();
-  const [party, setParty] = useState<IPartyApp>(emptyParty);
+  // const navigate = useNavigate();
+  const [party, setParty] = useState<IPartyApp>(addTeilnehmer(emptyParty));
+
+  const partyFind = partyCollection.find((party) => party.id === params.id);
 
   useEffect(() => {
-    const partyFind = partyCollection.find((party) => party.id === params.id);
-    if (partyFind !== undefined) {
-      setParty(addTeilnehmer(partyFind));
-    } else {
-      navigate("/wrong");
+    if (params.id) {
+      speichereActiveId(params.id);
     }
-  }, [partyCollection, params.id, addTeilnehmer]);
+    setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
+  }, [partyFind]);
+
 
   return (
     <section className={classes.uebersichtSection}>
