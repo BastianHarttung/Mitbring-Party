@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom";
 import globalStore from "../stores/global-store";
 import {observer} from "mobx-react";
 import PicArrowDown from "../assets/img/icons/caret-down.svg";
-import PicArrowUp from "../assets/img/icons/edit.svg";
+import PicArrowUp from "../assets/img/icons/caret-up.svg";
 import {emptyParty} from "../mockup/testConstants";
 import {IParty, IEssen} from "../interfaces/IParty";
 
