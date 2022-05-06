@@ -5,8 +5,9 @@ export const emptyParty: IPartyApp = {
   id: "0",
   partyName: "",
   ort: "",
+  ortCoordinates: "",
   datum: "",
-  zeit:"",
+  zeit: "",
   infos: "",
   essen: [],
   teilnehmer: [],
@@ -16,6 +17,7 @@ export const emptyPartyCollection: IParty[] = [
     id: "0",
     partyName: "",
     ort: "",
+    ortCoordinates: "",
     datum: "",
     zeit: "",
     infos: "",
@@ -25,20 +27,22 @@ export const emptyPartyCollection: IParty[] = [
 
 export const testPartyCollection: IParty[] = [
   {
-    id: "2022-12-25",
+    id: "1667260800000",
     partyName: "Fondue 2022",
-    ort: "Hilpoltstein",
+    ort: "Hip Joe + Birgitt",
+    ortCoordinates: "Altstadtring 40, 91161 Hilpoltstein",
     datum: "2022-12-25",
     zeit: "11:30",
     infos: "Das alljährliche Weihnachtsfondue",
     essen: [],
   },
   {
-    id: "2022-05-28",
+    id: "1651865749256",
     partyName: "Geburtstags-picknick Julia + Basti 2022",
     ort: "Rothsee",
+    ortCoordinates: "49.230910, 11.197084",
     datum: "2022-05-28",
-    zeit:"15:00",
+    zeit: "15:00",
     infos: "Wir feiern Geburtstag :)\n" +
       "Mit einem Picknick wo jeder was mitbringen darf und die Leckereien genießen kann, die andere mitgebracht haben. \n" +
       "Lasst uns Spaß haben.\n" +

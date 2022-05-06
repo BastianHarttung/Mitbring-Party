@@ -1,9 +1,10 @@
 export interface IParty {
-  id: string,
+  id: string,         // new Date().getTime().toString()
   partyName: string,
   ort: string,
+  ortCoordinates?: string,  // Coordinates or Address for Google Maps
   datum: string,
-  zeit:string,
+  zeit: string,
   infos: string,
   essen: IEssen[],
 }

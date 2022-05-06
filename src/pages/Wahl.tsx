@@ -73,7 +73,7 @@ const Wahl = () => {
             style={{border: 0}}
             loading="lazy"
             allowFullScreen
-            src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_Key}&q=${party.ort}`}>
+            src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_Key}&q=${party.ortCoordinates ? party.ortCoordinates : party.ort}`}>
           </iframe>
         </details>
       </div>
@@ -112,19 +112,19 @@ const Wahl = () => {
       </div>
 
       {neuesEssenEingabe && <div className={classes.neuesEssenContainer}>
-        <input type="text"
-               placeholder="Essen"
-               onChange={evt => setNeuesEssen(evt.target.value)}/>
-        <input type="datalist"
-               list="kategorie"
-               placeholder="Kategorie zB. Salate"
-               onChange={evt => setNeueKategorie(evt.target.value)}/>
-        <datalist id="kategorie">
-          {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)
-          }
-        </datalist>
+          <input type="text"
+                 placeholder="Essen"
+                 onChange={evt => setNeuesEssen(evt.target.value)}/>
+          <input type="datalist"
+                 list="kategorie"
+                 placeholder="Kategorie zB. Salate"
+                 onChange={evt => setNeueKategorie(evt.target.value)}/>
+          <datalist id="kategorie">
+            {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)
+            }
+          </datalist>
 
-        <button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>Essen hinzufügen</button>
+          <button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>Essen hinzufügen</button>
 
         {ausfuellen ? <div className={classes.ausfuellen}>Bitte vollständig ausfüllen!</div> : ""}
 

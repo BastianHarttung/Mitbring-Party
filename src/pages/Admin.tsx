@@ -26,6 +26,7 @@ const Admin = (): JSX.Element => {
 
   const [partyName, setPartyName] = useState("");
   const [ort, setOrt] = useState("");
+  const [ortCoordinates, setOrtCoordinates] = useState("");
   const [datum, setDatum] = useState("");
   const [zeit, setZeit] = useState("");
   const [infos, setInfos] = useState("");
@@ -33,9 +34,10 @@ const Admin = (): JSX.Element => {
 
   const [savedParty, setSavedParty] = useState(false);
 
-  function mapPartyFindToAdminParty(id: string): IParty {
+  function mapPartyFindToAdminParty(id: string) {
     const partyNam: string | undefined = partyCollection.find((part) => part.id === id)?.partyName;
     const partyOrt: string | undefined = partyCollection.find((part) => part.id === id)?.ort;
+    const partyOrtCoordinates: string | undefined = partyCollection.find((part) => part.id === id)?.ortCoordinates;
     const partyDatum: string | undefined = partyCollection.find((part) => part.id === id)?.datum;
     const partyZeit: string | undefined = partyCollection.find((part) => part.id === id)?.zeit;
     const partyInfos: string | undefined = partyCollection.find((part) => part.id === id)?.infos;
@@ -51,6 +53,7 @@ const Admin = (): JSX.Element => {
       id: id,
       partyName: partyNam ? partyNam : "",
       ort: partyOrt ? partyOrt : "",
+      ortCoordinates: partyOrtCoordinates ? partyOrtCoordinates : "",
       datum: partyDatum ? partyDatum : "",
       zeit: partyZeit ? partyZeit : "",
       infos: partyInfos ? partyInfos : "",
@@ -75,6 +78,7 @@ const Admin = (): JSX.Element => {
         id,
         partyName,
         ort,
+        ortCoordinates,
         datum,
         zeit,
         infos,
@@ -85,7 +89,7 @@ const Admin = (): JSX.Element => {
     }
   }
 
-  function loescheParty():void {
+  function loescheParty(): void {
     if (id) {
       loeschePartyBackend(id);
     }
@@ -97,6 +101,7 @@ const Admin = (): JSX.Element => {
     } else {
       setPartyName(mapPartyFindToAdminParty(id).partyName);
       setOrt(mapPartyFindToAdminParty(id).ort);
+      setOrtCoordinates(mapPartyFindToAdminParty(id).ortCoordinates);
       setDatum(mapPartyFindToAdminParty(id).datum);
       setZeit(mapPartyFindToAdminParty(id).zeit);
       setInfos(mapPartyFindToAdminParty(id).infos);
@@ -110,20 +115,27 @@ const Admin = (): JSX.Element => {
       {!isAdmin && <ModalPassword/>}
 
       {isAdmin && <section className={classes.adminSection}>
-        <input type="text"
-               value={partyName}
-               onChange={(e) => setPartyName(e.target.value)}/>
-        <input type="text"
-               value={ort}
-               onChange={(e) => setOrt(e.target.value)}/>
-        <input type="date"
-               value={datum}
-               onChange={(e) => setDatum(e.target.value)}/>
-        <input type="time"
-               value={zeit}
-               onChange={(e) => setZeit(e.target.value)}/>
-        <textarea value={infos}
-                  onChange={(e) => setInfos(e.target.value)}/>
+          <input type="text"
+                 placeholder="Party Name"
+                 value={partyName}
+                 onChange={(e) => setPartyName(e.target.value)}/>
+          <input type="text"
+                 placeholder="Ort"
+                 value={ort}
+                 onChange={(e) => setOrt(e.target.value)}/>
+          <input type="text"
+                 placeholder="Koordinaten oder Adresse"
+                 value={ortCoordinates}
+                 onChange={(e) => setOrtCoordinates(e.target.value)}/>
+          <input type="date"
+                 value={datum}
+                 onChange={(e) => setDatum(e.target.value)}/>
+          <input type="time"
+                 value={zeit}
+                 onChange={(e) => setZeit(e.target.value)}/>
+          <textarea value={infos}
+                    placeholder="Infos"
+                    onChange={(e) => setInfos(e.target.value)}/>
         {essen.map((ess, index) => {
           return (
             <div key={index} className={classes.essenContainer}>
@@ -138,15 +150,15 @@ const Admin = (): JSX.Element => {
           );
         })}
 
-        <button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
-                onClick={loescheParty}>
-          Party löschen
-        </button>
+          <button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+                  onClick={loescheParty}>
+              Party löschen
+          </button>
 
-        <button style={{fontSize: "1em", marginTop: "10px"}}
-                onClick={saveParty}>
-          Speichern
-        </button>
+          <button style={{fontSize: "1em", marginTop: "10px"}}
+                  onClick={saveParty}>
+              Speichern
+          </button>
 
         {savedParty && <p style={{color: "red"}}>Party gespeichert</p>}
 
