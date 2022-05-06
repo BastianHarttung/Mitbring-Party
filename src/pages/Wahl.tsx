@@ -79,6 +79,7 @@ const Wahl = () => {
         <textarea id="infos"
                   className="infos"
                   value={party.infos}
+                  rows={7}
                   readOnly/>
       </div>
 
