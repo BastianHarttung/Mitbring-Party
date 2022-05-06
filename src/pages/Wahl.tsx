@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import globalStore from "../stores/global-store";
 import {observer} from "mobx-react";
 import PicArrowDown from "../assets/img/icons/caret-down.svg";
+import PicArrowUp from "../assets/img/icons/edit.svg";
 import {emptyParty} from "../mockup/testConstants";
 import {IParty, IEssen} from "../interfaces/IParty";
 
@@ -34,6 +35,8 @@ const Wahl = () => {
   const [auswahlGespeichert, setAuswahlGespeichert] = useState(false);
   const [ausfuellen, setAusfuellen] = useState(false);
 
+  const [openOrt, setOpenOrt] = useState(false);
+
   useEffect(() => {
     if (params.id) {
       speichereActiveId(params.id);
@@ -55,16 +58,16 @@ const Wahl = () => {
       </div>
 
       <div className={classes.ortContainer}>
-        <details>
+        <details onClick={() => setOpenOrt(!openOrt)}>
           <summary className={classes.ortText}>
             <div><b>Ort:</b></div>
             <div className={classes.ortArrowContainer}>
               <div id="ort" className={classes.ort}>{party.ort}</div>
-              <img src={PicArrowDown} alt="open"/>
+              <img src={openOrt ? PicArrowUp : PicArrowDown} alt="open"/>
             </div>
           </summary>
           <iframe
-            width="250"
+            width="290"
             height="250"
             title={party.ort}
             style={{border: 0}}
