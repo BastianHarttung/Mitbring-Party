@@ -100,11 +100,15 @@
 .checkboxName {
   display: flex;
   align-items: center;
+
+  input{
+    accent-color: var(--main-color);
+  }
 }
 
 .werBringts {
   color: darkred;
-  font-family: "Behind Blue Eyes";
+  font-family: "Behind Blue Eyes", Arial, sans-serif;
   font-weight: 100;
   margin-left: 10px;
 }

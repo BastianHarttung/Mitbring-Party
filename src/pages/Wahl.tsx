@@ -42,7 +42,7 @@ const Wahl = () => {
       speichereActiveId(params.id);
     }
     setParty(partyFind ? partyFind : emptyParty);
-  }, [partyFind]);
+  }, [partyFind, params.id, speichereActiveId]);
 
 
   return (
@@ -152,11 +152,10 @@ const Wahl = () => {
    * @return {*[]} gibt ein Array zurück, dass einmalige Kategorien enthält gefunden in der party
    */
   function findKategorien(): string[] {
-    const kategorieArray = party.essen.reduce((kategorien, actual) => {
-      // @ts-ignore
-      kategorien.push(actual.kategorie);
-      return kategorien;
+    const vorhandeneKategorienArray = party.essen.map((essen) => {
+      return essen.kategorie;
     }, []);
+    const kategorieArray = [...vorhandeneKategorienArray, "Sonstiges"]
     return kategorieArray.filter((item, index) => kategorieArray.indexOf(item) === index);
   }
 

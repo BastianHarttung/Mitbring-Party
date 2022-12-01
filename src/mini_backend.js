@@ -24,7 +24,7 @@ window.onload = async function() {
 export async function downloadFromServer() {
     let result = await loadJSONFromServer();
     jsonFromServer = JSON.parse(result);
-    console.log('Loaded', result);
+    console.log('Loaded', jsonFromServer);
 }
 
 export function setURL(url) {
