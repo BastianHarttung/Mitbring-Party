@@ -1,21 +1,47 @@
 .nav {
-  background-color: var(--main-color);
-  min-height: 60px;
+  background: var(--linear-main);
+  min-height: 65px;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 64px;
 }
 
 .navLogo {
-  height: 35px;
+  height: 30px;
 }
 
-.link {
+.pages {
+  min-width: 175px;
+  display: flex;
+  gap: 8px;
+}
+
+.link,
+.link_logo {
+  background: rgba(255, 255, 255, 0.35);
   color: black;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 15px 15px 0 0;
+  padding: 8px 8px 16px 8px;
   text-decoration: none;
+
+  &:hover:not(.link_active) {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.25);
+  }
 }
 
-.link:hover {
-  text-decoration: underline;
+.link_logo {
+  padding: 8px 16px 16px 16px;
+}
+
+.link_active {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.25);
 }

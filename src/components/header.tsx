@@ -1,9 +1,8 @@
-import logo from "../assets/img/logos/essen_logo_voll.svg";
 import classes from "./header.module.scss";
-import {Link} from "react-router-dom";
-import {useLocation} from "react-router-dom";
-import globalStore from "../stores/global-store";
+import {NavLink, useLocation} from "react-router-dom";
 import {observer} from "mobx-react";
+import globalStore from "../stores/global-store";
+import logo from "../assets/img/logos/essen_logo_voll.svg";
 
 const Header = () => {
   const {activeId} = globalStore;
@@ -14,18 +13,24 @@ const Header = () => {
   const isLinkActive = cleanLocation === "/wahl" || cleanLocation === "/uebersicht";
 
   return (
-    <div>
-      <nav className={classes.nav}>
-        <Link to="/">
-          <img className={classes.navLogo} src={logo} alt="Picknick"/>
-        </Link>
+    <nav className={classes.nav}>
+      <NavLink to="/"
+               className={({isActive}) => `${classes.link_logo} ${isActive ? classes.link_active : ""}`}>
+        <img className={classes.navLogo} src={logo} alt="Picknick"/>
+      </NavLink>
+
+      <div className={classes.pages}>
         {isLinkActive &&
-          <div>
-            <Link to={"wahl/" + activeId} className={classes.link}>Wahl</Link>
-            <Link to={"uebersicht/" + activeId} className={classes.link}>Übersicht</Link>
-          </div>}
-      </nav>
-    </div>
+            <>
+                <NavLink to={"wahl/" + activeId}
+                         className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>Wahl</NavLink>
+                <NavLink to={"uebersicht/" + activeId}
+                         className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>Übersicht</NavLink>
+            </>
+        }
+      </div>
+    </nav>
+
   );
 };
 

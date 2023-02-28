@@ -26,6 +26,8 @@ code {
 :root {
   --main-color: #56d013;
   --main-color-bright: #a9ea80;
+
+  --linear-main: linear-gradient(180deg, #56D013 0%, #CEF8B8 100%)
 }
 
 input[type=text],
