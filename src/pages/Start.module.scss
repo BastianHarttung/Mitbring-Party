@@ -5,41 +5,52 @@
   align-items: center;
 }
 
+.heading {
+  font-size: 1.3em;
+  font-weight: 600;
+  font-style: italic;
+}
+
 .partyCollectionContainer {
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0;
 }
 
 .partyContainer {
   position: relative;
+
+  &.gone {
+    opacity: 0.5;
+  }
 }
 
 .editLink {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  padding: 5px;
+  top: 8px;
+  right: 8px;
+  padding: 0;
 
   svg {
-    height: 25px;
+    height: 24px;
 
     &:hover {
       fill: var(--main-color);
     }
   }
-
-
 }
 
 .partyBox {
   color: black;
-  max-width: 250px;
+  max-width: 280px;
   display: flex;
   align-items: flex-start;
-  border: 2px solid rgba(0, 0, 0);
+  border: 1px solid #9F9F9F;
   border-radius: 7px;
   text-decoration: none;
-  padding: 7px 35px 7px 7px;
-  margin: 8px 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  padding: 8px 36px 8px 16px;
   transition: background-color 130ms ease-in-out;
   cursor: pointer;
 
@@ -66,4 +77,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 8px;
+  margin-top: 16px;
 }

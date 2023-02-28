@@ -27,6 +27,8 @@ code {
   --main-color: #56d013;
   --main-color-bright: #a9ea80;
 
+  --gray-dark: #9F9F9F;
+
   --linear-main: linear-gradient(180deg, #56D013 0%, #CEF8B8 100%)
 }
 
@@ -34,14 +36,14 @@ input[type=text],
 input[type=datalist],
 input[type=date],
 input[type=time],
-input[type=password]{
+input[type=password] {
   font-family: Arial, sans-serif;
   font-size: 0.9em;
   height: 25px;
-  min-width: 250px;
+  min-width: 300px;
   border-radius: 7px;
-  padding: 3px;
-  margin: 5px 0;
+  border: 1px solid var(--gray-dark);
+  padding: 4px;
 }
 
 input[type=checkbox] {
@@ -55,12 +57,11 @@ input[type=checkbox] {
 textarea {
   font-family: Arial, sans-serif;
   font-size: 0.9em;
-  min-width: 250px;
-  min-height: 100px;
-  border: 2px solid black;
+  min-width: 300px;
+  min-height: 120px;
+  border: 1px solid var(--gray-dark);
   border-radius: 7px;
-  padding: 3px;
-  margin: 5px 0;
+  padding: 4px;
 }
 
 button {
