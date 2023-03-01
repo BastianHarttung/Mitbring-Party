@@ -14,20 +14,22 @@ const Header = () => {
 
   return (
     <nav className={classes.nav}>
-      <NavLink to="/"
-               className={({isActive}) => `${classes.link_logo} ${isActive ? classes.link_active : ""}`}>
-        <img className={classes.navLogo} src={logo} alt="Picknick"/>
-      </NavLink>
+      <div className={classes.nav_content}>
+        <NavLink to="/"
+                 className={({isActive}) => `${classes.link_logo} ${isActive ? classes.link_active : ""}`}>
+          <img className={classes.navLogo} src={logo} alt="Picknick"/>
+        </NavLink>
 
-      <div className={classes.pages}>
-        {isLinkActive &&
-            <>
-                <NavLink to={"wahl/" + activeId}
-                         className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>Wahl</NavLink>
-                <NavLink to={"uebersicht/" + activeId}
-                         className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>Übersicht</NavLink>
-            </>
-        }
+        <div className={classes.pages}>
+          {isLinkActive &&
+              <>
+                  <NavLink to={"wahl/" + activeId}
+                           className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>Wahl</NavLink>
+                  <NavLink to={"uebersicht/" + activeId}
+                           className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>Übersicht</NavLink>
+              </>
+          }
+        </div>
       </div>
     </nav>
 

@@ -1,8 +1,15 @@
 .nav {
   background: var(--linear-main);
   min-height: 65px;
+  width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.nav_content {
+  width: clamp(318px, 90%, 500px);
+  display: flex;
+  justify-content: space-between;
   align-items: flex-end;
   gap: 64px;
 }

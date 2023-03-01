@@ -22,7 +22,7 @@ function App(): JSX.Element {
 
       <Header/>
 
-      <div className="page-container">
+      <main>
         <Routes>
           <Route path="/"
                  element={<Start/>}
@@ -39,7 +39,7 @@ function App(): JSX.Element {
           <Route path="*"
                  element={<WrongUrl/>}/>
         </Routes>
-      </div>
+      </main>
 
 
     </BrowserRouter>
