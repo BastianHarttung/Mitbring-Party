@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 import {observer} from "mobx-react";
 import globalStore from "../stores/global-store";
 import {Party} from "../models/party";
+import Button from "../ui-components/Button";
+import {FiPlus} from "react-icons/fi"
 
 
 const Start = (): JSX.Element => {
@@ -74,8 +76,11 @@ const Start = (): JSX.Element => {
         )}
       </div>
 
-      <button onClick={() => setIsNewParty(!isNewParty)}>
-        {isNewParty ? "Abbrechen" : "Neue Party"}</button>
+      <Button onClick={() => setIsNewParty(!isNewParty)}
+              style={!isNewParty ? "primary" : "secondary"}
+              frontIcon={!isNewParty ? <FiPlus style={{fontSize: "20px"}}/> : undefined}>
+        {isNewParty ? "Abbrechen" : "Neue Party"}
+      </Button>
 
       {isNewParty && <div className={classes.newPartyContainer}>
           <input type="text"
@@ -97,8 +102,9 @@ const Start = (): JSX.Element => {
           <textarea placeholder="Infos"
                     value={info}
                     onChange={(e) => setInfo(e.target.value)}/>
-          <button onClick={partySpeichern}>Speichern
-          </button>
+          <Button onClick={partySpeichern}>
+              Speichern
+          </Button>
       </div>}
 
     </section>

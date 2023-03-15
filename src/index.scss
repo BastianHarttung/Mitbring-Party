@@ -57,6 +57,7 @@ main {
 :root {
   --main-color: #56d013;
   --main-color-bright: #a9ea80;
+  --main-color-dark: #389F00;
 
   --gray-dark: #9F9F9F;
 
@@ -100,20 +101,6 @@ textarea {
   border: 1px solid var(--gray-dark);
   border-radius: 7px;
   padding: 4px;
-}
-
-button {
-  background-color: var(--main-color-bright);
-  border: 0;
-  border-radius: 7px;
-  cursor: pointer;
-  padding: 8px 16px;
-  transition: 130ms ease-in-out;
-}
-
-button:hover {
-  background-color: var(--main-color);
-  transform: scale(1.1);
 }
 
 h3 {
