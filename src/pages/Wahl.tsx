@@ -1,14 +1,16 @@
 import classes from "./Wahl.module.scss";
 import {useState, useEffect} from "react";
 import React from "react";
-import {Essen} from "../models/party";
 import {useParams} from "react-router-dom";
-import globalStore from "../stores/global-store";
 import {observer} from "mobx-react";
+import {FiPlus} from "react-icons/fi";
+import {Essen} from "../models/party";
+import globalStore from "../stores/global-store";
 import PicArrowDown from "../assets/img/icons/caret-down.svg";
 import PicArrowUp from "../assets/img/icons/caret-up.svg";
 import {emptyParty} from "../mockup/testConstants";
 import {IParty, IEssen} from "../interfaces/IParty";
+import Button from "../ui-components/Button";
 
 const Wahl = () => {
 
@@ -36,6 +38,11 @@ const Wahl = () => {
   const [ausfuellen, setAusfuellen] = useState(false);
 
   const [openOrt, setOpenOrt] = useState(false);
+
+  const handleNeuesEssenClick = () => {
+    setAusfuellen(false);
+    setNeuesEssenEingabe(!neuesEssenEingabe);
+  }
 
   useEffect(() => {
     if (params.id) {
@@ -104,11 +111,11 @@ const Wahl = () => {
       </div>
 
       <div id="essenBtnContainer">
-        <button id="essenBtn"
-                onClick={() => {
-                  setAusfuellen(false);
-                  setNeuesEssenEingabe(!neuesEssenEingabe);
-                }}>{neuesEssenEingabe ? "Abbrechen" : "Neues Essen"}</button>
+        <Button onClick={handleNeuesEssenClick}
+                btnStyle={neuesEssenEingabe ? "secondary" : "primary"}
+                frontIcon={!neuesEssenEingabe ? <FiPlus style={{fontSize: "20px"}}/> : undefined}>
+          {neuesEssenEingabe ? "Abbrechen" : "Neues Essen"}
+        </Button>
       </div>
 
       {neuesEssenEingabe && <div className={classes.neuesEssenContainer}>
@@ -124,7 +131,9 @@ const Wahl = () => {
             }
           </datalist>
 
-          <button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>Essen hinzufügen</button>
+          <Button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>
+              Essen hinzufügen
+          </Button>
 
         {ausfuellen ? <div className={classes.ausfuellen}>Bitte vollständig ausfüllen!</div> : ""}
 
@@ -137,9 +146,9 @@ const Wahl = () => {
                placeholder="Dein Name"
                value={neuerName}
                onChange={evt => setNeuerName(evt.target.value)}/>
-        <button onClick={auswahlSpeichern}
-                className="speichernBtn">Auswahl speichern
-        </button>
+        <Button onClick={auswahlSpeichern}>
+          Auswahl speichern
+        </Button>
         {auswahlGespeichert ? <div className={classes.auswahlGespeichert}>Auswahl gespeichert</div> : ""}
       </div>
 

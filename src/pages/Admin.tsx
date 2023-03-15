@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import {MdDelete} from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
@@ -8,6 +8,7 @@ import {TEssen} from "../interfaces/Types";
 import {IEssen, IParty} from "../interfaces/IParty";
 import ModalPassword from "../components/modalPassword";
 import {observer} from "mobx-react";
+import Button from "../ui-components/Button";
 
 
 const Admin = (): JSX.Element => {
@@ -34,7 +35,7 @@ const Admin = (): JSX.Element => {
 
   const [savedParty, setSavedParty] = useState(false);
 
-  function mapPartyFindToAdminParty(id: string) {
+  const mapPartyFindToAdminParty = useCallback((id: string) => {
     const partyNam: string | undefined = partyCollection.find((part) => part.id === id)?.partyName;
     const partyOrt: string | undefined = partyCollection.find((part) => part.id === id)?.ort;
     const partyOrtCoordinates: string | undefined = partyCollection.find((part) => part.id === id)?.ortCoordinates;
@@ -59,7 +60,7 @@ const Admin = (): JSX.Element => {
       infos: partyInfos ? partyInfos : "",
       essen: essenArray,
     };
-  }
+  }, [partyCollection])
 
   function handleChangeEssen(event: any, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
@@ -107,7 +108,7 @@ const Admin = (): JSX.Element => {
       setInfos(mapPartyFindToAdminParty(id).infos);
       setEssen(mapPartyFindToAdminParty(id).essen);
     }
-  }, [partyFind]);
+  }, [partyFind, id, mapPartyFindToAdminParty]);
 
   return (
     <div>
@@ -150,15 +151,15 @@ const Admin = (): JSX.Element => {
           );
         })}
 
-          <button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+          <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
                   onClick={loescheParty}>
               Party löschen
-          </button>
+          </Button>
 
-          <button style={{fontSize: "1em", marginTop: "10px"}}
+          <Button style={{fontSize: "1em", marginTop: "10px"}}
                   onClick={saveParty}>
               Speichern
-          </button>
+          </Button>
 
         {savedParty && <p style={{color: "red"}}>Party gespeichert</p>}
 

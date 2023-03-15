@@ -77,7 +77,7 @@ const Start = (): JSX.Element => {
       </div>
 
       <Button onClick={() => setIsNewParty(!isNewParty)}
-              style={!isNewParty ? "primary" : "secondary"}
+              btnStyle={!isNewParty ? "primary" : "secondary"}
               frontIcon={!isNewParty ? <FiPlus style={{fontSize: "20px"}}/> : undefined}>
         {isNewParty ? "Abbrechen" : "Neue Party"}
       </Button>

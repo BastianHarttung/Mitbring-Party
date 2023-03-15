@@ -1,18 +1,30 @@
 import classes from "./Button.module.scss"
+import {CSSProperties} from "react";
 
 interface IButtonProps {
   onClick: () => void;
-  style?: "primary" | "secondary";
+  btnStyle?: "primary" | "secondary";
   frontIcon?: JSX.Element | undefined;
   backIcon?: JSX.Element;
   children: string;
   className?: string;
+  style?: CSSProperties;
 }
 
-const Button = ({onClick, style = "primary", frontIcon, backIcon, children, className, ...props}: IButtonProps) => {
+const Button = ({
+                  onClick,
+                  btnStyle = "primary",
+                  frontIcon,
+                  backIcon,
+                  children,
+                  className,
+                  style,
+                  ...props
+                }: IButtonProps) => {
   return (
     <button onClick={onClick}
-            className={`${classes.button} ${classes[style]} ${className}`}
+            className={`${classes.button} ${classes[btnStyle]} ${className}`}
+            style={style}
             {...props}>
       {frontIcon}
 
