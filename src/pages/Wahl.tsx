@@ -46,7 +46,7 @@ const Wahl = () => {
 
 
   return (
-    <section className={classes.wahlSection}>
+    <section>
       <h3 className={classes.partyName}>{party.partyName}</h3>
 
       <div className={classes.datumContainer}><b>Datum:</b><br/>

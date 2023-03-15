@@ -24,28 +24,31 @@ const Uebersicht = () => {
       speichereActiveId(params.id);
     }
     setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
-  }, [partyFind]);
+  }, [partyFind, addTeilnehmer, speichereActiveId, params.id]);
 
 
   return (
     <section className={classes.uebersichtSection}>
+
+      <h3>{party.partyName}</h3>
+
       <div className={classes.tableContainer}>
         <table id="table" className={classes.table}>
-
           <thead>
           <tr>
-            <th className={classes.tableStart}>{party.partyName}</th>
-            {party.teilnehmer.map((t, index) => {
+            <th className={classes.tableStart}></th>
+            {party.teilnehmer.map((teiln, index) => {
               return <th id={"table-name" + index}
                          key={index}
-                         className={classes.tableHead}>{t}</th>;
+                         className={classes.tableHead}>{teiln}</th>;
             })}
           </tr>
           </thead>
 
-          <tbody id="table-eat">
+          <tbody id="table-eat" className={classes.table_eat}>
           {party.essen.map((essen, index) => {
             return <tr id={"tableRow" + index}
+                       className={classes.tableRow}
                        key={index}>
               <td className={classes.trEat}>{essen.essenName}</td>
               {party.teilnehmer.map((teiln, indext) => {

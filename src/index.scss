@@ -36,6 +36,7 @@ main {
   backdrop-filter: blur(15px);
   padding: 16px 16px;
   margin-top: -8px;
+  overflow-x: auto;
 }
 
 :root {
@@ -45,6 +46,12 @@ main {
   --gray-dark: #9F9F9F;
 
   --linear-main: linear-gradient(180deg, #56D013 0%, #CEF8B8 100%)
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 input[type=text],
@@ -92,4 +99,13 @@ button {
 button:hover {
   background-color: var(--main-color);
   transform: scale(1.1);
+}
+
+h3 {
+  max-width: 300px;
+  font-size: 24px;
+  font-weight: 500;
+  font-style: italic;
+  text-align: center;
+  margin: 12px 12px 16px 12px;
 }

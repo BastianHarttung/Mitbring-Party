@@ -1,10 +1,3 @@
-.wahlSection {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .partyName {
   max-width: 300px;
   margin: 10px;
@@ -27,9 +20,6 @@
 }
 
 // Ort
-//details {
-//  margin: 0;
-//}
 
 .ortText {
   display: flex;
@@ -64,20 +54,25 @@
     resize: vertical;
     padding: 0;
     margin: 0;
-    &:focus-visible{
+
+    &:focus-visible {
       outline: none;
     }
-    &::-webkit-scrollbar{
+
+    &::-webkit-scrollbar {
       width: 5px;
     }
-    &::-webkit-scrollbar-track{
-      border:1px solid var(--gray);
-      border-radius:5px;
+
+    &::-webkit-scrollbar-track {
+      border: 1px solid var(--gray);
+      border-radius: 5px;
     }
-    &::-webkit-scrollbar-thumb{
-      background:linear-gradient(270deg,var(--main-color)0%,var(--main-color-bright)100%);;
-      border-radius:5px;
+
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(270deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
+      border-radius: 5px;
     }
+
     &::-webkit-resizer {
       width: 0;
       height: 0;
@@ -101,7 +96,7 @@
   display: flex;
   align-items: center;
 
-  input{
+  input {
     accent-color: var(--main-color);
   }
 }
