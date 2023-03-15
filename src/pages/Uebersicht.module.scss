@@ -6,9 +6,24 @@
 
 .tableContainer {
   max-height: calc(100vh - 130px);
-  max-width: calc(100vw - 32px);
+  width: clamp(318px, 100%, 500px);
   overflow: auto;
   margin: auto;
+
+  &::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border: 1px solid var(--gray);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(270deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
+    border-radius: 5px;
+  }
 }
 
 .table {

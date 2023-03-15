@@ -14,6 +14,21 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border: 1px solid var(--gray);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(270deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
+    border-radius: 5px;
+  }
 }
 
 code {
