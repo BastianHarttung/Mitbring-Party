@@ -10,11 +10,11 @@
   transition: 100ms ease-in-out;
 
   &.primary {
-    background-color: var(--main-color-bright);
+    background-color: var(--primary-color-bright);
     border: 0;
 
     &:hover {
-      background-color: var(--main-color);
+      background-color: var(--primary-color);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
       transform: scale(1.05);
     }
@@ -27,11 +27,11 @@
 
   &.secondary {
     background-color: white;
-    border: 2px solid var(--main-color-dark);
+    border: 2px solid var(--primary-color-dark);
     font-weight: 600;
 
     &:hover {
-      background-color: var(--main-color-bright);
+      background-color: var(--primary-color-bright);
     }
   }
 }

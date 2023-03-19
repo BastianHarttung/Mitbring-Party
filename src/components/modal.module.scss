@@ -1,5 +1,5 @@
 .modal {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 1);
   height: 100vh;
   width: 100vw;
   position: absolute;
@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 
   .inputContainer {
     background-color: white;
@@ -16,6 +17,18 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    gap: 8px;
+    border-radius: 10px;
+    padding: 12px 24px 24px 24px;
+
+    .close_btn {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      svg {
+        cursor: pointer;
+      }
+    }
   }
 }

@@ -26,7 +26,7 @@ body {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(270deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
+    background: linear-gradient(270deg, var(--primary-color) 0%, var(--primary-color-bright) 100%);;
     border-radius: 5px;
   }
 }
@@ -46,7 +46,7 @@ code {
 main {
   background-color: rgba(255, 255, 255, 0.5);
   width: clamp(318px, 90%, 500px);
-  min-height: calc(100vh - 65px - 32px);
+  min-height: calc(100vh - 65px - 24px);
   border-radius: 15px;
   backdrop-filter: blur(15px);
   padding: 16px 16px;
@@ -55,13 +55,15 @@ main {
 }
 
 :root {
-  --main-color: #56d013;
-  --main-color-bright: #a9ea80;
-  --main-color-dark: #389F00;
+  --primary-color: #56d013;
+  --primary-color-bright: #a9ea80;
+  --primary-color-dark: #389F00;
+  --secondary-color: #216869;
+  --third-color: #DDEDEE;
 
   --gray-dark: #9F9F9F;
 
-  --linear-main: linear-gradient(180deg, #56D013 0%, #CEF8B8 100%)
+  --linear-primary: linear-gradient(180deg, #56D013 0%, #CEF8B8 100%)
 }
 
 section {
@@ -78,7 +80,7 @@ input[type=password] {
   font-family: Arial, sans-serif;
   font-size: 0.9em;
   height: 25px;
-  min-width: 300px;
+  min-width: 250px;
   border-radius: 7px;
   border: 1px solid var(--gray-dark);
   padding: 4px;
@@ -93,7 +95,7 @@ input[type=checkbox] {
 }
 
 textarea {
-  background-color: transparent;
+  background-color: white;
   font-family: Arial, sans-serif;
   font-size: 0.9em;
   min-width: 300px;

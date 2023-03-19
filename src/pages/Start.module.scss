@@ -36,7 +36,7 @@
     height: 24px;
 
     &:hover {
-      fill: var(--main-color);
+      fill: var(--primary-color);
     }
   }
 }
@@ -55,7 +55,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: var(--main-color-bright);
+    background-color: var(--primary-color-bright);
   }
 
   .date {

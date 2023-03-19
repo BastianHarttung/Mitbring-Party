@@ -70,7 +70,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: linear-gradient(270deg, var(--main-color) 0%, var(--main-color-bright) 100%);;
+      background: linear-gradient(270deg, var(--primary-color) 0%, var(--primary-color-bright) 100%);;
       border-radius: 5px;
     }
 
@@ -79,7 +79,7 @@
       height: 0;
       border-style: solid;
       border-width: 0 0 10px 10px;
-      border-color: transparent transparent var(--main-color) transparent;
+      border-color: transparent transparent var(--primary-color) transparent;
     }
   }
 }
@@ -98,7 +98,7 @@
   align-items: center;
 
   input {
-    accent-color: var(--main-color);
+    accent-color: var(--primary-color);
   }
 }
 
