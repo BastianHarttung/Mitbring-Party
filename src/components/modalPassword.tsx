@@ -1,14 +1,14 @@
 import classes from "./modal.module.scss";
 import React, {useState} from "react";
 import ReactDom from "react-dom";
-import globalStore from "../stores/global-store";
 import {IoMdClose} from "react-icons/io"
 import {useNavigate} from "react-router-dom";
+import userStore from "../stores/user-store";
 
 
 const ModalPassword = () => {
 
-  const {checkIfAdmin} = globalStore;
+  const {checkIfAdmin} = userStore;
 
   const [password, setPassword] = useState("");
 

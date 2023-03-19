@@ -1,6 +1,6 @@
 import "./App.scss";
 import {observer} from "mobx-react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import {RiUserSettingsLine} from "react-icons/ri"
 
 import Wahl from "./pages/Wahl";
@@ -13,17 +13,26 @@ import Header from "./components/header";
 import ErrorMessage from "./components/error-message";
 import ButtonCircle from "./ui-components/Button-Circle";
 
+
 function App(): JSX.Element {
 
-  const {errorMessage} = globalStore;
+  const {errorMessage, isSettingsOpen, openSettings} = globalStore;
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleOpenSettings = () => {
+    navigate("/profil")
+    openSettings(location.pathname)
+  }
 
   return (
-    <BrowserRouter basename={"/MitbringParty"}>
-
+    <>
       {!!errorMessage && <ErrorMessage message={errorMessage}/>}
 
       <Header/>
-      <ButtonCircle icon={<RiUserSettingsLine size={24} color={"white"}/>}/>
+      {!isSettingsOpen && <ButtonCircle icon={<RiUserSettingsLine size={24} color={"white"}/>}
+                                        onClick={handleOpenSettings}/>}
 
       <main>
         <Routes>
@@ -43,9 +52,7 @@ function App(): JSX.Element {
                  element={<WrongUrl/>}/>
         </Routes>
       </main>
-
-
-    </BrowserRouter>
+    </>
   );
 
 }

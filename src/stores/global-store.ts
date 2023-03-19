@@ -16,6 +16,10 @@ class GlobalStore {
 
   errorMessage: string = "";
 
+  isSettingsOpen: boolean = false;
+
+  beforeUrl: string = "";
+
   constructor() {
     this.initBackend();
     this.initFromServer();
@@ -36,11 +40,6 @@ class GlobalStore {
         else return 0;
       });
     });
-  };
-
-  checkIfAdmin = (pw: string): void => {
-    if (pw === "BastiDev") this.isAdmin = true;
-    else this.throwErrorMessage("Passwort falsch");
   };
 
   speichereActiveId = (id: string): void => {
@@ -124,6 +123,15 @@ class GlobalStore {
   savePartyToBackend = () => {
     backend.setItem("partyCollection", this.partyCollection);
   };
+
+  openSettings = (url: string) => {
+    this.beforeUrl = url;
+    this.isSettingsOpen = true;
+  }
+
+  closeSettings = () => {
+    this.isSettingsOpen = false
+  }
 
 }
 
