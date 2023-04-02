@@ -1,8 +1,12 @@
 .circle {
-  background-color: var(--secondary-color);
-  position: fixed;
-  bottom: 1em;
-  right: 1em;
+  --size: 24px;
+
+  background-color: var(--primary-color-bright);
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 50;
@@ -10,6 +14,18 @@
   padding: 12px;
 
   &:hover {
+    background-color: var(--primary-color);
     transform: scale(1.05);
+  }
+
+  &.fixed{
+    background-color: var(--secondary-color);
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+
+    &:hover{
+      background-color: var(--secondary-color-dark);
+    }
   }
 }

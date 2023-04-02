@@ -11,6 +11,7 @@ import PicArrowUp from "../assets/img/icons/caret-up.svg";
 import {emptyParty} from "../mockup/testConstants";
 import {IParty, IEssen} from "../interfaces/IParty";
 import Button from "../ui-components/Button";
+import ButtonCircle from "../ui-components/Button-Circle";
 
 const Wahl = () => {
 
@@ -87,7 +88,6 @@ const Wahl = () => {
 
       <div className={classes.infosContainer}><b>Infos:</b><br/>
         <textarea id="infos"
-                  className="infos"
                   value={party.infos}
                   rows={7}
                   readOnly/>
@@ -110,42 +110,37 @@ const Wahl = () => {
         })}
       </div>
 
-      <div id="essenBtnContainer">
-        <Button onClick={handleNeuesEssenClick}
-                btnStyle={neuesEssenEingabe ? "secondary" : "primary"}
-                frontIcon={!neuesEssenEingabe ? <FiPlus style={{fontSize: "20px"}}/> : undefined}>
-          {neuesEssenEingabe ? "Abbrechen" : "Neues Essen"}
-        </Button>
+      <div id="essenBtnContainer"
+           className={classes.essenBtnContainer}>
+        <ButtonCircle
+          onClick={handleNeuesEssenClick}
+          icon={<FiPlus/>}
+          btnStyle="primary"
+          size="18px"/>
       </div>
 
-      {neuesEssenEingabe && <div className={classes.neuesEssenContainer}>
-          <input type="text"
-                 placeholder="Essen"
-                 onChange={evt => setNeuesEssen(evt.target.value)}/>
-          <input type="datalist"
-                 list="kategorie"
-                 placeholder="Kategorie zB. Salate"
-                 onChange={evt => setNeueKategorie(evt.target.value)}/>
-          <datalist id="kategorie">
-            {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)
-            }
-          </datalist>
+      {/*{neuesEssenEingabe && <div className={classes.neuesEssenContainer}>*/}
+      {/*    <input type="text"*/}
+      {/*           placeholder="Essen"*/}
+      {/*           onChange={evt => setNeuesEssen(evt.target.value)}/>*/}
+      {/*    <input type="datalist"*/}
+      {/*           list="kategorie"*/}
+      {/*           placeholder="Kategorie zB. Salate"*/}
+      {/*           onChange={evt => setNeueKategorie(evt.target.value)}/>*/}
+      {/*    <datalist id="kategorie">*/}
+      {/*      {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)*/}
+      {/*      }*/}
+      {/*    </datalist>*/}
 
-          <Button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>
-              Essen hinzufügen
-          </Button>
+      {/*    <Button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>*/}
+      {/*        Essen hinzufügen*/}
+      {/*    </Button>*/}
 
-        {ausfuellen ? <div className={classes.ausfuellen}>Bitte vollständig ausfüllen!</div> : ""}
+      {/*  {ausfuellen ? <div className={classes.ausfuellen}>Bitte vollständig ausfüllen!</div> : ""}*/}
 
-      </div>}
+      {/*</div>}*/}
 
       <div className={classes.nameSpeichernContainer}>
-        <input id="name"
-               type="text"
-               name="Name"
-               placeholder="Dein Name"
-               value={neuerName}
-               onChange={evt => setNeuerName(evt.target.value)}/>
         <Button onClick={auswahlSpeichern}>
           Auswahl speichern
         </Button>

@@ -58,6 +58,7 @@ main {
   --primary-color-bright: #a9ea80;
   --primary-color-dark: #389F00;
   --secondary-color: #216869;
+  --secondary-color-dark: #144748;
   --third-color: #DDEDEE;
 
   --gray-dark: #9F9F9F;
@@ -76,13 +77,12 @@ input[type=datalist],
 input[type=date],
 input[type=time],
 input[type=password] {
-  font-family: Arial, sans-serif;
   font-size: 0.9em;
   height: 25px;
   min-width: 250px;
-  border-radius: 7px;
+  border-radius: 8px;
   border: 1px solid var(--gray-dark);
-  padding: 4px;
+  padding: 4px 8px;
 }
 
 input[type=checkbox] {
@@ -94,13 +94,13 @@ input[type=checkbox] {
 }
 
 textarea {
-  background-color: white;
-  font-family: Arial, sans-serif;
+  background-color: transparent;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 0.9em;
   min-width: 300px;
   min-height: 120px;
   border: 1px solid var(--gray-dark);
-  border-radius: 7px;
+  border-radius: 8px;
   padding: 4px;
 }
 
