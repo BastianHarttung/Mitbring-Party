@@ -12,7 +12,6 @@ class GlobalStore {
 
   activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
-  isAdmin: boolean = false;
 
   errorMessage: string = "";
 

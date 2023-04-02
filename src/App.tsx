@@ -12,6 +12,8 @@ import globalStore from "./stores/global-store";
 import Header from "./components/header";
 import ErrorMessage from "./components/error-message";
 import ButtonCircle from "./ui-components/Button-Circle";
+import Profil from "./pages/Profil";
+import Hilfe from "./pages/Hilfe";
 
 
 function App(): JSX.Element {
@@ -47,6 +49,12 @@ function App(): JSX.Element {
           />
           <Route path="admin/:id"
                  element={<Admin/>}
+          />
+          <Route path="profil"
+                 element={<Profil/>}
+          />
+          <Route path="hilfe"
+                 element={<Hilfe/>}
           />
           <Route path="*"
                  element={<WrongUrl/>}/>

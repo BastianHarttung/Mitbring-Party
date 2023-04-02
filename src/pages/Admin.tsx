@@ -9,15 +9,17 @@ import {IEssen, IParty} from "../interfaces/IParty";
 import ModalPassword from "../components/modalPassword";
 import {observer} from "mobx-react";
 import Button from "../ui-components/Button";
+import userStore from "../stores/user-store";
 
 
 const Admin = (): JSX.Element => {
   const {
     partyCollection,
-    isAdmin,
     updatePartyBackend,
     loeschePartyBackend,
   } = globalStore;
+
+  const {isAdmin} = userStore
 
   const params = useParams();
   const {id} = params;
