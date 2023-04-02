@@ -52,7 +52,7 @@ const Start = (): JSX.Element => {
   return (
     <section className={classes.startSection}>
 
-      <h3 className={classes.heading}>Mitbringparty:</h3>
+      <h3>Mitbringparty:</h3>
 
       <div className={classes.partyCollectionContainer}>
         {partyCollection.map((party, index) => (
