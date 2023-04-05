@@ -37,6 +37,12 @@ class UserStore {
     // else this.throwErrorMessage("Passwort falsch"); TODO
   };
 
+  adminLogout = (): void => {
+    console.log("Admin Logout")
+    this.isAdmin = false
+    localStorage.removeItem("isAdmin")
+  }
+
 }
 
 const userStore = new UserStore();

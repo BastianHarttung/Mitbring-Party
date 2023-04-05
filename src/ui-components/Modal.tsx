@@ -6,12 +6,13 @@ import {IoMdClose} from "react-icons/io";
 
 interface ModalProps {
   children: JSX.Element;
+  isOpen?: boolean;
   closeable?: boolean;
 }
 
-const Modal = ({children, closeable = true}: ModalProps) => {
+const Modal = ({children, isOpen = false, closeable = true}: ModalProps) => {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
   return (
     <>

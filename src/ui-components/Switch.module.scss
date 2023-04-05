@@ -1,0 +1,43 @@
+.switch {
+  --height: 34px;
+
+  background-color: #fda0a0;
+  height: var(--height);
+  width: calc(var(--height) * 2);
+  position: relative;
+  border-radius: var(--height);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: background-color var(--transition-fast) ease-out;
+
+  &.active {
+    background-color: #73d55d;
+  }
+
+  & .switch_button {
+    background-color: white;
+    height: calc(var(--height) - 2px);
+    width: var(--height);
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    border-radius: 50%;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    transition: left var(--transition-fast) ease-out;
+
+    &.active {
+      left: calc(var(--height) - 1px);
+    }
+  }
+
+  & .help_text {
+    color: white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 12px;
+    margin-top: -1px;
+  }
+}

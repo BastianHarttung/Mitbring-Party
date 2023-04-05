@@ -54,6 +54,7 @@ main {
 }
 
 :root {
+  //Colors
   --primary-color: #56d013;
   --primary-color-bright: #a9ea80;
   --primary-color-dark: #389F00;
@@ -63,7 +64,12 @@ main {
 
   --gray-dark: #9F9F9F;
 
-  --linear-primary: linear-gradient(180deg, #56D013 0%, #CEF8B8 100%)
+  --linear-primary: linear-gradient(180deg, #56D013 0%, #CEF8B8 100%);
+
+  //Times
+  --transition-fast: 120ms;
+  --transition-medium: 230ms;
+  --transition-slow: 350ms;
 }
 
 section {
@@ -79,7 +85,7 @@ input[type=time],
 input[type=password] {
   font-size: 0.9em;
   height: 25px;
-  min-width: 250px;
+  min-width: 220px;
   border-radius: 8px;
   border: 1px solid var(--gray-dark);
   padding: 4px 8px;
