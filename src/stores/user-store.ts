@@ -4,6 +4,7 @@ import {makeAutoObservable} from "mobx";
 export interface IUserStore {
   userName: string | null;
   isAdmin: boolean;
+  isModalUserNameOpen: boolean;
 }
 
 class UserStore {
@@ -11,6 +12,8 @@ class UserStore {
   userName: string | null = null;
 
   isAdmin: boolean = false;
+
+  isModalUserNameOpen: boolean = true;
 
   constructor() {
     makeAutoObservable(this);
@@ -20,8 +23,13 @@ class UserStore {
   loadUserFromStorage = () => {
     const userNameStorage = localStorage.getItem("userName")
     const isAdminStorage = localStorage.getItem("isAdmin")
-    if (userNameStorage) this.userName = userNameStorage
-    if (isAdminStorage) this.isAdmin = isAdminStorage === "true"
+    if (userNameStorage) {
+      this.userName = userNameStorage;
+      this.isModalUserNameOpen = false;
+    }
+    if (isAdminStorage) {
+      this.isAdmin = isAdminStorage === "true"
+    }
   }
 
   setUserName = (name: string): void => {
@@ -41,6 +49,10 @@ class UserStore {
     console.log("Admin Logout")
     this.isAdmin = false
     localStorage.removeItem("isAdmin")
+  }
+
+  closeModalUserName = ():void => {
+    this.isModalUserNameOpen = false
   }
 
 }

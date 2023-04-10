@@ -14,11 +14,14 @@ import ErrorMessage from "./components/error-message";
 import ButtonCircle from "./ui-components/Button-Circle";
 import Profil from "./pages/Profil";
 import Hilfe from "./pages/Hilfe";
+import userStore from "./stores/user-store";
+import ModalUserName from "./components/modalUserName";
 
 
 function App(): JSX.Element {
 
   const {errorMessage, isSettingsOpen, openSettings} = globalStore;
+  const {isModalUserNameOpen} = userStore
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -31,6 +34,7 @@ function App(): JSX.Element {
   return (
     <>
       {!!errorMessage && <ErrorMessage message={errorMessage}/>}
+      <ModalUserName isOpen={isModalUserNameOpen}/>
 
       <Header/>
       {!isSettingsOpen && <ButtonCircle icon={<RiUserSettingsLine size={24} color={"white"}/>}
