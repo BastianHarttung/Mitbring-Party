@@ -61,8 +61,10 @@ const Start = (): JSX.Element => {
               <Link to={"/wahl/" + party.id}
                     onClick={() => speichereActiveId(party.id)}
                     className={classes.partyBox}>
-                <div className={classes.date}>{datumZuLocalString(party.datum)}</div>
-                <div className={classes.partyName}>{party.partyName}</div>
+                <div className={classes.partyName_container}>
+                  <div className={classes.date}>{datumZuLocalString(party.datum)}</div>
+                  <div className={classes.partyName}>{party.partyName}</div>
+                </div>
               </Link>
               <Link to={"admin/" + party.id}
                     className={classes.editLink}>
