@@ -12,6 +12,7 @@ import {emptyParty} from "../mockup/testConstants";
 import {IParty, IEssen} from "../interfaces/IParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
+import userStore from "../stores/user-store";
 
 const Wahl = () => {
 
@@ -21,8 +22,9 @@ const Wahl = () => {
     speichereEssen,
     speichereAuswahl,
     datumZuLocalString,
-    throwErrorMessage,
   } = globalStore;
+
+  const {userName} = userStore
 
   const params = useParams();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
@@ -32,7 +34,6 @@ const Wahl = () => {
   const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false);
   const [neueKategorie, setNeueKategorie] = useState("");
   const [neuesEssen, setNeuesEssen] = useState("");
-  const [neuerName, setNeuerName] = useState("");
   const [checkedEssen, setCheckedEssen] = useState<string[]>([]);
 
   const [auswahlGespeichert, setAuswahlGespeichert] = useState(false);
@@ -178,7 +179,6 @@ const Wahl = () => {
   function loescheInputFelder() {
     setNeuesEssen("");
     setNeueKategorie("");
-    setNeuerName("");
   }
 
   function handleChecked(event: React.ChangeEvent<HTMLInputElement>) {
@@ -199,17 +199,16 @@ const Wahl = () => {
   }
 
   function auswahlSpeichern() {
-    if (!!neuerName) {
-      speichereAuswahl(checkedEssen, neuerName, party);
-      //Alle Checkboxen unchecken
+    if (userName) {
+      speichereAuswahl(checkedEssen, userName, party);
+      // Uncheck all Boxes
       setCheckedEssen([]);
-      //Anzeige dass Auswahl gespeichert wurde
+      // show that Selection is Saved
       setAuswahlGespeichert(true);
       setTimeout(() => setAuswahlGespeichert(false), 2500);
-    } else {
-      throwErrorMessage("Name eingeben!");
     }
   }
+
 
 };
 
