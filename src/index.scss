@@ -86,10 +86,14 @@ input[type=time],
 input[type=password] {
   font-size: 0.9em;
   height: 25px;
-  min-width: 220px;
+  min-width: 200px;
   border-radius: 8px;
   border: 1px solid var(--gray-dark);
   padding: 4px 8px;
+
+  &:disabled {
+    background-color: lightgray;
+  }
 }
 
 input[type=checkbox] {

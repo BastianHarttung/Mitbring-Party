@@ -1,10 +1,26 @@
 import Switch from "../ui-components/Switch";
 import userStore from "../stores/user-store";
+import {ChangeEvent, useState} from "react";
+import {GrEdit} from "react-icons/gr"
+import {FaRegSave} from "react-icons/fa"
 
 
 const Profil = () => {
 
-  const {adminLogout} = userStore
+  const {userName, isAdmin, adminLogout, setUserName} = userStore
+
+  const [name, setName] = useState(userName ?? "");
+  const [edit, setEdit] = useState(false);
+
+  const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value)
+  }
+
+  const handleSaveName = () => {
+    setUserName(name)
+    setEdit(false)
+  }
+
 
   return (
     <section>
@@ -13,14 +29,21 @@ const Profil = () => {
         <h3>Profil</h3>
 
         <div className="flex-column-gap-3">
-          <div className="flex-row justify-space-between">
+          <div className="flex-row justify-space-between gap-2">
             <label htmlFor="name">Name</label>
-            <input name="name" type="text"/>
+            <input name="name"
+                   type="text"
+                   disabled={!edit}
+                   value={name}
+                   onChange={handleChangeName}/>
+            {edit ? <FaRegSave onClick={handleSaveName}/>
+              : <GrEdit onClick={() => setEdit(true)}/>}
           </div>
 
           <div className="flex-row justify-space-between">
             <label htmlFor="">Administrator-Modus</label>
-            <Switch onIsActive={() => console.log("activate")}
+            <Switch initialState={isAdmin}
+                    onIsActive={() => console.log("activate")}
                     onDeactivate={adminLogout}/>
           </div>
         </div>
