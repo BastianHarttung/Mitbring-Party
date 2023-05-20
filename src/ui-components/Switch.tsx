@@ -3,32 +3,26 @@ import {useEffect, useState} from "react";
 
 
 interface SwitchProps {
-  isActive?: boolean;
+  isActive: boolean;
   onIsActive: () => void;
   onDeactivate: () => void;
 }
 
-const Switch = ({isActive = false, onIsActive, onDeactivate}: SwitchProps) => {
+const Switch = ({isActive, onIsActive, onDeactivate}: SwitchProps) => {
   const [isSwitchOn, setIsSwitchOn] = useState(isActive);
 
   const handleClick = () => {
-    setIsSwitchOn((prevState) => !prevState)
+    if (!isSwitchOn) {
+      onIsActive()
+    } else if (isSwitchOn) {
+      onDeactivate()
+      setIsSwitchOn(false)
+    }
   }
 
   useEffect(() => {
-    if (isSwitchOn) {
-      onIsActive()
-    } else if (!isSwitchOn) {
-      onDeactivate()
-    }
-  }, [isSwitchOn, onIsActive, onDeactivate]);
-
-  useEffect(() => {
-    if (isActive) {
-      setIsSwitchOn(true)
-    } else {
-      setIsSwitchOn(false)
-    }
+    if (!isActive) setIsSwitchOn(false)
+    if (isActive) setIsSwitchOn(true)
   }, [isActive]);
 
 

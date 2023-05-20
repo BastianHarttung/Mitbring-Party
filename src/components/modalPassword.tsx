@@ -14,21 +14,20 @@ const ModalPassword = ({isOpen}: ModalPasswordProps) => {
 
   const [password, setPassword] = useState("");
 
-  const pressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      checkIfAdmin(password);
-    } else return;
-  };
-
-  const handleButtonClick = () => {
+  const checkPwAndContinue = () => {
     const isCorrectPw = checkIfAdmin(password)
     if (isCorrectPw) {
-      closeModalAdminPassword()
-      setPassword("")
+      handleCloseModal()
     } else {
       setPassword("")
     }
   }
+
+  const pressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      checkPwAndContinue()
+    } else return;
+  };
 
   const handleCloseModal = () => {
     closeModalAdminPassword()
@@ -45,7 +44,7 @@ const ModalPassword = ({isOpen}: ModalPasswordProps) => {
                value={password}
                onChange={e => setPassword(e.target.value)}
                onKeyDown={pressEnter}/>
-        <Button onClick={handleButtonClick}>Speichern</Button>
+        <Button onClick={checkPwAndContinue}>Speichern</Button>
       </div>
 
     </Modal>
