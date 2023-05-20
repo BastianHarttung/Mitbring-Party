@@ -13,7 +13,6 @@ const Profil = () => {
     adminLogout,
     setUserName,
     openModalAdminPassword,
-    checkIfAdmin
   } = userStore
 
   const [name, setName] = useState(userName ?? "");
@@ -49,8 +48,7 @@ const Profil = () => {
 
           <div className="flex-row justify-space-between">
             <label htmlFor="">Administrator-Modus</label>
-            <Switch initialState={isAdmin}
-                    beforeActivate={}
+            <Switch isActive={isAdmin}
                     onIsActive={openModalAdminPassword}
                     onDeactivate={adminLogout}/>
           </div>

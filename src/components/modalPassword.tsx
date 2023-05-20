@@ -24,13 +24,21 @@ const ModalPassword = ({isOpen}: ModalPasswordProps) => {
     const isCorrectPw = checkIfAdmin(password)
     if (isCorrectPw) {
       closeModalAdminPassword()
+      setPassword("")
+    } else {
+      setPassword("")
     }
+  }
+
+  const handleCloseModal = () => {
+    closeModalAdminPassword()
+    setPassword("")
   }
 
   return (
     <Modal isOpen={isOpen}
-           onClose={closeModalAdminPassword}
-           heading={"Passwort eingeben:"}>
+           onClose={handleCloseModal}
+           heading={"Passwort eingeben"}>
 
       <div className="flex-column-gap-3">
         <input type="password"

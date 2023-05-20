@@ -21,13 +21,15 @@
     border-radius: 10px;
     padding: 18px 24px 24px 24px;
 
-    .modal_head{
+    .modal_head {
       width: 100%;
       display: flex;
       justify-content: space-between;
+      gap: 8px
     }
+
     .close_btn {
-      width: 100%;
+      min-width: 24px;
       display: flex;
       justify-content: flex-end;
 
@@ -35,7 +37,8 @@
         cursor: pointer;
       }
     }
-    .heading{
+
+    .heading {
       width: 100%;
     }
   }
