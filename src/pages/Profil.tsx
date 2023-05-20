@@ -7,7 +7,14 @@ import {FaRegSave} from "react-icons/fa"
 
 const Profil = () => {
 
-  const {userName, isAdmin, adminLogout, setUserName} = userStore
+  const {
+    userName,
+    isAdmin,
+    adminLogout,
+    setUserName,
+    openModalAdminPassword,
+    checkIfAdmin
+  } = userStore
 
   const [name, setName] = useState(userName ?? "");
   const [edit, setEdit] = useState(false);
@@ -43,7 +50,8 @@ const Profil = () => {
           <div className="flex-row justify-space-between">
             <label htmlFor="">Administrator-Modus</label>
             <Switch initialState={isAdmin}
-                    onIsActive={() => console.log("activate")}
+                    beforeActivate={}
+                    onIsActive={openModalAdminPassword}
                     onDeactivate={adminLogout}/>
           </div>
         </div>

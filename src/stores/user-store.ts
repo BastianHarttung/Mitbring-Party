@@ -5,6 +5,7 @@ export interface IUserStore {
   userName: string | null;
   isAdmin: boolean;
   isModalUserNameOpen: boolean;
+  isModalAdminOpen: boolean;
 }
 
 class UserStore {
@@ -14,6 +15,8 @@ class UserStore {
   isAdmin: boolean = false;
 
   isModalUserNameOpen: boolean = true;
+
+  isModalAdminOpen: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -37,12 +40,15 @@ class UserStore {
     localStorage.setItem("userName", name)
   }
 
-  checkIfAdmin = (pw: string): void => {
+  checkIfAdmin = (pw: string): boolean => {
     if (pw === "BastiDev") {
       this.isAdmin = true
       localStorage.setItem("isAdmin", "true")
+      return true
+    } else {
+      return false
     }
-    // else this.throwErrorMessage("Passwort falsch"); TODO
+    //else this.throwErrorMessage("Passwort falsch"); TODO
   };
 
   adminLogout = (): void => {
@@ -51,8 +57,16 @@ class UserStore {
     localStorage.removeItem("isAdmin")
   }
 
-  closeModalUserName = ():void => {
+  closeModalUserName = (): void => {
     this.isModalUserNameOpen = false
+  }
+
+  closeModalAdminPassword = (): void => {
+    this.isModalAdminOpen = false
+  }
+
+  openModalAdminPassword = (): void => {
+    this.isModalAdminOpen = true
   }
 
 }

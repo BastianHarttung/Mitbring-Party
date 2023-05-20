@@ -5,11 +5,17 @@ import {useEffect, useState} from "react";
 interface SwitchProps {
   onIsActive: () => void;
   onDeactivate: () => void;
-  initialState?: boolean
+  initialState?: boolean;
+  beforeActivate?: () => boolean;
 }
 
-const Switch = ({initialState = false, onIsActive, onDeactivate}: SwitchProps) => {
+const Switch = ({initialState = false, onIsActive, onDeactivate, beforeActivate}: SwitchProps) => {
   const [isActive, setActive] = useState(initialState);
+
+  const handleClick = () => {
+    const activate = beforeActivate ?? true
+    if (activate) setActive((prevState) => !prevState)
+  }
 
   useEffect(() => {
     if (isActive) {
@@ -22,7 +28,7 @@ const Switch = ({initialState = false, onIsActive, onDeactivate}: SwitchProps) =
 
   return (
     <div className={`${classes.switch} ${isActive ? classes.active : ""}`}
-         onClick={() => setActive((prevState) => !prevState)}>
+         onClick={handleClick}>
       <div className={`${classes.switch_button} ${isActive ? classes.active : ""}`}/>
       <div className={classes.help_text}>
         <div className={`${classes.on}`}>AN</div>

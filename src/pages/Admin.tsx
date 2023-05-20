@@ -115,7 +115,7 @@ const Admin = (): JSX.Element => {
   return (
     <div>
 
-      {!isAdmin && <ModalPassword/>}
+      {!isAdmin && <ModalPassword isOpen={true}/>}
 
       {isAdmin && <section className={classes.adminSection}>
           <input type="text"

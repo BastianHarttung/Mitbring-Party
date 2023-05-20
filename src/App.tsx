@@ -16,12 +16,13 @@ import Profil from "./pages/Profil";
 import Hilfe from "./pages/Hilfe";
 import userStore from "./stores/user-store";
 import ModalUserName from "./components/modalUserName";
+import ModalPassword from "./components/modalPassword";
 
 
 function App(): JSX.Element {
 
   const {errorMessage, isSettingsOpen, openSettings} = globalStore;
-  const {isModalUserNameOpen} = userStore
+  const {isModalUserNameOpen, isModalAdminOpen} = userStore
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -34,7 +35,9 @@ function App(): JSX.Element {
   return (
     <>
       {!!errorMessage && <ErrorMessage message={errorMessage}/>}
+
       <ModalUserName isOpen={isModalUserNameOpen}/>
+      <ModalPassword isOpen={isModalAdminOpen}/>
 
       <Header/>
       {!isSettingsOpen && <ButtonCircle icon={<RiUserSettingsLine size={24} color={"white"}/>}

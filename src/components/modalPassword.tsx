@@ -1,41 +1,46 @@
-import classes from "./modal.module.scss";
 import React, {useState} from "react";
-import ReactDom from "react-dom";
-import {IoMdClose} from "react-icons/io"
-import {useNavigate} from "react-router-dom";
 import userStore from "../stores/user-store";
+import Modal from "../ui-components/Modal";
+import Button from "../ui-components/Button";
 
 
-const ModalPassword = () => {
+interface ModalPasswordProps {
+  isOpen: boolean
+}
 
-  const {checkIfAdmin} = userStore;
+const ModalPassword = ({isOpen}: ModalPasswordProps) => {
+
+  const {checkIfAdmin, closeModalAdminPassword} = userStore;
 
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
-
-  const checkPassword = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const pressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       checkIfAdmin(password);
     } else return;
   };
 
+  const handleButtonClick = () => {
+    const isCorrectPw = checkIfAdmin(password)
+    if (isCorrectPw) {
+      closeModalAdminPassword()
+    }
+  }
+
   return (
-    <>
-      {ReactDom.createPortal(<div className={classes.modal}>
-        <div className={classes.inputContainer}>
-          <div className={classes.close_btn}>
-            <IoMdClose size={24}
-                       onClick={() => navigate(-1)}/>
-          </div>
-          <label htmlFor="">Passwort eingeben:</label>
-          <input type="password"
-                 value={password}
-                 onChange={e => setPassword(e.target.value)}
-                 onKeyDown={checkPassword}/>
-        </div>
-      </div>, document.getElementById("modal-root") as HTMLElement)}
-    </>
+    <Modal isOpen={isOpen}
+           onClose={closeModalAdminPassword}
+           heading={"Passwort eingeben:"}>
+
+      <div className="flex-column-gap-3">
+        <input type="password"
+               value={password}
+               onChange={e => setPassword(e.target.value)}
+               onKeyDown={pressEnter}/>
+        <Button onClick={handleButtonClick}>Speichern</Button>
+      </div>
+
+    </Modal>
   );
 };
 
