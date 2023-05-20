@@ -5,10 +5,11 @@ import Button from "../ui-components/Button";
 
 
 interface ModalPasswordProps {
-  isOpen: boolean
+  isOpen: boolean;
+  closeable?: boolean;
 }
 
-const ModalPassword = ({isOpen}: ModalPasswordProps) => {
+const ModalPassword = ({isOpen, closeable = true}: ModalPasswordProps) => {
 
   const {checkIfAdmin, closeModalAdminPassword} = userStore;
 
@@ -37,6 +38,7 @@ const ModalPassword = ({isOpen}: ModalPasswordProps) => {
   return (
     <Modal isOpen={isOpen}
            onClose={handleCloseModal}
+           closeable={closeable}
            heading={"Passwort eingeben"}>
 
       <div className="flex-column-gap-3">

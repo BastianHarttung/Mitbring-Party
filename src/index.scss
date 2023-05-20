@@ -94,6 +94,10 @@ input[type=password] {
   &:disabled {
     background-color: lightgray;
   }
+
+  &:focus{
+    outline: 1px solid var(--primary-color);
+  }
 }
 
 input[type=checkbox] {

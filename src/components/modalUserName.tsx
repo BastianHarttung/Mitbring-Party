@@ -1,4 +1,4 @@
-import classes from "./modal.module.scss";
+import classes from "./modalUserName.module.scss";
 import React, {ChangeEvent, useState} from 'react';
 import Modal from "../ui-components/Modal";
 import userStore from "../stores/user-store";
@@ -32,7 +32,7 @@ const ModalUserName = ({isOpen}: IModalUserNameProps) => {
            onClose={closeModalUserName}
            heading="Dein Name">
       <div className={classes.content_modal_username}>
-        <p>Sag mir bitte deinen Namen. (Vorname reicht) <br/>
+        <p>Sag mir bitte deinen Namen.<br/>
           Keine Angst, es gibt keine Werbung und der Name wird auch nicht dauerhaft gespeichert.</p>
         <input type="text"
                placeholder="Name..."
