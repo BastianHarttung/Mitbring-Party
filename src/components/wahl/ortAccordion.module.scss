@@ -1,0 +1,25 @@
+// Ort
+.ortContainer {
+  font-size: 17px;
+  width: 300px;
+  margin-bottom: 8px;
+}
+
+.ortText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    height: 25px;
+  }
+}
+
+.ortArrowContainer {
+  display: flex;
+  align-items: center;
+}
+
+.ort {
+  margin-right: 5px;
+}

@@ -11,6 +11,7 @@ import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewFood from "../components/modalNewFood";
 import OrtAccordion from "../components/wahl/ortAccordion";
+import FoodCheck from "../components/wahl/foodCheck";
 
 
 const Wahl = () => {
@@ -104,20 +105,10 @@ const Wahl = () => {
       </div>
 
       <div id="checkbox-container" className={classes.checkboxContainer}>
-        {party.essen.map((ess, index) => {
-          return <div key={index} className={classes.checkbox}>
-            <div className={classes.checkboxName}>
-              <input type="checkbox"
-                     id={ess.essenName}
-                     name={ess.essenName}
-                     value={ess.essenName}
-                     onChange={(evt) => handleChecked(evt)}
-                     disabled={!!ess.werBringts}/>
-              <label htmlFor={ess.essenName}>{ess.essenName}</label>
-            </div>
-            {ess.werBringts && <div className={classes.werBringts}><i>({ess.werBringts})</i></div>}
-          </div>;
-        })}
+        {party.essen.map((ess, index) => (
+          <FoodCheck index={index}
+                     essen={ess}
+                     onChecked={handleChecked}/>))}
       </div>
 
       <div id="essenBtnContainer"

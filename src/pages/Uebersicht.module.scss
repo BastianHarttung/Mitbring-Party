@@ -30,6 +30,7 @@
   border-spacing: 0;
   border-collapse: collapse;
   margin: auto;
+  font-size: 1.1rem;
 
   th:not(:last-child) {
     box-shadow: inset -1px -1px 1px var(--border-table);
@@ -78,10 +79,13 @@ tr:nth-child(even) {
 }
 
 .trEat {
+  max-width: 130px;
+  line-break: anywhere;
   position: sticky;
   left: 0;
   padding: 7px;
   text-align: center;
+  overflow: hidden;
 }
 
 .tableRow {

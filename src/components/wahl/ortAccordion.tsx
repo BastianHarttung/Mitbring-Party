@@ -1,5 +1,5 @@
+import classes from "./ortAccordion.module.scss";
 import React, {useState} from 'react';
-import classes from "../../pages/Wahl.module.scss";
 import PicArrowUp from "../../assets/img/icons/caret-up.svg";
 import PicArrowDown from "../../assets/img/icons/caret-down.svg";
 import {IParty} from "../../interfaces/IParty";

@@ -1,0 +1,24 @@
+//Checkboxen
+.checkbox {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px;
+}
+
+.checkboxName {
+  display: flex;
+  align-items: center;
+
+  input {
+    accent-color: var(--primary-color);
+  }
+}
+
+.werBringts {
+  color: darkred;
+  font-family: "Behind Blue Eyes", Arial, sans-serif;
+  font-weight: 100;
+  margin-left: 8px;
+}

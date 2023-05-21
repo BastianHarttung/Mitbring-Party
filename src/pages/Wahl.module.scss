@@ -5,7 +5,6 @@
 }
 
 .infosContainer,
-.ortContainer,
 .datumContainer,
 .zeitContainer {
   font-size: 17px;
@@ -19,26 +18,6 @@
   justify-content: space-between;
 }
 
-// Ort
-
-.ortText {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  img {
-    height: 25px;
-  }
-}
-
-.ortArrowContainer {
-  display: flex;
-  align-items: center;
-}
-
-.ort {
-  margin-right: 5px;
-}
 
 .checkboxContainer {
   display: flex;
@@ -84,30 +63,6 @@
   }
 }
 
-//Checkboxen
-.checkbox {
-  width: 300px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 4px;
-}
-
-.checkboxName {
-  display: flex;
-  align-items: center;
-
-  input {
-    accent-color: var(--primary-color);
-  }
-}
-
-.werBringts {
-  color: darkred;
-  font-family: "Behind Blue Eyes", Arial, sans-serif;
-  font-weight: 100;
-  margin-left: 8px;
-}
 
 .neuesEssenContainer {
   display: flex;
