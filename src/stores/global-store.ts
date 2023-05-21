@@ -12,7 +12,6 @@ class GlobalStore {
 
   activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
-
   errorMessage: string = "";
 
   isSettingsOpen: boolean = false;
@@ -130,6 +129,18 @@ class GlobalStore {
 
   closeSettings = () => {
     this.isSettingsOpen = false
+  }
+
+  /**
+   * Find and filter Categories
+   * @return {*[]} return Array with unique categories as string of party
+   */
+  findKategorien = (party: IParty): string[] => {
+    const vorhandeneKategorienArray = party.essen.map((essen) => {
+      return essen.kategorie;
+    }, []);
+    const kategorieArray = [...vorhandeneKategorienArray, "Sonstiges"]
+    return kategorieArray.filter((item, index) => kategorieArray.indexOf(item) === index);
   }
 
 }

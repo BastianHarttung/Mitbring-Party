@@ -6,6 +6,7 @@ import globalStore from "../stores/global-store";
 import {Party} from "../models/party";
 import Button from "../ui-components/Button";
 import {FiPlus} from "react-icons/fi"
+import userStore from "../stores/user-store";
 
 
 const Start = (): JSX.Element => {
@@ -17,6 +18,8 @@ const Start = (): JSX.Element => {
     datumZuLocalString,
     throwErrorMessage
   } = globalStore;
+
+  const {isAdmin} = userStore;
 
   const [isNewParty, setIsNewParty] = useState(false);
 
@@ -84,7 +87,7 @@ const Start = (): JSX.Element => {
         {isNewParty ? "Abbrechen" : "Neue Party"}
       </Button>
 
-      {isNewParty && <div className={classes.newPartyContainer}>
+      {(isNewParty && isAdmin) && <div className={classes.newPartyContainer}>
           <input type="text"
                  placeholder="Party Name"
                  value={partyName}

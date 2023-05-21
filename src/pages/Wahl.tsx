@@ -1,27 +1,27 @@
 import classes from "./Wahl.module.scss";
-import {useState, useEffect} from "react";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {observer} from "mobx-react";
 import {FiPlus} from "react-icons/fi";
-import {Essen} from "../models/party";
 import globalStore from "../stores/global-store";
-import PicArrowDown from "../assets/img/icons/caret-down.svg";
-import PicArrowUp from "../assets/img/icons/caret-up.svg";
+import userStore from "../stores/user-store";
 import {emptyParty} from "../mockup/testConstants";
-import {IParty, IEssen} from "../interfaces/IParty";
+import {IEssen, IParty} from "../interfaces/IParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
-import userStore from "../stores/user-store";
+import ModalNewFood from "../components/modalNewFood";
+import OrtAccordion from "../components/wahl/ortAccordion";
+
 
 const Wahl = () => {
 
   const {
     partyCollection,
     speichereActiveId,
-    speichereEssen,
     speichereAuswahl,
     datumZuLocalString,
+    speichereEssen,
+    findKategorien,
   } = globalStore;
 
   const {userName} = userStore
@@ -31,19 +31,42 @@ const Wahl = () => {
 
   const [party, setParty] = useState<IParty>(emptyParty);
 
-  const [neuesEssenEingabe, setNeuesEssenEingabe] = useState(false);
-  const [neueKategorie, setNeueKategorie] = useState("");
-  const [neuesEssen, setNeuesEssen] = useState("");
   const [checkedEssen, setCheckedEssen] = useState<string[]>([]);
 
-  const [auswahlGespeichert, setAuswahlGespeichert] = useState(false);
-  const [ausfuellen, setAusfuellen] = useState(false);
+  const [isAuswahlGespeichert, setIsAuswahlGespeichert] = useState(false);
 
-  const [openOrt, setOpenOrt] = useState(false);
+  const [isModalNewFoodOpen, setIsModalNewFoodOpen] = useState(false);
 
-  const handleNeuesEssenClick = () => {
-    setAusfuellen(false);
-    setNeuesEssenEingabe(!neuesEssenEingabe);
+  function handleChecked(event: React.ChangeEvent<HTMLInputElement>) {
+    const checked = event.target.checked;
+    let newChecked = checkedEssen;
+    if (checked) {
+      // Add essen to array
+      newChecked.push(event.target.value);
+    } else {
+      //Delete essen from array
+      for (let i = 0; i < newChecked.length; i++) {
+        if (newChecked[i] === event.target.value) {
+          newChecked.splice(i, 1);
+        }
+      }
+    }
+    setCheckedEssen(newChecked);
+  }
+
+  function auswahlSpeichern() {
+    if (userName) {
+      speichereAuswahl(checkedEssen, userName, party);
+      // Uncheck all Boxes
+      setCheckedEssen([]);
+      // show that Selection is Saved
+      setIsAuswahlGespeichert(true);
+      setTimeout(() => setIsAuswahlGespeichert(false), 2500);
+    }
+  }
+
+  const handleSaveNewFood = (foodObj: IEssen) => {
+    speichereEssen(params.id, foodObj)
   }
 
   useEffect(() => {
@@ -56,6 +79,11 @@ const Wahl = () => {
 
   return (
     <section>
+      <ModalNewFood isOpen={isModalNewFoodOpen}
+                    onClose={() => setIsModalNewFoodOpen(false)}
+                    onSave={handleSaveNewFood}
+                    categories={findKategorien(party)}/>
+
       <h3 className={classes.partyName}>{party.partyName}</h3>
 
       <div className={classes.datumContainer}><b>Datum:</b><br/>
@@ -66,26 +94,7 @@ const Wahl = () => {
         <div id="zeit" className="zeit">{party.zeit} Uhr</div>
       </div>
 
-      <div className={classes.ortContainer}>
-        <details onClick={() => setOpenOrt(!openOrt)}>
-          <summary className={classes.ortText}>
-            <div><b>Ort:</b></div>
-            <div className={classes.ortArrowContainer}>
-              <div id="ort" className={classes.ort}>{party.ort}</div>
-              <img src={openOrt ? PicArrowUp : PicArrowDown} alt="open"/>
-            </div>
-          </summary>
-          <iframe
-            width="290"
-            height="250"
-            title={party.ort}
-            style={{border: 0}}
-            loading="lazy"
-            allowFullScreen
-            src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_Key}&q=${party.ortCoordinates ? party.ortCoordinates : party.ort}`}>
-          </iframe>
-        </details>
-      </div>
+      <OrtAccordion party={party}/>
 
       <div className={classes.infosContainer}><b>Infos:</b><br/>
         <textarea id="infos"
@@ -114,101 +123,21 @@ const Wahl = () => {
       <div id="essenBtnContainer"
            className={classes.essenBtnContainer}>
         <ButtonCircle
-          onClick={handleNeuesEssenClick}
+          onClick={() => setIsModalNewFoodOpen(true)}
           icon={<FiPlus/>}
           btnStyle="primary"
           size="18px"/>
       </div>
 
-      {/*{neuesEssenEingabe && <div className={classes.neuesEssenContainer}>*/}
-      {/*    <input type="text"*/}
-      {/*           placeholder="Essen"*/}
-      {/*           onChange={evt => setNeuesEssen(evt.target.value)}/>*/}
-      {/*    <input type="datalist"*/}
-      {/*           list="kategorie"*/}
-      {/*           placeholder="Kategorie zB. Salate"*/}
-      {/*           onChange={evt => setNeueKategorie(evt.target.value)}/>*/}
-      {/*    <datalist id="kategorie">*/}
-      {/*      {findKategorien().map((kategorie, index) => <option key={index} value={kategorie}/>)*/}
-      {/*      }*/}
-      {/*    </datalist>*/}
-
-      {/*    <Button onClick={() => essenHinzufuegen(neuesEssen, neueKategorie, neuerName)}>*/}
-      {/*        Essen hinzufügen*/}
-      {/*    </Button>*/}
-
-      {/*  {ausfuellen ? <div className={classes.ausfuellen}>Bitte vollständig ausfüllen!</div> : ""}*/}
-
-      {/*</div>}*/}
-
       <div className={classes.nameSpeichernContainer}>
         <Button onClick={auswahlSpeichern}>
           Auswahl speichern
         </Button>
-        {auswahlGespeichert ? <div className={classes.auswahlGespeichert}>Auswahl gespeichert</div> : ""}
+        {isAuswahlGespeichert ? <div className={classes.auswahlGespeichert}>Auswahl gespeichert</div> : ""}
       </div>
 
     </section>
   );
-
-
-  /**
-   * Finde und filtere Kategorien
-   * @return {*[]} gibt ein Array zurück, dass einmalige Kategorien enthält gefunden in der party
-   */
-  function findKategorien(): string[] {
-    const vorhandeneKategorienArray = party.essen.map((essen) => {
-      return essen.kategorie;
-    }, []);
-    const kategorieArray = [...vorhandeneKategorienArray, "Sonstiges"]
-    return kategorieArray.filter((item, index) => kategorieArray.indexOf(item) === index);
-  }
-
-  function essenHinzufuegen(neuesEssen: string, neueKategorie: string, neuerName: string) {
-    if (neuesEssen && neueKategorie) {
-      setAusfuellen(false);
-      const essen: IEssen = new Essen(neueKategorie, neuesEssen, neuerName);
-      speichereEssen(params.id, essen);
-      loescheInputFelder();
-      setNeuesEssenEingabe(false);
-    } else {
-      setAusfuellen(true);
-    }
-  }
-
-  function loescheInputFelder() {
-    setNeuesEssen("");
-    setNeueKategorie("");
-  }
-
-  function handleChecked(event: React.ChangeEvent<HTMLInputElement>) {
-    const checked = event.target.checked;
-    let newChecked = checkedEssen;
-    if (checked) {
-      // Add essen to array
-      newChecked.push(event.target.value);
-    } else {
-      //Delete essen from array
-      for (let i = 0; i < newChecked.length; i++) {
-        if (newChecked[i] === event.target.value) {
-          newChecked.splice(i, 1);
-        }
-      }
-    }
-    setCheckedEssen(newChecked);
-  }
-
-  function auswahlSpeichern() {
-    if (userName) {
-      speichereAuswahl(checkedEssen, userName, party);
-      // Uncheck all Boxes
-      setCheckedEssen([]);
-      // show that Selection is Saved
-      setAuswahlGespeichert(true);
-      setTimeout(() => setAuswahlGespeichert(false), 2500);
-    }
-  }
-
 
 };
 
