@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import userStore from "../stores/user-store";
 import Modal from "../ui-components/Modal";
 import Button from "../ui-components/Button";
+import globalStore from "../stores/global-store";
 
 
 interface ModalPasswordProps {
@@ -11,29 +12,31 @@ interface ModalPasswordProps {
 
 const ModalPassword = ({isOpen, closeable = true}: ModalPasswordProps) => {
 
+  const {throwErrorMessage} = globalStore;
   const {checkIfAdmin, closeModalAdminPassword} = userStore;
 
   const [password, setPassword] = useState("");
 
   const checkPwAndContinue = () => {
-    const isCorrectPw = checkIfAdmin(password)
+    const isCorrectPw = checkIfAdmin(password);
     if (isCorrectPw) {
-      handleCloseModal()
+      handleCloseModal();
     } else {
-      setPassword("")
+      throwErrorMessage("Das Passwort ist falsch");
+      setPassword("");
     }
-  }
+  };
 
   const pressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      checkPwAndContinue()
+      checkPwAndContinue();
     } else return;
   };
 
   const handleCloseModal = () => {
-    closeModalAdminPassword()
-    setPassword("")
-  }
+    closeModalAdminPassword();
+    setPassword("");
+  };
 
   return (
     <Modal isOpen={isOpen}

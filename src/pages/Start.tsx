@@ -1,11 +1,11 @@
 import classes from "./Start.module.scss";
-import {useState} from "react";
-import {Link} from "react-router-dom";
-import {observer} from "mobx-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { observer } from "mobx-react";
 import globalStore from "../stores/global-store";
-import {Party} from "../models/party";
+import { Party } from "../models/party";
 import Button from "../ui-components/Button";
-import {FiPlus} from "react-icons/fi"
+import { FiPlus } from "react-icons/fi";
 import userStore from "../stores/user-store";
 
 
@@ -16,7 +16,7 @@ const Start = (): JSX.Element => {
     speichereActiveId,
     speichereParty,
     datumZuLocalString,
-    throwErrorMessage
+    throwErrorMessage,
   } = globalStore;
 
   const {isAdmin} = userStore;
@@ -48,8 +48,16 @@ const Start = (): JSX.Element => {
   }
 
   const isGone = (datum: string) => {
-    return datum < new Date().toISOString().split("T")[0]
-  }
+    return datum < new Date().toISOString().split("T")[0];
+  };
+
+  const handleNewPartyClick = () => {
+    if (isAdmin) {
+      setIsNewParty(!isNewParty);
+    } else {
+      throwErrorMessage("Du musst Admin sein um eine neue Party anzulegen!");
+    }
+  };
 
 
   return (
@@ -77,39 +85,39 @@ const Start = (): JSX.Element => {
                 </svg>
               </Link>
             </div>
-          )
+          ),
         )}
       </div>
 
-      <Button onClick={() => setIsNewParty(!isNewParty)}
+      <Button onClick={handleNewPartyClick}
               btnStyle={!isNewParty ? "primary" : "secondary"}
               frontIcon={!isNewParty ? <FiPlus style={{fontSize: "20px"}}/> : undefined}>
         {isNewParty ? "Abbrechen" : "Neue Party"}
       </Button>
 
       {(isNewParty && isAdmin) && <div className={classes.newPartyContainer}>
-          <input type="text"
-                 placeholder="Party Name"
-                 value={partyName}
-                 onChange={(e) => setPartyName(e.target.value)}/>
-          <input type="text"
-                 placeholder="Ort"
-                 value={ort}
-                 onChange={(e) => setOrt(e.target.value)}/>
-          <input type="date"
-                 placeholder="Datum"
-                 value={datum}
-                 onChange={(e) => setDatum(e.target.value)}/>
-          <input type="time"
-                 placeholder="Zeit"
-                 value={zeit}
-                 onChange={(e) => setZeit(e.target.value)}/>
-          <textarea placeholder="Infos"
-                    value={info}
-                    onChange={(e) => setInfo(e.target.value)}/>
-          <Button onClick={partySpeichern}>
-              Speichern
-          </Button>
+        <input type="text"
+               placeholder="Party Name"
+               value={partyName}
+               onChange={(e) => setPartyName(e.target.value)}/>
+        <input type="text"
+               placeholder="Ort"
+               value={ort}
+               onChange={(e) => setOrt(e.target.value)}/>
+        <input type="date"
+               placeholder="Datum"
+               value={datum}
+               onChange={(e) => setDatum(e.target.value)}/>
+        <input type="time"
+               placeholder="Zeit"
+               value={zeit}
+               onChange={(e) => setZeit(e.target.value)}/>
+        <textarea placeholder="Infos"
+                  value={info}
+                  onChange={(e) => setInfo(e.target.value)}/>
+        <Button onClick={partySpeichern}>
+          Speichern
+        </Button>
       </div>}
 
     </section>
