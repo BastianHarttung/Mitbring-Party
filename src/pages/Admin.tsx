@@ -19,6 +19,7 @@ const Admin = (): JSX.Element => {
     partyCollection,
     updatePartyBackend,
     loeschePartyBackend,
+    throwPopupMessage,
   } = globalStore;
 
   const {isAdmin} = userStore;
@@ -37,7 +38,7 @@ const Admin = (): JSX.Element => {
   const [infos, setInfos] = useState(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
 
-  const [isPartySaved, setIsPartySaved] = useState(false);
+  // const [isPartySaved, setIsPartySaved] = useState(false);
 
   function handleChangeEssen(event: any, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
@@ -62,8 +63,7 @@ const Admin = (): JSX.Element => {
         infos,
         essen,
       });
-      setIsPartySaved(true);
-      setTimeout(() => setIsPartySaved(false), 3000);
+      throwPopupMessage("Party gespeichert", "success");
     }
   }
 
@@ -142,7 +142,7 @@ const Admin = (): JSX.Element => {
           Speichern
         </Button>
 
-        {isPartySaved && <p style={{color: "red"}}>Party gespeichert</p>}
+        {/*{isPartySaved && <p style={{color: "red"}}>Party gespeichert</p>}*/}
 
       </section>}
 
