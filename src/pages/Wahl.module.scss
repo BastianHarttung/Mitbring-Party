@@ -8,7 +8,7 @@
 .datumContainer,
 .zeitContainer {
   font-size: 17px;
-  width: 300px;
+  width: 100%;
   margin-bottom: 8px;
 }
 
@@ -28,6 +28,7 @@
 .infosContainer {
   textarea {
     font-size: 16px !important;
+    width: 100%;
     min-width: 292px;
     border: none;
     resize: vertical;
@@ -39,8 +40,8 @@
     }
 
     &::-webkit-scrollbar {
-      height: 4px;
-      width: 4px;
+      height: 8px;
+      width: 8px;
     }
 
     &::-webkit-scrollbar-track {
@@ -52,12 +53,9 @@
       background: linear-gradient(270deg, var(--primary-color) 0%, var(--primary-color-bright) 100%);;
       border-radius: 4px;
     }
-
     &::-webkit-resizer {
-      width: 0;
-      height: 0;
+      border-width: 0 0 16px 16px;
       border-style: solid;
-      border-width: 0 0 8px 8px;
       border-color: transparent transparent var(--primary-color) transparent;
     }
   }

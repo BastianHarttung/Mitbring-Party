@@ -106,7 +106,7 @@ const Wahl = () => {
 
       <div id="checkbox-container" className={classes.checkboxContainer}>
         {party.essen.map((ess, index) => (
-          <FoodCheck index={index}
+          <FoodCheck key={index}
                      essen={ess}
                      onChecked={handleChecked}/>))}
       </div>

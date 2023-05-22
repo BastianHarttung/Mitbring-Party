@@ -1,17 +1,16 @@
-import classes from "./foodCheck.module.scss"
-import React, {ChangeEvent} from 'react';
-import {IEssen} from "../../interfaces/IParty";
+import classes from "./foodCheck.module.scss";
+import React, { ChangeEvent } from "react";
+import { IEssen } from "../../interfaces/IParty";
 
 
 interface FoodCheckProps {
-  index: number;
   essen: IEssen;
   onChecked: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FoodCheck = ({index, essen, onChecked}: FoodCheckProps) => {
+const FoodCheck = ({essen, onChecked}: FoodCheckProps) => {
   return (
-    <div key={index} className={classes.checkbox}>
+    <div className={classes.checkbox}>
       <div className={classes.checkboxName}>
         <input type="checkbox"
                id={essen.essenName}

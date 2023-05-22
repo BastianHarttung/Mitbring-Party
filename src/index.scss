@@ -45,8 +45,10 @@ code {
 
 main {
   background-color: rgba(255, 255, 255, 0.5);
-  width: clamp(318px, 90%, 500px);
+  width: clamp(300px, 90%, 500px);
   min-height: calc(100vh - 65px - 24px);
+  display: flex;
+  justify-content: center;
   border-radius: 15px;
   backdrop-filter: blur(15px);
   padding: 16px 16px;
@@ -74,6 +76,7 @@ main {
 }
 
 section {
+  width: clamp(300px, 90%, 500px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,7 +98,7 @@ input[type=password] {
     background-color: lightgray;
   }
 
-  &:focus{
+  &:focus {
     outline: 1px solid var(--primary-color);
   }
 }

@@ -113,8 +113,7 @@ const Admin = (): JSX.Element => {
   }, [partyFind, id, mapPartyFindToAdminParty]);
 
   return (
-    <div>
-
+    <>
       {!isAdmin && <ModalPassword isOpen={true}
                                   closeable={false}/>}
 
@@ -168,7 +167,7 @@ const Admin = (): JSX.Element => {
 
       </section>}
 
-    </div>
+    </>
   );
 };
 

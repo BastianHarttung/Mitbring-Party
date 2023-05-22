@@ -25,7 +25,7 @@ const OrtAccordion = ({party}: OrtAccordionProps) => {
           </div>
         </summary>
         <iframe
-          width="290"
+          width="100%"
           height="250"
           title={party.ort}
           style={{border: 0}}
