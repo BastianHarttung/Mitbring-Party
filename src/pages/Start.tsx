@@ -16,7 +16,7 @@ const Start = (): JSX.Element => {
     speichereActiveId,
     speichereParty,
     datumZuLocalString,
-    throwErrorMessage,
+    throwPopupMessage,
   } = globalStore;
 
   const {isAdmin} = userStore;
@@ -35,7 +35,7 @@ const Start = (): JSX.Element => {
       inputFelderLoeschen();
       setIsNewParty(false);
     } else {
-      throwErrorMessage("Mindestens Party Name eingeben!");
+      throwPopupMessage("Mindestens Party Name eingeben!", "error");
     }
   }
 
@@ -55,7 +55,7 @@ const Start = (): JSX.Element => {
     if (isAdmin) {
       setIsNewParty(!isNewParty);
     } else {
-      throwErrorMessage("Du musst Admin sein um eine neue Party anzulegen!");
+      throwPopupMessage("Du musst Admin sein um eine neue Party anzulegen!", "error");
     }
   };
 

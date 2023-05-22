@@ -12,7 +12,7 @@ interface ModalPasswordProps {
 
 const ModalPassword = ({isOpen, closeable = true}: ModalPasswordProps) => {
 
-  const {throwErrorMessage} = globalStore;
+  const {throwPopupMessage} = globalStore;
   const {checkIfAdmin, closeModalAdminPassword} = userStore;
 
   const [password, setPassword] = useState("");
@@ -22,7 +22,7 @@ const ModalPassword = ({isOpen, closeable = true}: ModalPasswordProps) => {
     if (isCorrectPw) {
       handleCloseModal();
     } else {
-      throwErrorMessage("Das Passwort ist falsch");
+      throwPopupMessage("Das Passwort ist falsch", "error");
       setPassword("");
     }
   };

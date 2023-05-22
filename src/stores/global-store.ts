@@ -1,9 +1,10 @@
-import {makeAutoObservable} from "mobx";
-import {emptyPartyCollection} from "../mockup/testConstants";
-import {IParty} from "../interfaces/IParty";
-import {IEssen} from "../interfaces/IParty";
-import {IPartyApp} from "../interfaces/IParty";
-import {downloadFromServer, backend, setURL} from "../mini_backend";
+import { makeAutoObservable } from "mobx";
+import { emptyPartyCollection } from "../mockup/testConstants";
+import { IParty } from "../interfaces/IParty";
+import { IEssen } from "../interfaces/IParty";
+import { IPartyApp } from "../interfaces/IParty";
+import { downloadFromServer, backend, setURL } from "../mini_backend";
+import { TPopupStyle } from "../interfaces/Types";
 
 
 class GlobalStore {
@@ -12,7 +13,8 @@ class GlobalStore {
 
   activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
-  errorMessage: string = "";
+  popupMessage: string = "";
+  popupStyle: TPopupStyle | undefined = undefined;
 
   isSettingsOpen: boolean = false;
 
@@ -100,9 +102,10 @@ class GlobalStore {
     );
   };
 
-  throwErrorMessage = (message: string) => {
-    this.errorMessage = message;
-    setTimeout(() => this.errorMessage = "", 2500);
+  throwPopupMessage = (message: string, style?: TPopupStyle) => {
+    this.popupStyle = style;
+    this.popupMessage = message;
+    setTimeout(() => this.popupMessage = "", 2500);
   };
 
   updatePartyBackend = (neueParty: IParty) => {
@@ -125,11 +128,11 @@ class GlobalStore {
   openSettings = (url: string) => {
     this.beforeUrl = url;
     this.isSettingsOpen = true;
-  }
+  };
 
   closeSettings = () => {
-    this.isSettingsOpen = false
-  }
+    this.isSettingsOpen = false;
+  };
 
   /**
    * Find and filter Categories
@@ -139,9 +142,9 @@ class GlobalStore {
     const vorhandeneKategorienArray = party.essen.map((essen) => {
       return essen.kategorie;
     }, []);
-    const kategorieArray = [...vorhandeneKategorienArray, "Sonstiges"]
+    const kategorieArray = [...vorhandeneKategorienArray, "Sonstiges"];
     return kategorieArray.filter((item, index) => kategorieArray.indexOf(item) === index);
-  }
+  };
 
 }
 

@@ -1,7 +1,7 @@
 import "./App.scss";
-import {observer} from "mobx-react";
-import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import {RiUserSettingsLine} from "react-icons/ri"
+import { observer } from "mobx-react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { RiUserSettingsLine } from "react-icons/ri";
 
 import Wahl from "./pages/Wahl";
 import Start from "./pages/Start";
@@ -10,7 +10,7 @@ import Admin from "./pages/Admin";
 import WrongUrl from "./pages/WrongUrl";
 import globalStore from "./stores/global-store";
 import Header from "./components/header";
-import ErrorMessage from "./components/error-message";
+import PopupMessage from "./components/popup-message";
 import ButtonCircle from "./ui-components/Button-Circle";
 import Profil from "./pages/Profil";
 import Hilfe from "./pages/Hilfe";
@@ -21,20 +21,21 @@ import ModalPassword from "./components/modalPassword";
 
 function App(): JSX.Element {
 
-  const {errorMessage, isSettingsOpen, openSettings} = globalStore;
-  const {isModalUserNameOpen, isModalAdminOpen} = userStore
+  const {popupMessage, popupStyle, isSettingsOpen, openSettings} = globalStore;
+  const {isModalUserNameOpen, isModalAdminOpen} = userStore;
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpenSettings = () => {
-    navigate("/profil")
-    openSettings(location.pathname)
-  }
+    navigate("/profil");
+    openSettings(location.pathname);
+  };
 
   return (
     <>
-      {!!errorMessage && <ErrorMessage message={errorMessage}/>}
+      {!!popupMessage && <PopupMessage message={popupMessage}
+                                       style={popupStyle}/>}
 
       <ModalUserName isOpen={isModalUserNameOpen}/>
       <ModalPassword isOpen={isModalAdminOpen}/>
