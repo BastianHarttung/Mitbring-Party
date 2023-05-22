@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./popup-message.module.scss";
-import { TPopupStyle } from "../interfaces/Types";
+import {TPopupStyle} from "../interfaces/Types";
+import ReactDom from "react-dom";
 
 interface IErrorMessageProps {
   message: string;
@@ -14,12 +15,16 @@ const PopupMessage = ({message, style}: IErrorMessageProps) => {
   const isError = style === "error";
 
   return (
-    <div className={classes.messageContainer}>
-      <div
-        className={`${classes.messageBox} ${isSuccess ? classes.success : isWarning ? classes.warning : isError ? classes.error : ""}`}>
-        {message}
-      </div>
-    </div>
+    <>
+      {ReactDom.createPortal(
+        <div className={classes.messageContainer}>
+          <div
+            className={`${classes.messageBox} ${isSuccess ? classes.success : isWarning ? classes.warning : isError ? classes.error : ""}`}>
+            {message}
+          </div>
+        </div>
+        , document.getElementById("popup-root") as HTMLElement)}
+    </>
   );
 };
 
