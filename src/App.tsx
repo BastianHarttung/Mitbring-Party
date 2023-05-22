@@ -1,22 +1,22 @@
 import "./App.scss";
-import { observer } from "mobx-react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { RiUserSettingsLine } from "react-icons/ri";
+import {observer} from "mobx-react";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import {RiUserSettingsLine} from "react-icons/ri";
 
 import Wahl from "./pages/Wahl";
 import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
 import WrongUrl from "./pages/WrongUrl";
-import globalStore from "./stores/global-store";
-import Header from "./components/header";
-import PopupMessage from "./components/popup-message";
-import ButtonCircle from "./ui-components/Button-Circle";
 import Profil from "./pages/Profil";
 import Hilfe from "./pages/Hilfe";
 import userStore from "./stores/user-store";
+import globalStore from "./stores/global-store";
+import Header from "./components/header";
+import PopupMessage from "./components/popup-message";
 import ModalUserName from "./components/modalUserName";
 import ModalPassword from "./components/modalPassword";
+import ButtonCircle from "./ui-components/Button-Circle";
 
 
 function App(): JSX.Element {

@@ -17,7 +17,7 @@ const ButtonCircle = ({icon, onClick, btnStyle = "fixed", size = "24px"}: IButto
   const containerRef: MutableRefObject<any> = useRef();
 
   useEffect(() => {
-    containerRef?.current?.style.setProperty("--size", size);
+    if (size) containerRef?.current?.style.setProperty("--size", size);
   }, [size]);
 
 
