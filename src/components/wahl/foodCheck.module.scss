@@ -1,6 +1,6 @@
 //Checkboxen
 .checkbox {
-  width: 300px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,8 +17,9 @@
 }
 
 .werBringts {
-  color: darkred;
+  color: var(--primary-color-dark);
   font-family: "Behind Blue Eyes", Arial, sans-serif;
   font-weight: 100;
+  text-align: right;
   margin-left: 8px;
 }
