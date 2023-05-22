@@ -1,15 +1,17 @@
-import {useParams} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
-import {useState, useEffect, useCallback} from "react";
-import {MdDelete} from "react-icons/md";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { MdDelete } from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
-import {TEssen} from "../interfaces/Types";
-import {IEssen, IParty} from "../interfaces/IParty";
+import { TEssen } from "../interfaces/Types";
+import { IEssen, IParty } from "../interfaces/IParty";
 import ModalPassword from "../components/modalPassword";
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 import Button from "../ui-components/Button";
 import userStore from "../stores/user-store";
+import ButtonCircle from "../ui-components/Button-Circle";
+import { FiPlus } from "react-icons/fi";
 
 
 const Admin = (): JSX.Element => {
@@ -19,7 +21,7 @@ const Admin = (): JSX.Element => {
     loeschePartyBackend,
   } = globalStore;
 
-  const {isAdmin} = userStore
+  const {isAdmin} = userStore;
 
   const params = useParams();
   const {id} = params;
@@ -27,42 +29,15 @@ const Admin = (): JSX.Element => {
 
   const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
 
-  const [partyName, setPartyName] = useState("");
-  const [ort, setOrt] = useState("");
-  const [ortCoordinates, setOrtCoordinates] = useState("");
-  const [datum, setDatum] = useState("");
-  const [zeit, setZeit] = useState("");
-  const [infos, setInfos] = useState("");
-  const [essen, setEssen] = useState<IEssen[]>([]);
+  const [partyName, setPartyName] = useState(partyFind?.partyName ?? "");
+  const [ort, setOrt] = useState(partyFind?.ort ?? "");
+  const [ortCoordinates, setOrtCoordinates] = useState(partyFind?.ortCoordinates ?? "");
+  const [datum, setDatum] = useState(partyFind?.datum ?? "");
+  const [zeit, setZeit] = useState(partyFind?.zeit ?? "");
+  const [infos, setInfos] = useState(partyFind?.infos ?? "");
+  const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
 
-  const [savedParty, setSavedParty] = useState(false);
-
-  const mapPartyFindToAdminParty = useCallback((id: string) => {
-    const partyNam: string | undefined = partyCollection.find((part) => part.id === id)?.partyName;
-    const partyOrt: string | undefined = partyCollection.find((part) => part.id === id)?.ort;
-    const partyOrtCoordinates: string | undefined = partyCollection.find((part) => part.id === id)?.ortCoordinates;
-    const partyDatum: string | undefined = partyCollection.find((part) => part.id === id)?.datum;
-    const partyZeit: string | undefined = partyCollection.find((part) => part.id === id)?.zeit;
-    const partyInfos: string | undefined = partyCollection.find((part) => part.id === id)?.infos;
-    const partyEssen: IEssen[] | undefined = partyCollection.find((part) => part.id === id)?.essen;
-
-    let essenArray: IEssen[] = [];
-    partyEssen?.forEach((ess) => essenArray.push({
-      essenName: ess.essenName,
-      kategorie: ess.kategorie,
-      werBringts: ess.werBringts,
-    }));
-    return {
-      id: id,
-      partyName: partyNam ? partyNam : "",
-      ort: partyOrt ? partyOrt : "",
-      ortCoordinates: partyOrtCoordinates ? partyOrtCoordinates : "",
-      datum: partyDatum ? partyDatum : "",
-      zeit: partyZeit ? partyZeit : "",
-      infos: partyInfos ? partyInfos : "",
-      essen: essenArray,
-    };
-  }, [partyCollection])
+  const [isPartySaved, setIsPartySaved] = useState(false);
 
   function handleChangeEssen(event: any, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
@@ -87,10 +62,20 @@ const Admin = (): JSX.Element => {
         infos,
         essen,
       });
-      setSavedParty(true);
-      setTimeout(() => setSavedParty(false), 3000);
+      setIsPartySaved(true);
+      setTimeout(() => setIsPartySaved(false), 3000);
     }
   }
+
+  const handleAddNewChoice = () => {
+    setEssen((prevState) => [...prevState,
+      {
+        kategorie: "",
+        essenName: "",
+        werBringts: "",
+      },
+    ]);
+  };
 
   function loescheParty(): void {
     if (id) {
@@ -99,18 +84,6 @@ const Admin = (): JSX.Element => {
     navigate("/");
   }
 
-  useEffect(() => {
-    if (!partyFind || id === undefined) {
-    } else {
-      setPartyName(mapPartyFindToAdminParty(id).partyName);
-      setOrt(mapPartyFindToAdminParty(id).ort);
-      setOrtCoordinates(mapPartyFindToAdminParty(id).ortCoordinates);
-      setDatum(mapPartyFindToAdminParty(id).datum);
-      setZeit(mapPartyFindToAdminParty(id).zeit);
-      setInfos(mapPartyFindToAdminParty(id).infos);
-      setEssen(mapPartyFindToAdminParty(id).essen);
-    }
-  }, [partyFind, id, mapPartyFindToAdminParty]);
 
   return (
     <>
@@ -118,27 +91,27 @@ const Admin = (): JSX.Element => {
                                   closeable={false}/>}
 
       {isAdmin && <section className={classes.adminSection}>
-          <input type="text"
-                 placeholder="Party Name"
-                 value={partyName}
-                 onChange={(e) => setPartyName(e.target.value)}/>
-          <input type="text"
-                 placeholder="Ort"
-                 value={ort}
-                 onChange={(e) => setOrt(e.target.value)}/>
-          <input type="text"
-                 placeholder="Koordinaten oder Adresse"
-                 value={ortCoordinates}
-                 onChange={(e) => setOrtCoordinates(e.target.value)}/>
-          <input type="date"
-                 value={datum}
-                 onChange={(e) => setDatum(e.target.value)}/>
-          <input type="time"
-                 value={zeit}
-                 onChange={(e) => setZeit(e.target.value)}/>
-          <textarea value={infos}
-                    placeholder="Infos"
-                    onChange={(e) => setInfos(e.target.value)}/>
+        <input type="text"
+               placeholder="Party Name"
+               value={partyName}
+               onChange={(e) => setPartyName(e.target.value)}/>
+        <input type="text"
+               placeholder="Ort"
+               value={ort}
+               onChange={(e) => setOrt(e.target.value)}/>
+        <input type="text"
+               placeholder="Koordinaten oder Adresse"
+               value={ortCoordinates}
+               onChange={(e) => setOrtCoordinates(e.target.value)}/>
+        <input type="date"
+               value={datum}
+               onChange={(e) => setDatum(e.target.value)}/>
+        <input type="time"
+               value={zeit}
+               onChange={(e) => setZeit(e.target.value)}/>
+        <textarea value={infos}
+                  placeholder="Infos"
+                  onChange={(e) => setInfos(e.target.value)}/>
         {essen.map((ess, index) => {
           return (
             <div key={index} className={classes.essenContainer}>
@@ -153,17 +126,23 @@ const Admin = (): JSX.Element => {
           );
         })}
 
-          <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
-                  onClick={loescheParty}>
-              Party löschen
-          </Button>
+        <ButtonCircle
+          onClick={handleAddNewChoice}
+          icon={<FiPlus/>}
+          btnStyle="primary"
+          size="14px"/>
 
-          <Button style={{fontSize: "1em", marginTop: "10px"}}
-                  onClick={saveParty}>
-              Speichern
-          </Button>
+        <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+                onClick={loescheParty}>
+          Party löschen
+        </Button>
 
-        {savedParty && <p style={{color: "red"}}>Party gespeichert</p>}
+        <Button style={{fontSize: "1em", marginTop: "10px"}}
+                onClick={saveParty}>
+          Speichern
+        </Button>
+
+        {isPartySaved && <p style={{color: "red"}}>Party gespeichert</p>}
 
       </section>}
 
