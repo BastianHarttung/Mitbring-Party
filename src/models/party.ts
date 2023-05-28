@@ -1,4 +1,5 @@
-import {IEssen} from "../interfaces/IParty";
+import {IEssen, INotizen} from "../interfaces/IParty";
+
 
 export class Party {
   id: string;
@@ -8,9 +9,10 @@ export class Party {
   zeit: string;
   infos: string;
   essen: IEssen[];
+  notizen: INotizen[];
   teilnehmer: string[];
 
-  constructor(partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = []) {
+  constructor(partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = [], notizen: INotizen[] = []) {
     this.id = new Date().getTime().toString();
     this.partyName = partyName;
     this.ort = ort;
@@ -18,6 +20,7 @@ export class Party {
     this.zeit = zeit;
     this.infos = infos;
     this.essen = essen;
+    this.notizen = notizen;
     this.teilnehmer = [];
     this.addTeilnehmer();
   }
@@ -43,5 +46,19 @@ export class Essen {
     this.kategorie = kategorie;
     this.essenName = essenname;
     this.werBringts = werBringts;
+  }
+}
+
+export class Notiz {
+  id: string;
+  name: string;
+  datum: string;  // ISO String in Format "2023-05-28"
+  beschreibung: string;
+
+  constructor(name: string, beschreibung: string, datum?: string,) {
+    this.id = new Date().getTime().toString();
+    this.name = name;
+    this.datum = datum ?? new Date().toISOString().split("T")[0];
+    this.beschreibung = beschreibung
   }
 }

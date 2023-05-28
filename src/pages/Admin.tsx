@@ -1,17 +1,16 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import { MdDelete } from "react-icons/md";
+import {useParams, useNavigate} from "react-router-dom";
+import React, {useState} from "react";
+import {observer} from "mobx-react";
+import {MdDelete} from "react-icons/md";
+import {FiPlus} from "react-icons/fi";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
-import { TEssen } from "../interfaces/Types";
-import { IEssen, IParty } from "../interfaces/IParty";
+import {TEssen} from "../interfaces/Types";
+import {IEssen, IParty} from "../interfaces/IParty";
 import ModalPassword from "../components/modalPassword";
-import { observer } from "mobx-react";
 import Button from "../ui-components/Button";
 import userStore from "../stores/user-store";
 import ButtonCircle from "../ui-components/Button-Circle";
-import { FiPlus } from "react-icons/fi";
 
 
 const Admin = (): JSX.Element => {
@@ -37,8 +36,6 @@ const Admin = (): JSX.Element => {
   const [zeit, setZeit] = useState(partyFind?.zeit ?? "");
   const [infos, setInfos] = useState(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
-
-  // const [isPartySaved, setIsPartySaved] = useState(false);
 
   function handleChangeEssen(event: any, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
@@ -91,27 +88,27 @@ const Admin = (): JSX.Element => {
                                   closeable={false}/>}
 
       {isAdmin && <section className={classes.adminSection}>
-        <input type="text"
-               placeholder="Party Name"
-               value={partyName}
-               onChange={(e) => setPartyName(e.target.value)}/>
-        <input type="text"
-               placeholder="Ort"
-               value={ort}
-               onChange={(e) => setOrt(e.target.value)}/>
-        <input type="text"
-               placeholder="Koordinaten oder Adresse"
-               value={ortCoordinates}
-               onChange={(e) => setOrtCoordinates(e.target.value)}/>
-        <input type="date"
-               value={datum}
-               onChange={(e) => setDatum(e.target.value)}/>
-        <input type="time"
-               value={zeit}
-               onChange={(e) => setZeit(e.target.value)}/>
-        <textarea value={infos}
-                  placeholder="Infos"
-                  onChange={(e) => setInfos(e.target.value)}/>
+          <input type="text"
+                 placeholder="Party Name"
+                 value={partyName}
+                 onChange={(e) => setPartyName(e.target.value)}/>
+          <input type="text"
+                 placeholder="Ort"
+                 value={ort}
+                 onChange={(e) => setOrt(e.target.value)}/>
+          <input type="text"
+                 placeholder="Koordinaten oder Adresse"
+                 value={ortCoordinates}
+                 onChange={(e) => setOrtCoordinates(e.target.value)}/>
+          <input type="date"
+                 value={datum}
+                 onChange={(e) => setDatum(e.target.value)}/>
+          <input type="time"
+                 value={zeit}
+                 onChange={(e) => setZeit(e.target.value)}/>
+          <textarea value={infos}
+                    placeholder="Infos"
+                    onChange={(e) => setInfos(e.target.value)}/>
         {essen.map((ess, index) => {
           return (
             <div key={index} className={classes.essenContainer}>
@@ -126,23 +123,21 @@ const Admin = (): JSX.Element => {
           );
         })}
 
-        <ButtonCircle
-          onClick={handleAddNewChoice}
-          icon={<FiPlus/>}
-          btnStyle="primary"
-          size="14px"/>
+          <ButtonCircle
+              onClick={handleAddNewChoice}
+              icon={<FiPlus/>}
+              btnStyle="primary"
+              size="14px"/>
 
-        <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
-                onClick={loescheParty}>
-          Party löschen
-        </Button>
+          <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+                  onClick={loescheParty}>
+              Party löschen
+          </Button>
 
-        <Button style={{fontSize: "1em", marginTop: "10px"}}
-                onClick={saveParty}>
-          Speichern
-        </Button>
-
-        {/*{isPartySaved && <p style={{color: "red"}}>Party gespeichert</p>}*/}
+          <Button style={{fontSize: "1em", marginTop: "10px"}}
+                  onClick={saveParty}>
+              Speichern
+          </Button>
 
       </section>}
 

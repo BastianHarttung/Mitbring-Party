@@ -7,6 +7,7 @@ export interface IParty {
   zeit: string,
   infos: string,
   essen: IEssen[],
+  notizen?: INotizen[],
 }
 
 export interface IPartyApp extends IParty {
@@ -17,4 +18,13 @@ export interface IEssen {
   kategorie: string,
   essenName: string,
   werBringts: string,
+}
+
+export interface INotizen {
+  id: string;
+  name: string,
+  datum: string,  // ISO String in Format "2023-05-28"
+  beschreibung: string,
+  // kommentare: IKommentar[], TODO
+
 }
