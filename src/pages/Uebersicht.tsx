@@ -13,9 +13,8 @@ const Uebersicht = () => {
     speichereActiveId,
   } = globalStore;
 
-  const params = useParams();
-  // const navigate = useNavigate();
   const [party, setParty] = useState<IPartyApp>(addTeilnehmer(emptyParty));
+  const params = useParams();
 
   const partyFind = partyCollection.find((party) => party.id === params.id);
 

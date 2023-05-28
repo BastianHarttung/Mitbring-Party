@@ -14,7 +14,7 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-  const isLinkActive = cleanLocation === "/wahl" || cleanLocation === "/uebersicht" || cleanLocation === "/kommentare";
+  const isLinkActive = cleanLocation === "/wahl" || cleanLocation === "/uebersicht" || cleanLocation === "/notizen";
 
   const handleBackBtnClick = () => {
     navigate(beforeUrl)
@@ -37,7 +37,7 @@ const Header = () => {
               <>
                   <NavLink to={"wahl/" + activeId}
                            className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>Wahl</NavLink>
-                  <NavLink to={"kommentare/" + activeId}
+                  <NavLink to={"notizen/" + activeId}
                            className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>
                       <div className={classes.comment_link_container}>
                           <div>5</div>
