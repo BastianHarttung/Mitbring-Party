@@ -8,6 +8,7 @@ import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
 import WrongUrl from "./pages/WrongUrl";
+import Kommentare from "./pages/Kommentare";
 import Profil from "./pages/Profil";
 import Hilfe from "./pages/Hilfe";
 import userStore from "./stores/user-store";
@@ -57,6 +58,9 @@ function App(): JSX.Element {
           />
           <Route path="admin/:id"
                  element={<Admin/>}
+          />
+          <Route path="kommentare/:id"
+                 element={<Kommentare/>}
           />
           <Route path="profil"
                  element={<Profil/>}

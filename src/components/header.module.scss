@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 64px;
+  gap: 12px;
 }
 
 .navLogo {
@@ -61,4 +61,21 @@
   height: 30px;
   padding: 8px 16px 16px 16px;
   cursor: pointer;
+}
+
+.comment_link_container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  div {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 0.9rem;
+    line-height: 18px;
+    text-align: center;
+  }
 }
