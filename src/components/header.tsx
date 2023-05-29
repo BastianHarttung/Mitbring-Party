@@ -3,7 +3,8 @@ import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react";
 import globalStore from "../stores/global-store";
 import logo from "../assets/img/logos/essen_logo_voll.svg";
-import {FaChevronLeft, FaRegCommentAlt} from "react-icons/fa"
+import notesIcon from "../assets/img/icons/comment_bubble_speach.svg";
+import {FaChevronLeft} from "react-icons/fa"
 
 const Header = () => {
 
@@ -41,7 +42,7 @@ const Header = () => {
                            className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>
                       <div className={classes.comment_link_container}>
                           <div>5</div>
-                          <FaRegCommentAlt size={24}/>
+                          <img className={classes.navLogo} src={notesIcon} alt="Notizen"/>
                       </div>
                   </NavLink>
                   <NavLink to={"uebersicht/" + activeId}
