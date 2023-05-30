@@ -1,4 +1,4 @@
-import {IEssen, INotizen} from "../interfaces/IParty";
+import {IEssen, INotiz} from "../interfaces/IParty";
 
 
 export class Party {
@@ -9,10 +9,10 @@ export class Party {
   zeit: string;
   infos: string;
   essen: IEssen[];
-  notizen: INotizen[];
+  notizen: INotiz[];
   teilnehmer: string[];
 
-  constructor(partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = [], notizen: INotizen[] = []) {
+  constructor(partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = [], notizen: INotiz[] = []) {
     this.id = new Date().getTime().toString();
     this.partyName = partyName;
     this.ort = ort;

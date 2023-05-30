@@ -10,6 +10,7 @@ export const emptyParty: IPartyApp = {
   zeit: "",
   infos: "",
   essen: [],
+  notizen: [],
   teilnehmer: [],
 };
 export const emptyPartyCollection: IParty[] = [
@@ -22,6 +23,7 @@ export const emptyPartyCollection: IParty[] = [
     zeit: "",
     infos: "",
     essen: [],
+    notizen: [],
   },
 ];
 
@@ -35,6 +37,7 @@ export const testPartyCollection: IParty[] = [
     zeit: "11:30",
     infos: "Das alljährliche Weihnachtsfondue",
     essen: [],
+    notizen: [],
   },
   {
     id: "1651865749256",
@@ -69,6 +72,14 @@ export const testPartyCollection: IParty[] = [
         werBringts: "",
       },
     ],
+    notizen: [
+      {
+        id: "1234",
+        name: "Bastian",
+        datum: "2023-05-23",  // ISO String in Format "2023-05-28"
+        beschreibung: "Das ist eine Test Notiz. Hoffentlich klappt das gut und ich habe Ruhe",
+      }
+    ]
   },
 
 ];

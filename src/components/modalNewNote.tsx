@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import Modal from "../ui-components/Modal";
 import Button from "../ui-components/Button";
-import {INotizen} from "../interfaces/IParty";
+import {INotiz} from "../interfaces/IParty";
 import userStore from "../stores/user-store";
 
 
 interface ModalNewNoteProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (note: INotizen) => void;
+  onSave: (note: INotiz) => void;
 }
 
 const ModalNewNote = ({isOpen, onClose, onSave}: ModalNewNoteProps) => {
@@ -30,7 +30,7 @@ const ModalNewNote = ({isOpen, onClose, onSave}: ModalNewNoteProps) => {
 
   const handleSubmit = () => {
     if (newNote) {
-      const newNoteObj: INotizen = {
+      const newNoteObj: INotiz = {
         id: new Date().getTime().toString(),
         name: userName ?? "",
         datum: new Date().toISOString().split("T")[0],  // ISO String in Format "2023-05-28"

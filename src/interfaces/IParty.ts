@@ -7,7 +7,7 @@ export interface IParty {
   zeit: string,
   infos: string,
   essen: IEssen[],
-  notizen?: INotizen[],
+  notizen: INotiz[],
 }
 
 export interface IPartyApp extends IParty {
@@ -20,7 +20,7 @@ export interface IEssen {
   werBringts: string,
 }
 
-export interface INotizen {
+export interface INotiz {
   id: string;
   name: string,
   datum: string,  // ISO String in Format "2023-05-28"

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
 import {FiPlus} from "react-icons/fi";
-import {INotizen, IPartyApp} from "../interfaces/IParty";
+import {INotiz, IPartyApp} from "../interfaces/IParty";
 import {emptyParty} from "../mockup/testConstants";
 import globalStore from "../stores/global-store";
 import ButtonCircle from "../ui-components/Button-Circle";
@@ -16,6 +16,7 @@ const Notizen = () => {
     addTeilnehmer,
     speichereActiveId,
     speichereNotesCount,
+    speichereNotiz,
   } = globalStore;
 
   const [isModalNewNoteOpen, setIsModalNewNoteOpen] = useState(false);
@@ -25,8 +26,10 @@ const Notizen = () => {
 
   const partyFind = partyCollection.find((party) => party.id === params.id);
 
-  const handleSaveNewNote = (note: INotizen) => {
+  const handleSaveNewNote = (note: INotiz) => {
     console.log("save new note", note)
+    speichereNotiz(params.id, note)
+    setIsModalNewNoteOpen(false)
   }
 
   useEffect(() => {
@@ -37,6 +40,7 @@ const Notizen = () => {
     setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
   }, [partyFind, addTeilnehmer, speichereActiveId, speichereNotesCount, params.id]);
 
+
   return (
     <section className={classes.notizenSection}>
       <ModalNewNote isOpen={isModalNewNoteOpen}
@@ -44,6 +48,9 @@ const Notizen = () => {
                     onSave={handleSaveNewNote}/>
 
       <h3>Notizen zu {party.partyName}</h3>
+
+      {party.notizen && party.notizen.map((notiz) => <div>{notiz.beschreibung}</div>)}
+
       <ButtonCircle
         onClick={() => setIsModalNewNoteOpen(true)}
         icon={<FiPlus/>}

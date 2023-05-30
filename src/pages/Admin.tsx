@@ -6,7 +6,7 @@ import {FiPlus} from "react-icons/fi";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
 import {TEssen} from "../interfaces/Types";
-import {IEssen, IParty} from "../interfaces/IParty";
+import {IEssen, INotiz, IParty} from "../interfaces/IParty";
 import ModalPassword from "../components/modalPassword";
 import Button from "../ui-components/Button";
 import userStore from "../stores/user-store";
@@ -36,6 +36,7 @@ const Admin = (): JSX.Element => {
   const [zeit, setZeit] = useState(partyFind?.zeit ?? "");
   const [infos, setInfos] = useState(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
+  const [notizen, setNotizen] = useState<INotiz[]>(partyFind?.notizen ?? []);
 
   function handleChangeEssen(event: any, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
@@ -59,6 +60,7 @@ const Admin = (): JSX.Element => {
         zeit,
         infos,
         essen,
+        notizen,
       });
       throwPopupMessage("Party gespeichert", "success");
     }

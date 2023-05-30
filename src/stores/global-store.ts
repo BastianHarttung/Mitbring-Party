@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import {emptyPartyCollection} from "../mockup/testConstants";
-import {IParty} from "../interfaces/IParty";
+import {INotiz, IParty} from "../interfaces/IParty";
 import {IEssen} from "../interfaces/IParty";
 import {IPartyApp} from "../interfaces/IParty";
 import {downloadFromServer, backend, setURL} from "../mini_backend";
@@ -59,12 +59,20 @@ class GlobalStore {
   };
 
   speichereEssen = (id: string | undefined, essen: IEssen) => {
-    const partyFind = this.partyCollection.find((part) => part.id.toString() === id);
+    const partyFind = this.partyCollection.find((part) => part.id === id);
     if (!!partyFind) {
       partyFind.essen.push(essen);
       this.savePartyToBackend();
     }
   };
+
+  speichereNotiz = (id: string | undefined, note: INotiz) => {
+    const partyFind = this.partyCollection.find((party) => party.id === id);
+    if (!!partyFind) {
+      partyFind.notizen.push(note);
+      this.savePartyToBackend();
+    }
+  }
 
   /**
    * Speichere Auswahl und Name
