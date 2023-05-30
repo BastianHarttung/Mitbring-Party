@@ -11,7 +11,8 @@
 
   .inputContainer {
     background-color: white;
-    max-width: clamp(200px, 70%, 300px);
+    width: 100%;
+    max-width: clamp(200px, 75%, 300px);
     display: flex;
     flex-direction: column;
     justify-content: center;

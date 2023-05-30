@@ -48,7 +48,7 @@ const ModalNewFood = ({isOpen, onClose, onSave, categories}: ModalNewFoodProps) 
   return (
     <Modal isOpen={isModalOpen}
            onClose={closeModal}>
-      <form className="flex-column-gap-3">
+      <form className="flex-column-gap-3 width-100">
         <input type="text"
                placeholder="Essen"
                value={newFood}

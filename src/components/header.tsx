@@ -8,7 +8,13 @@ import {FaChevronLeft} from "react-icons/fa"
 
 const Header = () => {
 
-  const {activeId, isSettingsOpen, closeSettings, beforeUrl} = globalStore;
+  const {
+    activeId,
+    isSettingsOpen,
+    closeSettings,
+    beforeUrl,
+    notesCount
+  } = globalStore;
 
   const location = useLocation();
   const cleanLocation = location.pathname.slice(0, location.pathname.lastIndexOf("/"));
@@ -41,7 +47,7 @@ const Header = () => {
                   <NavLink to={"notizen/" + activeId}
                            className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>
                       <div className={classes.comment_link_container}>
-                          <div>5</div>
+                          <div>{notesCount > 0 ? notesCount : ""}</div>
                           <img className={classes.navLogo} src={notesIcon} alt="Notizen"/>
                       </div>
                   </NavLink>

@@ -26,5 +26,4 @@ export interface INotizen {
   datum: string,  // ISO String in Format "2023-05-28"
   beschreibung: string,
   // kommentare: IKommentar[], TODO
-
 }

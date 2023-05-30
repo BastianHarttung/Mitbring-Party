@@ -15,6 +15,9 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent; /* Für WebKit-basierte Browser */
+  -webkit-touch-callout: none; /* Für WebKit-basierte Browser */
+  user-select: none;
 
   &::-webkit-scrollbar {
     height: 8px;
@@ -116,7 +119,7 @@ textarea {
   background-color: transparent;
   font-family: "Inter", Arial, sans-serif;
   font-size: 0.9em;
-  min-width: 300px;
+  min-width: 200px;
   min-height: 120px;
   border: 1px solid var(--gray-dark);
   border-radius: 8px;
