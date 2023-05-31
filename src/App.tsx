@@ -21,8 +21,16 @@ import ButtonCircle from "./ui-components/Button-Circle";
 
 function App(): JSX.Element {
 
-  const {popupMessage, popupStyle, isSettingsOpen, openSettings} = globalStore;
-  const {isModalUserNameOpen, isModalAdminOpen} = userStore;
+  const {
+    popupMessage,
+    popupStyle,
+    isSettingsOpen,
+    openSettings,
+  } = globalStore;
+  const {
+    isModalUserNameOpen,
+    isModalAdminOpen,
+  } = userStore;
 
   const navigate = useNavigate();
   const location = useLocation();

@@ -1,17 +1,18 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-import { MdDelete } from "react-icons/md";
+import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import React, {useState} from "react";
+import {MdDelete} from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
-import { TEssen } from "../interfaces/Types";
-import { IEssen, IParty } from "../interfaces/IParty";
+import {TEssen} from "../interfaces/Types";
+import {IEssen, IParty} from "../interfaces/IParty";
 import ModalPassword from "../components/modalPassword";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 import Button from "../ui-components/Button";
 import userStore from "../stores/user-store";
 import ButtonCircle from "../ui-components/Button-Circle";
-import { FiPlus } from "react-icons/fi";
+import {FiPlus} from "react-icons/fi";
+import ModalConfirmDelete from "../components/modalConfirmDelete";
 
 
 const Admin = (): JSX.Element => {
@@ -30,15 +31,15 @@ const Admin = (): JSX.Element => {
 
   const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
 
-  const [partyName, setPartyName] = useState(partyFind?.partyName ?? "");
-  const [ort, setOrt] = useState(partyFind?.ort ?? "");
-  const [ortCoordinates, setOrtCoordinates] = useState(partyFind?.ortCoordinates ?? "");
-  const [datum, setDatum] = useState(partyFind?.datum ?? "");
-  const [zeit, setZeit] = useState(partyFind?.zeit ?? "");
-  const [infos, setInfos] = useState(partyFind?.infos ?? "");
+  const [partyName, setPartyName] = useState<string>(partyFind?.partyName ?? "");
+  const [ort, setOrt] = useState<string>(partyFind?.ort ?? "");
+  const [ortCoordinates, setOrtCoordinates] = useState<string>(partyFind?.ortCoordinates ?? "");
+  const [datum, setDatum] = useState<string>(partyFind?.datum ?? "");
+  const [zeit, setZeit] = useState<string>(partyFind?.zeit ?? "");
+  const [infos, setInfos] = useState<string>(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
 
-  // const [isPartySaved, setIsPartySaved] = useState(false);
+  const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
 
   function handleChangeEssen(event: any, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
@@ -89,29 +90,33 @@ const Admin = (): JSX.Element => {
     <>
       {!isAdmin && <ModalPassword isOpen={true}
                                   closeable={false}/>}
+      {isModalConfirmDeleteOpen && <ModalConfirmDelete isOpen={isModalConfirmDeleteOpen}
+                                                       onClose={() => setIsModalConfirmDeleteOpen(false)}
+                                                       onDelete={loescheParty}/>}
+
 
       {isAdmin && <section className={classes.adminSection}>
-        <input type="text"
-               placeholder="Party Name"
-               value={partyName}
-               onChange={(e) => setPartyName(e.target.value)}/>
-        <input type="text"
-               placeholder="Ort"
-               value={ort}
-               onChange={(e) => setOrt(e.target.value)}/>
-        <input type="text"
-               placeholder="Koordinaten oder Adresse"
-               value={ortCoordinates}
-               onChange={(e) => setOrtCoordinates(e.target.value)}/>
-        <input type="date"
-               value={datum}
-               onChange={(e) => setDatum(e.target.value)}/>
-        <input type="time"
-               value={zeit}
-               onChange={(e) => setZeit(e.target.value)}/>
-        <textarea value={infos}
-                  placeholder="Infos"
-                  onChange={(e) => setInfos(e.target.value)}/>
+          <input type="text"
+                 placeholder="Party Name"
+                 value={partyName}
+                 onChange={(e) => setPartyName(e.target.value)}/>
+          <input type="text"
+                 placeholder="Ort"
+                 value={ort}
+                 onChange={(e) => setOrt(e.target.value)}/>
+          <input type="text"
+                 placeholder="Koordinaten oder Adresse"
+                 value={ortCoordinates}
+                 onChange={(e) => setOrtCoordinates(e.target.value)}/>
+          <input type="date"
+                 value={datum}
+                 onChange={(e) => setDatum(e.target.value)}/>
+          <input type="time"
+                 value={zeit}
+                 onChange={(e) => setZeit(e.target.value)}/>
+          <textarea value={infos}
+                    placeholder="Infos"
+                    onChange={(e) => setInfos(e.target.value)}/>
         {essen.map((ess, index) => {
           return (
             <div key={index} className={classes.essenContainer}>
@@ -126,23 +131,21 @@ const Admin = (): JSX.Element => {
           );
         })}
 
-        <ButtonCircle
-          onClick={handleAddNewChoice}
-          icon={<FiPlus/>}
-          btnStyle="primary"
-          size="14px"/>
+          <ButtonCircle
+              onClick={handleAddNewChoice}
+              icon={<FiPlus/>}
+              btnStyle="primary"
+              size="14px"/>
 
-        <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
-                onClick={loescheParty}>
-          Party löschen
-        </Button>
+          <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+                  onClick={() => setIsModalConfirmDeleteOpen(true)}>
+              Party löschen
+          </Button>
 
-        <Button style={{fontSize: "1em", marginTop: "10px"}}
-                onClick={saveParty}>
-          Speichern
-        </Button>
-
-        {/*{isPartySaved && <p style={{color: "red"}}>Party gespeichert</p>}*/}
+          <Button style={{fontSize: "1em", marginTop: "10px"}}
+                  onClick={saveParty}>
+              Speichern
+          </Button>
 
       </section>}
 

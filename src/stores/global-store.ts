@@ -1,10 +1,10 @@
-import { makeAutoObservable } from "mobx";
-import { emptyPartyCollection } from "../mockup/testConstants";
-import { IParty } from "../interfaces/IParty";
-import { IEssen } from "../interfaces/IParty";
-import { IPartyApp } from "../interfaces/IParty";
-import { downloadFromServer, backend, setURL } from "../mini_backend";
-import { TPopupStyle } from "../interfaces/Types";
+import {makeAutoObservable} from "mobx";
+import {emptyPartyCollection} from "../mockup/testConstants";
+import {IParty} from "../interfaces/IParty";
+import {IEssen} from "../interfaces/IParty";
+import {IPartyApp} from "../interfaces/IParty";
+import {downloadFromServer, backend, setURL} from "../mini_backend";
+import {TPopupStyle} from "../interfaces/Types";
 
 
 class GlobalStore {
