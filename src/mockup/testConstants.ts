@@ -25,6 +25,73 @@ export const emptyPartyCollection: IParty[] = [
   },
 ];
 
+
+export const birthdayParty =  {
+  id: "1652027075154",
+  partyName: "Geburtstags-Picknick Basti 40er",
+  ort: "Rothsee/Birkach",
+  ortCoordinates: "49.230910, 11.197084",
+  datum: "2023-06-10",
+  zeit: "15:00",
+  infos: "Lasst uns einfach Spaß haben und den Tag genießen mit einem Picknick wo jeder was mitbringen darf und die Leckereien genießen kann, die andere mitgebracht haben.\n" +
+    "Und damit die Vorfreude noch größer wird und wir nicht zu viel doppelt haben tragt bitte ein was ihr mitbringt.\n" +
+    "Entweder macht ihr Häkchen und drückt \"Auswahl speichern\" oder noch besser ihr klickt \"+\" und tragt selber was ein.\n" +
+    "Für Getränke sorgen wir, außer ihr braucht irgendwas ganz Spezielles.\n" +
+    "Wir freuen uns auf euch.",
+  essen: [
+    {
+      kategorie: "Salate",
+      essenName: "Nudelsalat",
+      werBringts: ""
+    },
+    {
+      kategorie: "Süßes",
+      essenName: "Muffins",
+      werBringts: ""
+    },
+    {
+      kategorie: "Herzhaftes",
+      essenName: "Bratwürstchen/ Nürnberger",
+      werBringts: "Patrick"
+    },
+    {
+      kategorie: "Salate",
+      essenName: "Takkosalat",
+      werBringts: ""
+    },
+    {
+      kategorie: "Salate",
+      essenName: "Kartoffelsalat",
+      werBringts: "Bastian"
+    },
+    {
+      kategorie: "Herzhaftes",
+      essenName: "Baguetteschlange",
+      werBringts: "Julia"
+    },
+    {
+      kategorie: "Beilagen",
+      essenName: "Zatziki",
+      werBringts: "Sabrina"
+    },
+    {
+      kategorie: "Herzhaftes",
+      essenName: "Herzhafte Spieße (z.B. Käse-Weintraube u.a.m.)",
+      werBringts: "Silke/Tree"
+    },
+    {
+      kategorie: "Herzhaftes",
+      essenName: "Fleischküchle",
+      werBringts: ""
+    },
+    {
+      kategorie: "Salate",
+      essenName: "Melonensalat",
+      werBringts: ""
+    }
+  ]
+}
+
 export const testPartyCollection: IParty[] = [
   {
     id: "1667260800000",
@@ -36,39 +103,6 @@ export const testPartyCollection: IParty[] = [
     infos: "Das alljährliche Weihnachtsfondue",
     essen: [],
   },
-  {
-    id: "1651865749256",
-    partyName: "Geburtstags-picknick Julia + Basti 2022",
-    ort: "Rothsee",
-    ortCoordinates: "49.230910, 11.197084",
-    datum: "2022-05-28",
-    zeit: "15:00",
-    infos: "Wir feiern Geburtstag :)\n" +
-      "Mit einem Picknick wo jeder was mitbringen darf und die Leckereien genießen kann, die andere mitgebracht haben. \n" +
-      "Lasst uns Spaß haben.\n" +
-      "Und damit nicht zu viel doppelt kommt tragt ein was ihr mitbringt.",
-    essen: [
-      {
-        kategorie: "Salate",
-        essenName: "Nudelsalat",
-        werBringts: "Sabrina",
-      },
-      {
-        kategorie: "Süßes",
-        essenName: "Kuchen",
-        werBringts: "Julia",
-      },
-      {
-        kategorie: "Herzhaftes",
-        essenName: "Gefüllte Eier",
-        werBringts: "Patrick",
-      },
-      {
-        kategorie: "Süßes",
-        essenName: "Muffins",
-        werBringts: "",
-      },
-    ],
-  },
+  birthdayParty
+]
 
-];
