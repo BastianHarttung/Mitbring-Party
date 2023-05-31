@@ -3,25 +3,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap:8px;
+  gap: 10px;
 
   input,
   textarea {
-    width: clamp(200px, 97%, 460px);
+    width: clamp(200px, 100%, 460px);
   }
 }
 
 .essenContainer {
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 4px;
 
-  input {
-    min-width: 100px;
-    width: 43%;
+  .essenName {
+    width: clamp(50px, 97%, 460px);
   }
 
-  input:first-child {
-    margin-right: 3%;
+  .input_second_row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .kategorie {
+      width: clamp(50px, 97%, 460px);
+      min-width: 50px;
+    }
+
+    .werBringts {
+      width: clamp(50px, 97%, 460px);
+      min-width: 50px;
+    }
   }
 
   input:nth-child(2) {
@@ -31,7 +45,7 @@
   svg {
     height: 100%;
     width: 25px;
-    margin-left: 5px;
+    min-width: 25px;
     cursor: pointer;
   }
 }
