@@ -30,10 +30,24 @@ const Wahl = () => {
 
   const params = useParams();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
+  const userCheckedEssen = () => {
+    if (partyFind) {
+      const essenArray = [];
+      for (let i = 0; i < partyFind.essen.length; i++) {
+        if (partyFind.essen[i].werBringts === userName) {
+          essenArray.push(partyFind.essen[i].essenName);
+        }
+      }
+      return essenArray;
+    }
+    else{
+      return []
+    }
+  }
 
   const [party, setParty] = useState<IParty>(emptyParty);
 
-  const [checkedEssen, setCheckedEssen] = useState<string[]>([]);
+  const [checkedEssen, setCheckedEssen] = useState<string[]>(userCheckedEssen());
 
   const [isAuswahlGespeichert, setIsAuswahlGespeichert] = useState(false);
 
@@ -78,6 +92,7 @@ const Wahl = () => {
     }
     setParty(partyFind ? partyFind : emptyParty);
   }, [partyFind, params.id, speichereActiveId]);
+
 
   if (!partyFind) {
     return <NoParty/>
