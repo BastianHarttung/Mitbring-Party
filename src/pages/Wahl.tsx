@@ -1,17 +1,18 @@
 import classes from "./Wahl.module.scss";
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { observer } from "mobx-react";
-import { FiPlus } from "react-icons/fi";
+import React, {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
+import {observer} from "mobx-react";
+import {FiPlus} from "react-icons/fi";
 import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
-import { emptyParty } from "../mockup/testConstants";
-import { IEssen, IParty } from "../interfaces/IParty";
+import {emptyParty} from "../mockup/testConstants";
+import {IEssen, IParty} from "../interfaces/IParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewFood from "../components/modalNewFood";
 import OrtAccordion from "../components/wahl/ortAccordion";
 import FoodCheck from "../components/wahl/foodCheck";
+import NoParty from "../components/noParty";
 
 
 const Wahl = () => {
@@ -78,6 +79,9 @@ const Wahl = () => {
     setParty(partyFind ? partyFind : emptyParty);
   }, [partyFind, params.id, speichereActiveId]);
 
+  if (!partyFind) {
+    return <NoParty/>
+  }
 
   return (
     <section>

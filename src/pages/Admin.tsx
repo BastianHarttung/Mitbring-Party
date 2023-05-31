@@ -14,6 +14,7 @@ import ButtonCircle from "../ui-components/Button-Circle";
 import {FiPlus} from "react-icons/fi";
 import ModalConfirmDelete from "../components/modalConfirmDelete";
 import FoodRow from "../components/admin/foodRow";
+import NoParty from "../components/noParty";
 
 
 const Admin = (): JSX.Element => {
@@ -87,7 +88,7 @@ const Admin = (): JSX.Element => {
   }
 
   if (!partyFind) {
-    return <div>Keine Party gefunden</div>
+    return <NoParty/>
   }
 
   return (
