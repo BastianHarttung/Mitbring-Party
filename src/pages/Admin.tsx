@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {MdDelete} from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
@@ -13,6 +13,7 @@ import userStore from "../stores/user-store";
 import ButtonCircle from "../ui-components/Button-Circle";
 import {FiPlus} from "react-icons/fi";
 import ModalConfirmDelete from "../components/modalConfirmDelete";
+import FoodRow from "../components/admin/foodRow";
 
 
 const Admin = (): JSX.Element => {
@@ -41,7 +42,7 @@ const Admin = (): JSX.Element => {
 
   const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
 
-  function handleChangeEssen(event: any, index: number, mod: TEssen): void {
+  function handleChangeEssen(event: ChangeEvent<HTMLInputElement>, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
     neuesEssen[index][mod] = event.target.value;
     setEssen(neuesEssen);
@@ -85,6 +86,9 @@ const Admin = (): JSX.Element => {
     navigate("/");
   }
 
+  if (!partyFind) {
+    return <div>Keine Party gefunden</div>
+  }
 
   return (
     <>
@@ -95,7 +99,7 @@ const Admin = (): JSX.Element => {
                                                        onDelete={loescheParty}/>}
 
 
-      {isAdmin && <section className={classes.adminSection}>
+      {(isAdmin && partyFind) ? <section className={classes.adminSection}>
           <input type="text"
                  placeholder="Party Name"
                  value={partyName}
@@ -117,37 +121,32 @@ const Admin = (): JSX.Element => {
           <textarea value={infos}
                     placeholder="Infos"
                     onChange={(e) => setInfos(e.target.value)}/>
-        {essen.map((ess, index) => {
-          return (
-            <div key={index} className={classes.essenContainer}>
-              <input type="text"
-                     value={ess.essenName}
-                     onChange={(event) => handleChangeEssen(event, index, "essenName")}/>
-              <input type="text"
-                     value={ess.werBringts}
-                     onChange={(event) => handleChangeEssen(event, index, "werBringts")}/>
-              <MdDelete onClick={() => loescheEssen(ess)}/>
-            </div>
-          );
-        })}
+          {essen.map((ess, index) => (
+            <FoodRow key={index}
+                     essen={ess}
+                     index={index}
+                     onChange={handleChangeEssen}
+                     onDelete={loescheEssen}/>)
+          )}
 
           <ButtonCircle
-              onClick={handleAddNewChoice}
-              icon={<FiPlus/>}
-              btnStyle="primary"
-              size="14px"/>
+            onClick={handleAddNewChoice}
+            icon={<FiPlus/>}
+            btnStyle="primary"
+            size="14px"/>
 
           <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
                   onClick={() => setIsModalConfirmDeleteOpen(true)}>
-              Party löschen
+            Party löschen
           </Button>
 
           <Button style={{fontSize: "1em", marginTop: "10px"}}
                   onClick={saveParty}>
-              Speichern
+            Speichern
           </Button>
 
-      </section>}
+        </section>
+        : <div>Keine Party</div>}
 
     </>
   );

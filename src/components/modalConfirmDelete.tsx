@@ -16,7 +16,11 @@ const ModalConfirmDelete = ({isOpen, onClose, onDelete}: ModalConfirmDeleteProps
            onClose={() => onClose()}
            closeable
            heading={"Party wirklich löschen?"}>
-      <Button onClick={() => onDelete()}>Löschen</Button>
+      <div className="flex-row justify-space-between width-100">
+        <Button btnStyle="secondary"
+                onClick={() => onClose()}>Abbrechen</Button>
+        <Button onClick={() => onDelete()}>Löschen</Button>
+      </div>
     </Modal>
   );
 };
