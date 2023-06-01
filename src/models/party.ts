@@ -12,7 +12,7 @@ export class Party {
   notizen: INotiz[];
   teilnehmer: string[];
 
-  constructor(partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = [], notizen: INotiz[] = []) {
+  constructor(partyName: string, ort: string, datum: string, zeit: string, infos: string, essen: IEssen[] = [], notizen: INotiz[] = [] ) {
     this.id = new Date().getTime().toString();
     this.partyName = partyName;
     this.ort = ort;

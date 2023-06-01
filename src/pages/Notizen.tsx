@@ -9,6 +9,7 @@ import globalStore from "../stores/global-store";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewNote from "../components/modalNewNote";
 import Loading from "../ui-components/Loading";
+import Notiz from "../components/notizen/notiz";
 
 
 const Notizen = () => {
@@ -29,7 +30,6 @@ const Notizen = () => {
   const partyFind = partyCollection.find((party) => party.id === params.id);
 
   const handleSaveNewNote = (note: INotiz) => {
-    console.log("save new note", note)
     speichereNotiz(params.id, note)
     setIsModalNewNoteOpen(false)
   }
@@ -55,7 +55,10 @@ const Notizen = () => {
 
       <h3>Notizen zu {party.partyName}</h3>
 
-      {party.notizen && party.notizen.map((notiz) => <div>{notiz.beschreibung}</div>)}
+      {party.notizen && party.notizen.map((notiz) =>
+        <Notiz key={notiz.id}
+               notiz={notiz}/>
+      )}
 
       <ButtonCircle
         onClick={() => setIsModalNewNoteOpen(true)}

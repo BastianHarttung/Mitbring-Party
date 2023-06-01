@@ -80,8 +80,8 @@ class GlobalStore {
   speichereNotiz = (id: string | undefined, note: INotiz) => {
     const partyFind = this.partyCollection.find((party) => party.id === id);
     if (!!partyFind) {
-      partyFind.notizen.push(note);
-      this.savePartyToBackend();
+      partyFind.notizen = [...partyFind.notizen, note]
+      this.savePartyToBackend()
     }
   }
 
