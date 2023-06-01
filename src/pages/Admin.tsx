@@ -1,7 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import React, {ChangeEvent, useState} from "react";
-import {MdDelete} from "react-icons/md";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
 import {TEssen} from "../interfaces/Types";

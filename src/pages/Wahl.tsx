@@ -1,12 +1,12 @@
 import classes from "./Wahl.module.scss";
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { observer } from "mobx-react";
-import { FiPlus } from "react-icons/fi";
+import React, {useState, useEffect, useMemo} from "react";
+import {useParams} from "react-router-dom";
+import {observer} from "mobx-react";
+import {FiPlus} from "react-icons/fi";
 import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
-import { emptyParty } from "../mockup/testConstants";
-import { IEssen, IParty } from "../interfaces/IParty";
+import {emptyParty} from "../mockup/testConstants";
+import {IEssen, IParty} from "../interfaces/IParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewFood from "../components/modalNewFood";
@@ -31,7 +31,7 @@ const Wahl = () => {
 
   const params = useParams();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
-  const userCheckedEssen = () => {
+  const userCheckedEssen = useMemo(() => {
     if (partyFind) {
       const essenArray = [];
       for (let i = 0; i < partyFind.essen.length; i++) {
@@ -43,11 +43,11 @@ const Wahl = () => {
     } else {
       return [];
     }
-  };
+  }, [partyFind, userName])
 
   const [party, setParty] = useState<IParty>(emptyParty);
 
-  const [checkedEssen, setCheckedEssen] = useState<string[]>(userCheckedEssen());
+  const [checkedEssen, setCheckedEssen] = useState<string[]>([]);
 
   const [isModalNewFoodOpen, setIsModalNewFoodOpen] = useState(false);
 
@@ -81,9 +81,10 @@ const Wahl = () => {
   useEffect(() => {
     if (params.id) {
       speichereActiveId(params.id);
+      setCheckedEssen(userCheckedEssen)
     }
     setParty(partyFind ? partyFind : emptyParty);
-  }, [partyFind, params.id, speichereActiveId]);
+  }, [partyFind, params.id, speichereActiveId, userCheckedEssen]);
 
 
   if (!partyFind) {

@@ -67,7 +67,6 @@ class GlobalStore {
    * @param {object} partyObject Object of active Party
    */
   speichereAuswahl = (checkedEssen: string[], neuerName: string, partyObject: IParty): void => {
-    console.log("speichere checkedEssen", checkedEssen);
     const newPartyCollection = this.partyCollection.map((party) => {
       if (party.id === partyObject.id) {
         const newParty = {...party};
