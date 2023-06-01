@@ -1,8 +1,7 @@
+import React, {ChangeEvent, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
-import React, {useState} from "react";
-import {observer} from "mobx-react";
-import {MdDelete} from "react-icons/md";
 import {FiPlus} from "react-icons/fi";
+import {observer} from "mobx-react";
 import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
 import {TEssen} from "../interfaces/Types";
@@ -11,6 +10,9 @@ import ModalPassword from "../components/modalPassword";
 import Button from "../ui-components/Button";
 import userStore from "../stores/user-store";
 import ButtonCircle from "../ui-components/Button-Circle";
+import ModalConfirmDelete from "../components/modalConfirmDelete";
+import FoodRow from "../components/admin/foodRow";
+import NoParty from "../components/noParty";
 
 
 const Admin = (): JSX.Element => {
@@ -29,16 +31,18 @@ const Admin = (): JSX.Element => {
 
   const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
 
-  const [partyName, setPartyName] = useState(partyFind?.partyName ?? "");
-  const [ort, setOrt] = useState(partyFind?.ort ?? "");
-  const [ortCoordinates, setOrtCoordinates] = useState(partyFind?.ortCoordinates ?? "");
-  const [datum, setDatum] = useState(partyFind?.datum ?? "");
-  const [zeit, setZeit] = useState(partyFind?.zeit ?? "");
-  const [infos, setInfos] = useState(partyFind?.infos ?? "");
+  const [partyName, setPartyName] = useState<string>(partyFind?.partyName ?? "");
+  const [ort, setOrt] = useState<string>(partyFind?.ort ?? "");
+  const [ortCoordinates, setOrtCoordinates] = useState<string>(partyFind?.ortCoordinates ?? "");
+  const [datum, setDatum] = useState<string>(partyFind?.datum ?? "");
+  const [zeit, setZeit] = useState<string>(partyFind?.zeit ?? "");
+  const [infos, setInfos] = useState<string>(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
   const [notizen, setNotizen] = useState<INotiz[]>(partyFind?.notizen ?? []);
 
-  function handleChangeEssen(event: any, index: number, mod: TEssen): void {
+  const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
+
+  function handleChangeEssen(event: ChangeEvent<HTMLInputElement>, index: number, mod: TEssen): void {
     let neuesEssen = [...essen];
     neuesEssen[index][mod] = event.target.value;
     setEssen(neuesEssen);
@@ -83,66 +87,67 @@ const Admin = (): JSX.Element => {
     navigate("/");
   }
 
+  if (!partyFind) {
+    return <NoParty/>
+  }
 
   return (
     <>
       {!isAdmin && <ModalPassword isOpen={true}
                                   closeable={false}/>}
+      {isModalConfirmDeleteOpen && <ModalConfirmDelete isOpen={isModalConfirmDeleteOpen}
+                                                       onClose={() => setIsModalConfirmDeleteOpen(false)}
+                                                       onDelete={loescheParty}/>}
 
-      {isAdmin && <section className={classes.adminSection}>
-          <input type="text"
-                 placeholder="Party Name"
-                 value={partyName}
-                 onChange={(e) => setPartyName(e.target.value)}/>
-          <input type="text"
-                 placeholder="Ort"
-                 value={ort}
-                 onChange={(e) => setOrt(e.target.value)}/>
-          <input type="text"
-                 placeholder="Koordinaten oder Adresse"
-                 value={ortCoordinates}
-                 onChange={(e) => setOrtCoordinates(e.target.value)}/>
-          <input type="date"
-                 value={datum}
-                 onChange={(e) => setDatum(e.target.value)}/>
-          <input type="time"
-                 value={zeit}
-                 onChange={(e) => setZeit(e.target.value)}/>
-          <textarea value={infos}
-                    placeholder="Infos"
-                    onChange={(e) => setInfos(e.target.value)}/>
-        {essen.map((ess, index) => {
-          return (
-            <div key={index} className={classes.essenContainer}>
+
+      {(isAdmin && partyFind) &&
+          <section className={classes.adminSection}>
               <input type="text"
-                     value={ess.essenName}
-                     onChange={(event) => handleChangeEssen(event, index, "essenName")}/>
+                     placeholder="Party Name"
+                     value={partyName}
+                     onChange={(e) => setPartyName(e.target.value)}/>
               <input type="text"
-                     value={ess.werBringts}
-                     onChange={(event) => handleChangeEssen(event, index, "werBringts")}/>
-              <MdDelete onClick={() => loescheEssen(ess)}/>
-            </div>
-          );
-        })}
+                     placeholder="Ort"
+                     value={ort}
+                     onChange={(e) => setOrt(e.target.value)}/>
+              <input type="text"
+                     placeholder="Koordinaten oder Adresse"
+                     value={ortCoordinates}
+                     onChange={(e) => setOrtCoordinates(e.target.value)}/>
+              <input type="date"
+                     value={datum}
+                     onChange={(e) => setDatum(e.target.value)}/>
+              <input type="time"
+                     value={zeit}
+                     onChange={(e) => setZeit(e.target.value)}/>
+              <textarea value={infos}
+                        placeholder="Infos"
+                        onChange={(e) => setInfos(e.target.value)}/>
+            {essen.map((ess, index) => (
+              <FoodRow key={index}
+                       essen={ess}
+                       index={index}
+                       onChange={handleChangeEssen}
+                       onDelete={loescheEssen}/>)
+            )}
 
-          <ButtonCircle
-              onClick={handleAddNewChoice}
-              icon={<FiPlus/>}
-              btnStyle="primary"
-              size="14px"/>
+              <ButtonCircle
+                  onClick={handleAddNewChoice}
+                  icon={<FiPlus/>}
+                  btnStyle="primary"
+                  size="14px"/>
 
-          <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
-                  onClick={loescheParty}>
-              Party löschen
-          </Button>
+              <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+                      onClick={() => setIsModalConfirmDeleteOpen(true)}>
+                  Party löschen
+              </Button>
 
-          <Button style={{fontSize: "1em", marginTop: "10px"}}
-                  onClick={saveParty}>
-              Speichern
-          </Button>
+              <Button style={{fontSize: "1em", marginTop: "10px"}}
+                      onClick={saveParty}>
+                  Speichern
+              </Button>
 
-      </section>}
-
+          </section>}
     </>
   );
 };

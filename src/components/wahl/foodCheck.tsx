@@ -1,14 +1,27 @@
 import classes from "./foodCheck.module.scss";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { IEssen } from "../../interfaces/IParty";
+import userStore from "../../stores/user-store";
 
 
 interface FoodCheckProps {
   essen: IEssen;
   onChecked: (event: ChangeEvent<HTMLInputElement>) => void;
+  defaultChecked: boolean;
 }
 
-const FoodCheck = ({essen, onChecked}: FoodCheckProps) => {
+const FoodCheck = ({essen, onChecked, defaultChecked}: FoodCheckProps) => {
+  const {userName} = userStore;
+
+  const [isChecked, setIsChecked] = useState(defaultChecked);
+
+  const userHasChecked = essen.werBringts === userName;
+
+  const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
+    onChecked(event);
+    setIsChecked(prevState => !prevState);
+  };
+
   return (
     <div className={classes.checkbox}>
       <div className={classes.checkboxName}>
@@ -16,8 +29,9 @@ const FoodCheck = ({essen, onChecked}: FoodCheckProps) => {
                id={essen.essenName}
                name={essen.essenName}
                value={essen.essenName}
-               onChange={onChecked}
-               disabled={!!essen.werBringts}/>
+               onChange={handleCheck}
+               checked={isChecked}
+               disabled={!!essen.werBringts && !userHasChecked}/>
         <label htmlFor={essen.essenName}>{essen.essenName}</label>
       </div>
       {essen.werBringts && <div className={classes.werBringts}><i>({essen.werBringts})</i></div>}

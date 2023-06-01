@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {emptyParty} from "../mockup/testConstants";
 import {IPartyApp} from "../interfaces/IParty";
+import NoParty from "../components/noParty";
 
 const Uebersicht = () => {
   const {
@@ -25,6 +26,9 @@ const Uebersicht = () => {
     setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
   }, [partyFind, addTeilnehmer, speichereActiveId, params.id]);
 
+  if(!partyFind){
+    return <NoParty/>
+  }
 
   return (
     <section className={classes.uebersichtSection}>
