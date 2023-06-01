@@ -1,15 +1,17 @@
 import classes from "./Uebersicht.module.scss";
 import {useParams} from "react-router-dom";
 import globalStore from "../stores/global-store";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {emptyParty} from "../mockup/testConstants";
 import {IPartyApp} from "../interfaces/IParty";
 import NoParty from "../components/noParty";
+import Loading from "../ui-components/Loading";
 
 const Uebersicht = () => {
   const {
     partyCollection,
+    isLoading,
     addTeilnehmer,
     speichereActiveId,
   } = globalStore;
@@ -26,7 +28,12 @@ const Uebersicht = () => {
     setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
   }, [partyFind, addTeilnehmer, speichereActiveId, params.id]);
 
-  if(!partyFind){
+
+  if (isLoading) {
+    return <Loading/>
+  }
+
+  if (!partyFind) {
     return <NoParty/>
   }
 

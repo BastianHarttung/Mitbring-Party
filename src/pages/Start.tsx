@@ -1,5 +1,5 @@
 import classes from "./Start.module.scss";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import globalStore from "../stores/global-store";
@@ -7,12 +7,14 @@ import { Party } from "../models/party";
 import Button from "../ui-components/Button";
 import { FiPlus } from "react-icons/fi";
 import userStore from "../stores/user-store";
+import Loading from "../ui-components/Loading";
 
 
 const Start = (): JSX.Element => {
 
   const {
     partyCollection,
+    isLoading,
     speichereActiveId,
     speichereParty,
     datumZuLocalString,
@@ -59,6 +61,10 @@ const Start = (): JSX.Element => {
     }
   };
 
+
+  if (isLoading) {
+    return <Loading/>
+  }
 
   return (
     <section className={classes.startSection}>

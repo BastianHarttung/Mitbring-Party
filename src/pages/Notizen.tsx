@@ -8,11 +8,13 @@ import {emptyParty} from "../mockup/testConstants";
 import globalStore from "../stores/global-store";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewNote from "../components/modalNewNote";
+import Loading from "../ui-components/Loading";
 
 
 const Notizen = () => {
   const {
     partyCollection,
+    isLoading,
     addTeilnehmer,
     speichereActiveId,
     speichereNotesCount,
@@ -40,6 +42,10 @@ const Notizen = () => {
     setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
   }, [partyFind, addTeilnehmer, speichereActiveId, speichereNotesCount, params.id]);
 
+
+  if (isLoading) {
+    return <Loading/>
+  }
 
   return (
     <section className={classes.notizenSection}>

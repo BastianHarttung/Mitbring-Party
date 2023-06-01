@@ -13,12 +13,14 @@ import ModalNewFood from "../components/modalNewFood";
 import OrtAccordion from "../components/wahl/ortAccordion";
 import FoodCheck from "../components/wahl/foodCheck";
 import NoParty from "../components/noParty";
+import Loading from "../ui-components/Loading";
 
 
 const Wahl = () => {
 
   const {
     partyCollection,
+    isLoading,
     speichereActiveId,
     speichereAuswahl,
     datumZuLocalString,
@@ -86,6 +88,10 @@ const Wahl = () => {
     setParty(partyFind ? partyFind : emptyParty);
   }, [partyFind, params.id, speichereActiveId, userCheckedEssen]);
 
+
+  if (isLoading) {
+    return <Loading/>
+  }
 
   if (!partyFind) {
     return <NoParty/>;

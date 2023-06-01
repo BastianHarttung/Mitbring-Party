@@ -20,6 +20,8 @@ class GlobalStore {
 
   beforeUrl: string = "";
 
+  isLoading: boolean = false;
+
   notesCount: number = 0;
 
   constructor() {
@@ -33,6 +35,7 @@ class GlobalStore {
   };
 
   initFromServer = (): void => {
+    this.isLoading = true;
     downloadFromServer()
       .then((resolve) => {
         this.partyCollection = backend.getItem("partyCollection");
@@ -42,7 +45,14 @@ class GlobalStore {
           if (a.datum > b.datum) return -1;
           else return 0;
         });
-      });
+      })
+      .catch(error => {
+        this.throwPopupMessage("Something went wrong", "error")
+        console.log(error)
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
   };
 
   speichereActiveId = (id: string): void => {
