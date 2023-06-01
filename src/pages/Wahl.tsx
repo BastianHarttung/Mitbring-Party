@@ -1,12 +1,12 @@
 import classes from "./Wahl.module.scss";
-import React, {useState, useEffect} from "react";
-import {useParams} from "react-router-dom";
-import {observer} from "mobx-react";
-import {FiPlus} from "react-icons/fi";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { observer } from "mobx-react";
+import { FiPlus } from "react-icons/fi";
 import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
-import {emptyParty} from "../mockup/testConstants";
-import {IEssen, IParty} from "../interfaces/IParty";
+import { emptyParty } from "../mockup/testConstants";
+import { IEssen, IParty } from "../interfaces/IParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewFood from "../components/modalNewFood";
@@ -24,6 +24,7 @@ const Wahl = () => {
     datumZuLocalString,
     speichereEssen,
     findKategorien,
+    throwPopupMessage,
   } = globalStore;
 
   const {userName} = userStore;
@@ -39,33 +40,28 @@ const Wahl = () => {
         }
       }
       return essenArray;
+    } else {
+      return [];
     }
-    else{
-      return []
-    }
-  }
+  };
 
   const [party, setParty] = useState<IParty>(emptyParty);
 
   const [checkedEssen, setCheckedEssen] = useState<string[]>(userCheckedEssen());
 
-  const [isAuswahlGespeichert, setIsAuswahlGespeichert] = useState(false);
-
   const [isModalNewFoodOpen, setIsModalNewFoodOpen] = useState(false);
 
   function handleChecked(event: React.ChangeEvent<HTMLInputElement>) {
     const checked = event.target.checked;
+    const essenName = event.target.value;
+
     let newChecked = checkedEssen;
     if (checked) {
       // Add essen to array
-      newChecked.push(event.target.value);
+      newChecked.push(essenName);
     } else {
-      //Delete essen from array
-      for (let i = 0; i < newChecked.length; i++) {
-        if (newChecked[i] === event.target.value) {
-          newChecked.splice(i, 1);
-        }
-      }
+      // Filter Essen out of Array
+      newChecked = newChecked.filter((item) => item !== essenName);
     }
     setCheckedEssen(newChecked);
   }
@@ -73,11 +69,7 @@ const Wahl = () => {
   function auswahlSpeichern() {
     if (userName) {
       speichereAuswahl(checkedEssen, userName, party);
-      // Uncheck all Boxes
-      setCheckedEssen([]);
-      // show that Selection is Saved
-      setIsAuswahlGespeichert(true);
-      setTimeout(() => setIsAuswahlGespeichert(false), 2500);
+      throwPopupMessage("Auswahl gespeichert", "success");
     }
   }
 
@@ -95,7 +87,7 @@ const Wahl = () => {
 
 
   if (!partyFind) {
-    return <NoParty/>
+    return <NoParty/>;
   }
 
   return (
@@ -128,7 +120,8 @@ const Wahl = () => {
         {party.essen.map((ess, index) => (
           <FoodCheck key={index}
                      essen={ess}
-                     onChecked={handleChecked}/>))}
+                     onChecked={handleChecked}
+                     defaultChecked={checkedEssen.includes(ess.essenName)}/>))}
       </div>
 
       <div id="essenBtnContainer"
@@ -144,7 +137,6 @@ const Wahl = () => {
         <Button onClick={auswahlSpeichern}>
           Auswahl speichern
         </Button>
-        {isAuswahlGespeichert ? <div className={classes.auswahlGespeichert}>Auswahl gespeichert</div> : ""}
       </div>
 
     </section>

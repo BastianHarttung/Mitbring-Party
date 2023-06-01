@@ -1,10 +1,10 @@
-import {makeAutoObservable} from "mobx";
-import {emptyPartyCollection} from "../mockup/testConstants";
-import {IParty} from "../interfaces/IParty";
-import {IEssen} from "../interfaces/IParty";
-import {IPartyApp} from "../interfaces/IParty";
-import {downloadFromServer, backend, setURL} from "../mini_backend";
-import {TPopupStyle} from "../interfaces/Types";
+import { makeAutoObservable } from "mobx";
+import { emptyPartyCollection } from "../mockup/testConstants";
+import { IParty } from "../interfaces/IParty";
+import { IEssen } from "../interfaces/IParty";
+import { IPartyApp } from "../interfaces/IParty";
+import { downloadFromServer, backend, setURL } from "../mini_backend";
+import { TPopupStyle } from "../interfaces/Types";
 
 
 class GlobalStore {
@@ -67,14 +67,20 @@ class GlobalStore {
    * @param {object} partyObject Object of active Party
    */
   speichereAuswahl = (checkedEssen: string[], neuerName: string, partyObject: IParty): void => {
+    console.log("speichere checkedEssen", checkedEssen);
     const newPartyCollection = this.partyCollection.map((party) => {
       if (party.id === partyObject.id) {
         const newParty = {...party};
         for (let i = 0; i < newParty.essen.length; i++) {
           for (let j = 0; j < checkedEssen.length; j++) {
+            // Add Name To Essen
             if (newParty.essen[i].essenName === checkedEssen[j]) {
               newParty.essen[i].werBringts = neuerName;
             }
+          }
+          // Delete Name From Other Essen
+          if (newParty.essen[i].werBringts === neuerName && !checkedEssen.includes(newParty.essen[i].essenName)) {
+            newParty.essen[i].werBringts = "";
           }
         }
         return newParty;
