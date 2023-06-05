@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {RiSendPlaneFill} from "react-icons/ri"
 import Modal from "../ui-components/Modal";
 import Button from "../ui-components/Button";
 import {INotiz} from "../interfaces/IParty";
@@ -29,7 +30,7 @@ const ModalNewNote = ({isOpen, onClose, onSave}: ModalNewNoteProps) => {
   }
 
   const handleSubmit = () => {
-    if (newNote) {
+    if (newNote.trim()) {
       const newNoteObj: INotiz = {
         id: new Date().getTime().toString(),
         name: userName ?? "",
@@ -55,7 +56,10 @@ const ModalNewNote = ({isOpen, onClose, onSave}: ModalNewNoteProps) => {
                   value={newNote}
                   onChange={evt => setNewNote(evt.target.value)}/>
 
-        <Button onClick={handleSubmit}>Notiz speichern</Button>
+        <Button onClick={handleSubmit}
+                backIcon={<RiSendPlaneFill/>}>
+          Notiz speichern
+        </Button>
       </form>
     </Modal>
   );

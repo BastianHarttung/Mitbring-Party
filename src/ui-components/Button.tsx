@@ -19,13 +19,14 @@ const Button = ({
                   children,
                   className,
                   style,
-                  ...props
+                  ...restProps
                 }: IButtonProps) => {
   return (
     <button onClick={onClick}
             className={`${classes.button} ${classes[btnStyle]} ${className}`}
             style={style}
-            {...props}>
+            type="button"
+            {...restProps}>
       {frontIcon}
 
       {children}
