@@ -53,12 +53,16 @@ const Notizen = () => {
                     onClose={() => setIsModalNewNoteOpen(false)}
                     onSave={handleSaveNewNote}/>
 
-      <h3>Notizen zu {party.partyName}</h3>
+      <div className="flex-center" style={{width:"100%"}}>
+        <h3>Notizen zu {party.partyName}</h3>
+      </div>
 
-      {party.notizen && party.notizen.map((notiz) =>
-        <Notiz key={notiz.id}
-               notiz={notiz}/>
-      )}
+      <div className={classes.notizen_container}>
+        {party.notizen && party.notizen.map((notiz) =>
+          <Notiz key={notiz.id}
+                 notiz={notiz}/>
+        )}
+      </div>
 
       <ButtonCircle
         onClick={() => setIsModalNewNoteOpen(true)}

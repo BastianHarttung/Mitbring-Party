@@ -1,0 +1,12 @@
+.notizenSection {
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.notizen_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
