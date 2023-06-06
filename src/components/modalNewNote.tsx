@@ -34,7 +34,7 @@ const ModalNewNote = ({isOpen, onClose, onSave}: ModalNewNoteProps) => {
       const newNoteObj: INotiz = {
         id: new Date().getTime().toString(),
         name: userName ?? "",
-        datum: new Date().toISOString().split("T")[0],  // ISO String in Format "2023-05-28"
+        datum: new Date().toISOString(),
         beschreibung: newNote,
       };
       onSave(newNoteObj);

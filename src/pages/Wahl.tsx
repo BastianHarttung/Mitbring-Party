@@ -22,6 +22,7 @@ const Wahl = () => {
     partyCollection,
     isLoading,
     speichereActiveId,
+    speichereNotesCount,
     speichereAuswahl,
     datumZuLocalString,
     speichereEssen,
@@ -33,6 +34,7 @@ const Wahl = () => {
 
   const params = useParams();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
+
   const userCheckedEssen = useMemo(() => {
     if (partyFind) {
       const essenArray = [];
@@ -83,10 +85,11 @@ const Wahl = () => {
   useEffect(() => {
     if (params.id) {
       speichereActiveId(params.id);
+      speichereNotesCount(partyFind?.notizen?.length ?? 0)
       setCheckedEssen(userCheckedEssen)
     }
     setParty(partyFind ? partyFind : emptyParty);
-  }, [partyFind, params.id, speichereActiveId, userCheckedEssen]);
+  }, [partyFind, params.id, speichereActiveId, speichereNotesCount, userCheckedEssen]);
 
 
   if (isLoading) {

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
 import {FiPlus} from "react-icons/fi";
-import {INotiz, IPartyApp} from "../interfaces/IParty";
+import {INotiz, IParty} from "../interfaces/IParty";
 import {emptyParty} from "../mockup/testConstants";
 import globalStore from "../stores/global-store";
 import ButtonCircle from "../ui-components/Button-Circle";
@@ -25,13 +25,17 @@ const Notizen = () => {
   const [isModalNewNoteOpen, setIsModalNewNoteOpen] = useState(false);
 
   const params = useParams();
-  const [party, setParty] = useState<IPartyApp>(addTeilnehmer(emptyParty));
+  const [party, setParty] = useState<IParty>(emptyParty);
 
   const partyFind = partyCollection.find((party) => party.id === params.id);
 
   const handleSaveNewNote = (note: INotiz) => {
     speichereNotiz(params.id, note)
     setIsModalNewNoteOpen(false)
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
   }
 
   useEffect(() => {
@@ -39,7 +43,7 @@ const Notizen = () => {
       speichereActiveId(params.id);
       speichereNotesCount(partyFind?.notizen?.length ?? 0)
     }
-    setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
+    setParty(partyFind ? partyFind : emptyParty);
   }, [partyFind, addTeilnehmer, speichereActiveId, speichereNotesCount, params.id]);
 
 
@@ -53,8 +57,13 @@ const Notizen = () => {
                     onClose={() => setIsModalNewNoteOpen(false)}
                     onSave={handleSaveNewNote}/>
 
-      <div className="flex-center" style={{width:"100%"}}>
+      <div className="flex-center" style={{width: "100%"}}>
         <h3>Notizen zu {party.partyName}</h3>
+        <ButtonCircle
+          onClick={() => setIsModalNewNoteOpen(true)}
+          icon={<FiPlus/>}
+          btnStyle="primary"
+          size="18px"/>
       </div>
 
       <div className={classes.notizen_container}>
@@ -64,11 +73,6 @@ const Notizen = () => {
         )}
       </div>
 
-      <ButtonCircle
-        onClick={() => setIsModalNewNoteOpen(true)}
-        icon={<FiPlus/>}
-        btnStyle="primary"
-        size="18px"/>
     </section>
   );
 };

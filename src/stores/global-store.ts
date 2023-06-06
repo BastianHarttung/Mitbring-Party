@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {emptyPartyCollection} from "../mockup/testConstants";
+import {emptyParty, emptyPartyCollection} from "../mockup/testConstants";
 import {INotiz, IParty} from "../interfaces/IParty";
 import {IEssen} from "../interfaces/IParty";
 import {IPartyApp} from "../interfaces/IParty";
@@ -10,6 +10,8 @@ import {TPopupStyle} from "../interfaces/Types";
 class GlobalStore {
 
   partyCollection: IParty[] = emptyPartyCollection;
+
+  activeParty: IParty = emptyParty;
 
   activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
@@ -80,7 +82,8 @@ class GlobalStore {
   speichereNotiz = (id: string | undefined, note: INotiz) => {
     const partyFind = this.partyCollection.find((party) => party.id === id);
     if (!!partyFind) {
-      partyFind.notizen = [...partyFind.notizen, note]
+      partyFind.notizen.push(note)
+      partyFind.notizen.sort((a, b) => new Date(b.datum).getTime() - new Date(a.datum).getTime())
       this.savePartyToBackend()
     }
   }

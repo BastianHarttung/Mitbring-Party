@@ -14,6 +14,7 @@ const Uebersicht = () => {
     isLoading,
     addTeilnehmer,
     speichereActiveId,
+    speichereNotesCount,
   } = globalStore;
 
   const [party, setParty] = useState<IPartyApp>(addTeilnehmer(emptyParty));
@@ -24,9 +25,10 @@ const Uebersicht = () => {
   useEffect(() => {
     if (params.id) {
       speichereActiveId(params.id);
+      speichereNotesCount(partyFind?.notizen?.length ?? 0)
     }
     setParty(partyFind ? addTeilnehmer(partyFind) : addTeilnehmer(emptyParty));
-  }, [partyFind, addTeilnehmer, speichereActiveId, params.id]);
+  }, [partyFind, addTeilnehmer, speichereActiveId, speichereNotesCount, params.id]);
 
 
   if (isLoading) {
