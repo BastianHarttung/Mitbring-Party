@@ -88,6 +88,15 @@ class GlobalStore {
     }
   }
 
+  deleteNote = (id: string| undefined, note: INotiz) => {
+    const partyFind = this.partyCollection.find((party) => party.id === id);
+    console.log(partyFind)
+    if (!!partyFind) {
+      partyFind.notizen.filter((notiz) => notiz.id !== note.id)
+      this.savePartyToBackend()
+    }
+  }
+
   /**
    * Speichere Auswahl und Name
    * @param {string array} checkedEssen checked Essen

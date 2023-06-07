@@ -7,17 +7,14 @@ import userStore from "../../stores/user-store";
 
 interface NotizProps {
   notiz: INotiz
+  onDelete: (note: INotiz) => void;
 }
 
-const Notiz = ({notiz}: NotizProps) => {
+const Notiz = ({notiz, onDelete}: NotizProps) => {
 
   const {isAdmin, userName} = userStore
 
   const canDelete = isAdmin || userName === notiz.name
-
-  const handleDelete = () => {
-    console.log("delete", notiz)
-  }
 
 
   return (
@@ -29,7 +26,7 @@ const Notiz = ({notiz}: NotizProps) => {
       <div className="trennlinie"/>
       <div>
         <div>{notiz.beschreibung}</div>
-        {canDelete && <MdDelete onClick={handleDelete}/>}
+        {canDelete && <MdDelete onClick={() => onDelete(notiz)}/>}
       </div>
     </div>
   );

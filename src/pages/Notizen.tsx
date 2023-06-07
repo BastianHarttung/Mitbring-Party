@@ -20,6 +20,7 @@ const Notizen = () => {
     speichereActiveId,
     speichereNotesCount,
     speichereNotiz,
+    deleteNote,
   } = globalStore;
 
   const [isModalNewNoteOpen, setIsModalNewNoteOpen] = useState(false);
@@ -36,6 +37,10 @@ const Notizen = () => {
       top: 0,
       behavior: "smooth"
     })
+  }
+
+  const handleDeleteNote = (note: INotiz) => {
+    deleteNote(params.id, note)
   }
 
   useEffect(() => {
@@ -69,7 +74,8 @@ const Notizen = () => {
       <div className={classes.notizen_container}>
         {party.notizen && party.notizen.map((notiz) =>
           <Notiz key={notiz.id}
-                 notiz={notiz}/>
+                 notiz={notiz}
+                 onDelete={handleDeleteNote}/>
         )}
       </div>
 
