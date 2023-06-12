@@ -50,12 +50,12 @@ code {
 main {
   background-color: rgba(255, 255, 255, 0.5);
   width: clamp(300px, 90%, 500px);
-  min-height: calc(100vh - 65px - 24px);
+  min-height: calc(100svh - 65px - 72px);
   display: flex;
   justify-content: center;
   border-radius: 15px;
   backdrop-filter: blur(15px);
-  padding: 16px 16px;
+  padding: 16px 16px 64px 16px;
   margin-top: -8px;
   overflow-x: auto;
 }
