@@ -65,6 +65,7 @@ main {
   --primary-color: #56d013;
   --primary-color-bright: #a9ea80;
   --primary-color-dark: #389F00;
+  --primary-color-transpa: rgba(86, 208, 19, 0.1);
   --secondary-color: #216869;
   --secondary-color-dark: #144748;
   --third-color: #DDEDEE;
@@ -80,7 +81,7 @@ main {
 }
 
 section {
-  width: clamp(300px, 90%, 500px);
+  width: clamp(320px, 90%, 500px);
   display: flex;
   flex-direction: column;
   align-items: center;

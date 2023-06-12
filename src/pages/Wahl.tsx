@@ -82,6 +82,14 @@ const Wahl = () => {
     setIsModalNewFoodOpen(false);
   };
 
+  const essen = party.essen.slice().sort((a, b) => {
+    if (a.werBringts === userName && b.werBringts !== userName) return -1
+    if (a.werBringts !== userName && b.werBringts === userName) return 1
+    if (a.werBringts === "" && b.werBringts !== "") return -1
+    if (a.werBringts !== "" && b.werBringts === "") return 1
+    else return 0
+  })
+
   useEffect(() => {
     if (params.id) {
       speichereActiveId(params.id);
@@ -127,7 +135,7 @@ const Wahl = () => {
       </div>
 
       <div id="checkbox-container" className={classes.checkboxContainer}>
-        {party.essen.map((ess, index) => (
+        {essen.map((ess, index) => (
           <FoodCheck key={index}
                      essen={ess}
                      onChecked={handleChecked}
