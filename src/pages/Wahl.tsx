@@ -9,11 +9,12 @@ import {emptyParty} from "../mockup/testConstants";
 import {IEssen, IParty} from "../interfaces/IParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
+import Loading from "../ui-components/Loading";
 import ModalNewFood from "../components/modalNewFood";
 import OrtAccordion from "../components/wahl/ortAccordion";
 import FoodCheck from "../components/wahl/foodCheck";
 import NoParty from "../components/noParty";
-import Loading from "../ui-components/Loading";
+import {datumZuLocalString} from "../helper-functions/helper-functions";
 
 
 const Wahl = () => {
@@ -24,7 +25,6 @@ const Wahl = () => {
     speichereActiveId,
     speichereNotesCount,
     speichereAuswahl,
-    datumZuLocalString,
     speichereEssen,
     findKategorien,
     throwPopupMessage,
