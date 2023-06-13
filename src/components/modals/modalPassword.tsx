@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import userStore from "../stores/user-store";
-import Modal from "../ui-components/Modal";
-import Button from "../ui-components/Button";
-import globalStore from "../stores/global-store";
+import userStore from "../../stores/user-store";
+import globalStore from "../../stores/global-store";
+import Modal from "../../ui-components/Modal";
+import Button from "../../ui-components/Button";
 
 
 interface ModalPasswordProps {

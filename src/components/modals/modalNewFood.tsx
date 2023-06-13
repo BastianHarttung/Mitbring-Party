@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import Modal from "../ui-components/Modal";
-import Button from "../ui-components/Button";
-import {IEssen} from "../interfaces/IParty";
-import userStore from "../stores/user-store";
+import React, { useEffect, useState } from 'react';
+import userStore from "../../stores/user-store";
+import Modal from "../../ui-components/Modal";
+import Button from "../../ui-components/Button";
+import { IEssen } from "../../interfaces/IParty";
 
 
 interface ModalNewFoodProps {

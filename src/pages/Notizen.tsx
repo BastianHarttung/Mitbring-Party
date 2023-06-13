@@ -1,15 +1,16 @@
 import classes from "./Notizen.module.scss";
-import React, {useEffect, useState} from 'react';
-import {observer} from "mobx-react";
-import {useParams} from "react-router-dom";
-import {FiPlus} from "react-icons/fi";
-import {INotiz, IParty} from "../interfaces/IParty";
-import {emptyParty} from "../mockup/testConstants";
+import React, { useEffect, useState } from 'react';
+import { observer } from "mobx-react";
+import { useParams } from "react-router-dom";
+import { FiPlus } from "react-icons/fi";
+import { INotiz, IParty } from "../interfaces/IParty";
+import { emptyParty } from "../mockup/testConstants";
 import globalStore from "../stores/global-store";
 import ButtonCircle from "../ui-components/Button-Circle";
-import ModalNewNote from "../components/modalNewNote";
+import ModalNewNote from "../components/modals/modalNewNote";
 import Loading from "../ui-components/Loading";
 import Notiz from "../components/notizen/notiz";
+import ModalConfirmDelete from "../components/modals/modalConfirmDelete";
 
 
 const Notizen = () => {
@@ -24,6 +25,7 @@ const Notizen = () => {
   } = globalStore;
 
   const [isModalNewNoteOpen, setIsModalNewNoteOpen] = useState(false);
+  const [modalConfirmDelete, setModalConfirmDelete] = useState<INotiz | null>(null);
 
   const params = useParams();
   const [party, setParty] = useState<IParty>(emptyParty);
@@ -39,8 +41,15 @@ const Notizen = () => {
     })
   }
 
-  const handleDeleteNote = (note: INotiz) => {
-    deleteNote(params.id, note)
+  const handleDelete = () => {
+    if (modalConfirmDelete) {
+      deleteNote(params.id, modalConfirmDelete)
+      setModalConfirmDelete(null)
+    }
+  }
+
+  const handleClickDelete = (note: INotiz) => {
+    setModalConfirmDelete(note)
   }
 
   useEffect(() => {
@@ -61,6 +70,11 @@ const Notizen = () => {
       <ModalNewNote isOpen={isModalNewNoteOpen}
                     onClose={() => setIsModalNewNoteOpen(false)}
                     onSave={handleSaveNewNote}/>
+      <ModalConfirmDelete isOpen={!!modalConfirmDelete}
+                          onClose={() => setModalConfirmDelete(null)}
+                          onDelete={handleDelete}
+                          heading="Notiz wirklich löschen?"/>
+
 
       <div className="flex-center" style={{width: "100%"}}>
         <h3>Notizen zu {party.partyName}</h3>
@@ -75,7 +89,7 @@ const Notizen = () => {
         {party.notizen && party.notizen.map((notiz) =>
           <Notiz key={notiz.id}
                  notiz={notiz}
-                 onDelete={handleDeleteNote}/>
+                 onDelete={handleClickDelete}/>
         )}
       </div>
 

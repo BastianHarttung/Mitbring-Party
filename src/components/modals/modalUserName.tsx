@@ -1,8 +1,8 @@
 import classes from "./modalUserName.module.scss";
-import React, {ChangeEvent, useState} from 'react';
-import Modal from "../ui-components/Modal";
-import userStore from "../stores/user-store";
-import Button from "../ui-components/Button";
+import React, { ChangeEvent, useState } from 'react';
+import userStore from "../../stores/user-store";
+import Modal from "../../ui-components/Modal";
+import Button from "../../ui-components/Button";
 
 
 interface IModalUserNameProps {

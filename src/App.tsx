@@ -1,7 +1,7 @@
 import "./App.scss";
-import {observer} from "mobx-react";
-import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import {RiUserSettingsLine} from "react-icons/ri";
+import { observer } from "mobx-react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { RiUserSettingsLine } from "react-icons/ri";
 
 import Wahl from "./pages/Wahl";
 import Start from "./pages/Start";
@@ -15,8 +15,8 @@ import userStore from "./stores/user-store";
 import globalStore from "./stores/global-store";
 import Header from "./components/header";
 import PopupMessage from "./components/popup-message";
-import ModalUserName from "./components/modalUserName";
-import ModalPassword from "./components/modalPassword";
+import ModalUserName from "./components/modals/modalUserName";
+import ModalPassword from "./components/modals/modalPassword";
 import ButtonCircle from "./ui-components/Button-Circle";
 
 

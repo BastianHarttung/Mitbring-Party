@@ -1,18 +1,18 @@
-import React, {ChangeEvent, useState} from "react";
-import {useParams, useNavigate} from "react-router-dom";
-import {FiPlus} from "react-icons/fi";
-import {observer} from "mobx-react";
-import globalStore from "../stores/global-store";
 import classes from "./Admin.module.scss";
-import {TEssen} from "../interfaces/Types";
-import {IEssen, INotiz, IParty} from "../interfaces/IParty";
-import ModalPassword from "../components/modalPassword";
-import Button from "../ui-components/Button";
+import React, { ChangeEvent, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { observer } from "mobx-react";
+import { FiPlus } from "react-icons/fi";
+import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
-import ButtonCircle from "../ui-components/Button-Circle";
-import ModalConfirmDelete from "../components/modalConfirmDelete";
+import { TEssen } from "../interfaces/Types";
+import { IEssen, IParty } from "../interfaces/IParty";
+import ModalPassword from "../components/modals/modalPassword";
+import ModalConfirmDelete from "../components/modals/modalConfirmDelete";
 import FoodRow from "../components/admin/foodRow";
 import NoParty from "../components/noParty";
+import Button from "../ui-components/Button";
+import ButtonCircle from "../ui-components/Button-Circle";
 
 
 const Admin = (): JSX.Element => {
@@ -38,7 +38,6 @@ const Admin = (): JSX.Element => {
   const [zeit, setZeit] = useState<string>(partyFind?.zeit ?? "");
   const [infos, setInfos] = useState<string>(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
-  const [notizen, setNotizen] = useState<INotiz[]>(partyFind?.notizen ?? []);
 
   const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
 
@@ -64,7 +63,7 @@ const Admin = (): JSX.Element => {
         zeit,
         infos,
         essen,
-        notizen,
+        notizen: [],
       });
       throwPopupMessage("Party gespeichert", "success");
     }

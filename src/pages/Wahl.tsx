@@ -1,20 +1,20 @@
 import classes from "./Wahl.module.scss";
-import React, {useState, useEffect, useMemo} from "react";
-import {useParams} from "react-router-dom";
-import {observer} from "mobx-react";
-import {FiPlus} from "react-icons/fi";
+import React, { useState, useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
+import { observer } from "mobx-react";
+import { FiPlus } from "react-icons/fi";
 import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
-import {emptyParty} from "../mockup/testConstants";
-import {IEssen, IParty} from "../interfaces/IParty";
+import { emptyParty } from "../mockup/testConstants";
+import { IEssen, IParty } from "../interfaces/IParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import Loading from "../ui-components/Loading";
-import ModalNewFood from "../components/modalNewFood";
+import ModalNewFood from "../components/modals/modalNewFood";
 import OrtAccordion from "../components/wahl/ortAccordion";
 import FoodCheck from "../components/wahl/foodCheck";
 import NoParty from "../components/noParty";
-import {datumZuLocalString} from "../helper-functions/helper-functions";
+import { datumZuLocalString } from "../helper-functions/helper-functions";
 
 
 const Wahl = () => {

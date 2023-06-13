@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {RiSendPlaneFill} from "react-icons/ri"
-import Modal from "../ui-components/Modal";
-import Button from "../ui-components/Button";
-import {INotiz} from "../interfaces/IParty";
-import userStore from "../stores/user-store";
+import Modal from "../../ui-components/Modal";
+import Button from "../../ui-components/Button";
+import {INotiz} from "../../interfaces/IParty";
+import userStore from "../../stores/user-store";
 
 
 interface ModalNewNoteProps {
