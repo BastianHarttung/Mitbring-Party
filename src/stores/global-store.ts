@@ -39,7 +39,7 @@ class GlobalStore {
   initFromServer = (): void => {
     this.isLoading = true;
     downloadFromServer()
-      .then((resolve) => {
+      .then(() => {
         this.partyCollection = backend.getItem("partyCollection");
         // Sort by Date
         this.partyCollection.sort((a, b) => {
@@ -84,15 +84,16 @@ class GlobalStore {
     if (!!partyFind) {
       partyFind.notizen.push(note)
       partyFind.notizen.sort((a, b) => new Date(b.datum).getTime() - new Date(a.datum).getTime())
+      this.notesCount = partyFind.notizen.length
       this.savePartyToBackend()
     }
   }
 
-  deleteNote = (id: string| undefined, note: INotiz) => {
+  deleteNote = (id: string | undefined, note: INotiz) => {
     const partyFind = this.partyCollection.find((party) => party.id === id);
-    console.log(partyFind)
     if (!!partyFind) {
-      partyFind.notizen.filter((notiz) => notiz.id !== note.id)
+      partyFind.notizen = partyFind.notizen.filter((notiz) => notiz.id !== note.id)
+      this.notesCount = partyFind.notizen.length
       this.savePartyToBackend()
     }
   }
@@ -164,7 +165,8 @@ class GlobalStore {
   };
 
   savePartyToBackend = () => {
-    backend.setItem("partyCollection", this.partyCollection);
+    backend.setItem("partyCollection", this.partyCollection)
+      .then(() => console.log("Saved Parties"))
   };
 
   openSettings = (url: string) => {
