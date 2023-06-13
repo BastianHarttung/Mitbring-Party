@@ -1,17 +1,15 @@
-import {makeAutoObservable} from "mobx";
-import {emptyParty, emptyPartyCollection} from "../mockup/testConstants";
-import {INotiz, IParty} from "../interfaces/IParty";
-import {IEssen} from "../interfaces/IParty";
-import {IPartyApp} from "../interfaces/IParty";
-import {downloadFromServer, backend, setURL} from "../mini_backend";
-import {TPopupStyle} from "../interfaces/Types";
+import { makeAutoObservable } from "mobx";
+import { emptyPartyCollection } from "../mockup/testConstants";
+import { INotiz, IParty } from "../interfaces/IParty";
+import { IEssen } from "../interfaces/IParty";
+import { IPartyApp } from "../interfaces/IParty";
+import { downloadFromServer, backend, setURL } from "../mini_backend";
+import { TPopupStyle } from "../interfaces/Types";
 
 
 class GlobalStore {
 
   partyCollection: IParty[] = emptyPartyCollection;
-
-  activeParty: IParty = emptyParty;
 
   activeId: string = this.partyCollection[this.partyCollection.length - 1].id;
 
@@ -20,7 +18,7 @@ class GlobalStore {
 
   isSettingsOpen: boolean = false;
 
-  beforeUrl: string = "";
+  beforeUrl: string = "/";
 
   isLoading: boolean = false;
 
