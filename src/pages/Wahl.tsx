@@ -1,5 +1,5 @@
 import classes from "./Wahl.module.scss";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import { FiPlus } from "react-icons/fi";
@@ -35,19 +35,19 @@ const Wahl = () => {
   const params = useParams();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
 
-  const userCheckedEssen = useMemo(() => {
-    if (partyFind) {
-      const essenArray = [];
-      for (let i = 0; i < partyFind.essen.length; i++) {
-        if (partyFind.essen[i].werBringts === userName) {
-          essenArray.push(partyFind.essen[i].essenName);
-        }
-      }
-      return essenArray;
-    } else {
-      return [];
-    }
-  }, [partyFind, userName])
+  // const userCheckedEssen = () => {
+  //   if (partyFind) {
+  //     const essenArray = [];
+  //     for (let i = 0; i < partyFind.essen.length; i++) {
+  //       if (partyFind.essen[i].werBringts === userName) {
+  //         essenArray.push(partyFind.essen[i].essenName);
+  //       }
+  //     }
+  //     return essenArray;
+  //   } else {
+  //     return [];
+  //   }
+  // }
 
   const [party, setParty] = useState<IParty>(emptyParty);
 
@@ -91,13 +91,24 @@ const Wahl = () => {
   })
 
   useEffect(() => {
+    const userCheckedEssen = () => {
+      if (partyFind) {
+        const essenArray = [];
+        for (let i = 0; i < partyFind.essen.length; i++) {
+          if (partyFind.essen[i].werBringts === userName) {
+            essenArray.push(partyFind.essen[i].essenName);
+          }
+        }
+        return essenArray;
+      } else return []
+    }
     if (params.id) {
       speichereActiveId(params.id);
-      speichereNotesCount(partyFind?.notizen?.length ?? 0)
-      setCheckedEssen(userCheckedEssen)
     }
+    setCheckedEssen(userCheckedEssen)
+    speichereNotesCount(partyFind?.notizen?.length ?? 0)
     setParty(partyFind ? partyFind : emptyParty);
-  }, [partyFind, params.id, speichereActiveId, speichereNotesCount, userCheckedEssen]);
+  }, [partyFind, params.id, speichereActiveId, speichereNotesCount, userName]);
 
 
   if (isLoading) {
@@ -139,7 +150,7 @@ const Wahl = () => {
           <FoodCheck key={index}
                      essen={ess}
                      onChecked={handleChecked}
-                     defaultChecked={checkedEssen.includes(ess.essenName)}/>))}
+                     checkedEssen={checkedEssen}/>))}
       </div>
 
       <div id="essenBtnContainer"

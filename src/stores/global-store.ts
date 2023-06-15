@@ -72,7 +72,16 @@ class GlobalStore {
   speichereEssen = (id: string | undefined, essen: IEssen) => {
     const partyFind = this.partyCollection.find((part) => part.id === id);
     if (!!partyFind) {
-      partyFind.essen.push(essen);
+      partyFind.essen.push(essen)
+      partyFind.essen.sort((a, b) => {
+        if (a.kategorie < b.kategorie) return -1
+        if (a.kategorie > b.kategorie) return 1
+        if (a.kategorie === b.kategorie) {
+          if (a.essenName.toLowerCase() < b.essenName.toLowerCase()) return -1
+          if (a.essenName.toLowerCase() > b.essenName.toLowerCase()) return 1
+        }
+        return 0
+      })
       this.savePartyToBackend();
     }
   };
