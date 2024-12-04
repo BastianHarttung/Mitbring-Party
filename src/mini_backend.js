@@ -72,10 +72,4 @@ function saveJSONToServer() {
 
 function determineProxySettings() {
     return '';
-
-    if (window.location.href.indexOf('.developerakademie.com') > -1) {
-        return '';
-    } else {
-        return 'https://cors-anywhere.herokuapp.com/';
-    }
 }
