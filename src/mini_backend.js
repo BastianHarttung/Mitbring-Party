@@ -25,13 +25,13 @@ export const backend = {
     }
 };
 
-window.onload = async function() {
-    await downloadFromServer();
-}
-
 export async function downloadFromServer() {
     let result = await loadJSONFromServer();
-    jsonFromServer = JSON.parse(result);
+    try {
+        jsonFromServer = JSON.parse(result);
+    } catch (e) {
+        throw new Error('Backend lieferte kein JSON (falsche REACT_APP_BACKEND_URL?): ' + BASE_SERVER_URL);
+    }
     isLoadedFromServer = true;
     console.log('Loaded', jsonFromServer.partyCollection);
 }
@@ -47,8 +47,10 @@ export function setURL(url) {
 
 async function loadJSONFromServer() {
     let response = await fetch(BASE_SERVER_URL + '/nocors.php?json=database&noache=' + (new Date().getTime()));
+    if (!response.ok) {
+        throw new Error('Backend nicht erreichbar: ' + response.status + ' ' + response.statusText);
+    }
     return await response.text();
-
 }
 
 /**

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { emptyPartyCollection } from "../mockup/testConstants";
 import { INotiz, IParty } from "../interfaces/IParty";
 import { IEssen } from "../interfaces/IParty";
@@ -38,7 +38,7 @@ class GlobalStore {
   initFromServer = (): void => {
     this.isLoading = true;
     downloadFromServer()
-      .then(() => {
+      .then(() => runInAction(() => {
         this.partyCollection = backend.getItem("partyCollection");
         // Sort by Date
         this.partyCollection.sort((a, b) => {
@@ -46,14 +46,14 @@ class GlobalStore {
           if (a.datum > b.datum) return -1;
           else return 0;
         });
-      })
+      }))
       .catch(error => {
         this.throwPopupMessage("Something went wrong", "error")
         console.log(error)
       })
-      .finally(() => {
+      .finally(() => runInAction(() => {
         this.isLoading = false
-      })
+      }))
   };
 
   speichereActiveId = (id: string): void => {
@@ -146,7 +146,7 @@ class GlobalStore {
   throwPopupMessage = (message: string, style?: TPopupStyle) => {
     this.popupStyle = style;
     this.popupMessage = message;
-    setTimeout(() => this.popupMessage = "", 2500);
+    setTimeout(() => runInAction(() => this.popupMessage = ""), 2500);
   };
 
   updatePartyBackend = (neueParty: IParty) => {
