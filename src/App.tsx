@@ -17,6 +17,7 @@ import PopupMessage from "./components/popup-message";
 import ModalUserName from "./components/modals/modalUserName";
 import ModalPassword from "./components/modals/modalPassword";
 import ButtonCircle from "./ui-components/Button-Circle";
+import PartyPasswordGuard from "./components/partyPasswordGuard";
 
 
 function App(): JSX.Element {
@@ -58,16 +59,16 @@ function App(): JSX.Element {
                  element={<Start/>}
           />
           <Route path="party/:id"
-                 element={<Party/>}
+                 element={<PartyPasswordGuard><Party/></PartyPasswordGuard>}
           />
           <Route path="uebersicht/:id"
-                 element={<Uebersicht/>}
+                 element={<PartyPasswordGuard><Uebersicht/></PartyPasswordGuard>}
+          />
+          <Route path="notizen/:id"
+                 element={<PartyPasswordGuard><Notizen/></PartyPasswordGuard>}
           />
           <Route path="admin/:id"
                  element={<Admin/>}
-          />
-          <Route path="notizen/:id"
-                 element={<Notizen/>}
           />
           <Route path="profil"
                  element={<Profil/>}

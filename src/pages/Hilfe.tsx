@@ -22,6 +22,10 @@ const faq = [
     antwort: "Jede Feier ist nur bis zu einem bestimmten Datum bearbeitbar, normalerweise bis 1 Woche nach der Feier. Danach kannst du nichts mehr auswählen und keine Notizen mehr schreiben oder löschen. Die Feier verschwindet dann auch von der Startseite.",
   },
   {
+    frage: "Warum muss ich ein Passwort eingeben?",
+    antwort: "Manche Feiern sind mit einem Passwort geschützt. Das Passwort bekommst du vom Gastgeber. Du musst es auf jedem Gerät nur einmal eingeben. Ändert der Gastgeber das Passwort, wirst du erneut danach gefragt.",
+  },
+  {
     frage: "Wird mein Name irgendwo veröffentlicht?",
     antwort: "Nein. Er wird nur auf deinem Gerät gespeichert und bei deiner Auswahl und deinen Notizen angezeigt, damit die anderen wissen, wer was mitbringt.",
   },

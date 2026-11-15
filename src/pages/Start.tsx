@@ -8,7 +8,7 @@ import userStore from "../stores/user-store";
 import {Party} from "../models/party";
 import Button from "../ui-components/Button";
 import Loading from "../ui-components/Loading";
-import {datumZuLocalString, isPartyGesperrt} from "../helper-functions/helper-functions";
+import {datumZuLocalString, hashPassword, isPartyGesperrt} from "../helper-functions/helper-functions";
 
 
 const Start = (): JSX.Element => {
@@ -30,10 +30,21 @@ const Start = (): JSX.Element => {
   const [datum, setDatum] = useState("");
   const [zeit, setZeit] = useState("");
   const [info, setInfo] = useState("");
+  const [passwort, setPasswort] = useState("");
 
-  function partySpeichern() {
+  async function partySpeichern() {
     if (partyName) {
-      speichereParty(new Party(partyName, ort, datum, zeit, info));
+      const neueParty = new Party(partyName, ort, datum, zeit, info);
+      if (passwort.trim() !== "") {
+        try {
+          neueParty.passwortHash = await hashPassword(passwort);
+        } catch (error) {
+          console.log(error);
+          throwPopupMessage("Passwort konnte nicht gespeichert werden", "error");
+          return;
+        }
+      }
+      speichereParty(neueParty);
       inputFelderLoeschen();
       setIsNewParty(false);
     } else {
@@ -47,6 +58,7 @@ const Start = (): JSX.Element => {
     setDatum("");
     setZeit("");
     setInfo("");
+    setPasswort("");
   }
 
   const isGone = (datum: string) => {
@@ -127,6 +139,11 @@ const Start = (): JSX.Element => {
           <textarea placeholder="Infos"
                     value={info}
                     onChange={(e) => setInfo(e.target.value)}/>
+          <input type="text"
+                 autoComplete="off"
+                 placeholder="Passwort (optional)"
+                 value={passwort}
+                 onChange={(e) => setPasswort(e.target.value)}/>
           <Button onClick={partySpeichern}>
               Speichern
           </Button>

@@ -9,6 +9,10 @@
   align-items: center;
   z-index: 100;
 
+  &.dark {
+    background-color: rgba(0, 0, 0, 0.96);
+  }
+
   .inputContainer {
     background-color: white;
     width: 100%;

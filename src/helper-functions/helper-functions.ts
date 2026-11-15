@@ -1,5 +1,41 @@
 import { IParty } from "../interfaces/IParty";
 
+/**
+ * Erzeugt einen SHA-256-Hash (hex) des übergebenen Strings.
+ * Hinweis: crypto.subtle ist nur in sicheren Kontexten verfügbar (HTTPS oder localhost).
+ */
+export const hashPassword = async (pw: string): Promise<string> => {
+  const data = new TextEncoder().encode(pw);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+};
+
+/** localStorage-Key, unter dem der Hash des eingegebenen Party-Passworts liegt */
+const partyPasswortStorageKey = (partyId: string) => `partyPasswort_${partyId}`;
+
+/**
+ * Ist die Party für dieses Gerät freigeschaltet?
+ * true, wenn die Party kein Passwort hat oder der gespeicherte Hash zum aktuellen Passwort passt.
+ * Ändert der Admin das Passwort, passt der alte Hash nicht mehr.
+ */
+export const isPartyFreigeschaltet = (party: Pick<IParty, "id" | "passwortHash">): boolean => {
+  if (!party.passwortHash) return true;
+  return localStorage.getItem(partyPasswortStorageKey(party.id)) === party.passwortHash.toLowerCase();
+};
+
+/**
+ * Prüft das eingegebene Passwort gegen den Hash der Party und merkt es sich bei Erfolg im localStorage.
+ */
+export const pruefePartyPasswort = async (party: Pick<IParty, "id" | "passwortHash">, pw: string): Promise<boolean> => {
+  if (!party.passwortHash) return true;
+  const hash = await hashPassword(pw);
+  if (hash !== party.passwortHash.toLowerCase()) return false;
+  localStorage.setItem(partyPasswortStorageKey(party.id), hash);
+  return true;
+};
+
 export const datumZuLocalString = (datum: string) => {
   return new Date(datum).toLocaleDateString("de-DE",
     {

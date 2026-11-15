@@ -6,6 +6,7 @@ export interface IParty {
   datum: string,
   zeit: string,
   editEndDatum?: string,  // ISO "YYYY-MM-DD"; leer = Standard (1 Woche nach datum). Danach nur noch Admin
+  passwortHash?: string,  // SHA-256 (hex) des optionalen Party-Passworts; leer = ohne Passwort
   infos: string,
   essen: IEssen[],
   notizen: INotiz[],

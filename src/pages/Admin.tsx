@@ -13,7 +13,7 @@ import FoodRow from "../components/admin/foodRow";
 import NoParty from "../components/noParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
-import { datumZuLocalString, standardEditEndDatum } from "../helper-functions/helper-functions";
+import { datumZuLocalString, hashPassword, standardEditEndDatum } from "../helper-functions/helper-functions";
 
 
 const Admin = (): JSX.Element => {
@@ -41,6 +41,10 @@ const Admin = (): JSX.Element => {
   const [editEndDatum, setEditEndDatum] = useState<string>(partyFind?.editEndDatum ?? "");
   const [infos, setInfos] = useState<string>(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
+  // Gespeichert wird nur der Hash. Neues Passwort im Klartext; leer = bisheriges Passwort bleibt
+  const [neuesPasswort, setNeuesPasswort] = useState<string>("");
+  const [isPasswortEntfernt, setIsPasswortEntfernt] = useState<boolean>(false);
+  const hatPasswort = !!partyFind?.passwortHash && !isPasswortEntfernt;
 
   const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
 
@@ -55,8 +59,18 @@ const Admin = (): JSX.Element => {
     setEssen(neu);
   }
 
-  function saveParty(): void {
+  async function saveParty(): Promise<void> {
     if (id !== undefined) {
+      let passwortHash: string | undefined = isPasswortEntfernt ? undefined : partyFind?.passwortHash;
+      if (neuesPasswort.trim() !== "") {
+        try {
+          passwortHash = await hashPassword(neuesPasswort);
+        } catch (error) {
+          console.log(error);
+          throwPopupMessage("Passwort konnte nicht gespeichert werden", "error");
+          return;
+        }
+      }
       updatePartyBackend({
         id,
         partyName,
@@ -65,10 +79,13 @@ const Admin = (): JSX.Element => {
         datum,
         zeit,
         ...(editEndDatum ? {editEndDatum} : {}),
+        ...(passwortHash ? {passwortHash} : {}),
         infos,
         essen,
         notizen: partyFind?.notizen ?? [],
       });
+      setNeuesPasswort("");
+      setIsPasswortEntfernt(false);
       throwPopupMessage("Party gespeichert", "success");
     }
   }
@@ -142,6 +159,34 @@ const Admin = (): JSX.Element => {
                       : standardEditEndDatum(datum)
                         ? `Standard: 1 Woche nach der Party (${datumZuLocalString(standardEditEndDatum(datum))}). Danach sieht nur noch der Admin die Party.`
                         : "Standard: 1 Woche nach der Party. Ohne Party-Datum gibt es kein Ende."}
+                  </small>
+              </div>
+              <div className={classes.editEndContainer}>
+                  <span>Passwort (optional):</span>
+                  <div className={classes.editEndRow}>
+                      <input type="text"
+                             autoComplete="off"
+                             placeholder={hatPasswort ? "Neues Passwort" : "Kein Passwort"}
+                             value={neuesPasswort}
+                             onChange={(e) => setNeuesPasswort(e.target.value)}/>
+                    {(hatPasswort || neuesPasswort) &&
+                        <Button btnStyle="secondary"
+                                style={{fontSize: "0.9em"}}
+                                onClick={() => {
+                                  setNeuesPasswort("");
+                                  setIsPasswortEntfernt(true);
+                                }}>
+                            Entfernen
+                        </Button>}
+                  </div>
+                  <small>
+                    {neuesPasswort
+                      ? "Nach dem Speichern brauchen alle das neue Passwort, das alte gilt nicht mehr."
+                      : hatPasswort
+                        ? "Die Party ist passwortgeschützt. Leer lassen, um das Passwort zu behalten."
+                        : isPasswortEntfernt
+                          ? "Das Passwort wird beim Speichern entfernt."
+                          : "Ohne Passwort kann jeder mit dem Link die Party öffnen."}
                   </small>
               </div>
               <textarea value={infos}

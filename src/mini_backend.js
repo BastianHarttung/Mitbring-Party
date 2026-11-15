@@ -33,7 +33,6 @@ export async function downloadFromServer() {
         throw new Error('Backend lieferte kein JSON (falsche REACT_APP_BACKEND_URL?): ' + BASE_SERVER_URL);
     }
     isLoadedFromServer = true;
-    console.log('Loaded', jsonFromServer.partyCollection);
 }
 
 export function setURL(url) {

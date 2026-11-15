@@ -1,20 +1,9 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {backend, downloadFromServer} from "../mini_backend";
+import {hashPassword} from "../helper-functions/helper-functions";
 
 
 const ADMIN_PASSWORD_KEY = "adminPassword";
-
-/**
- * Erzeugt einen SHA-256-Hash (hex) des übergebenen Strings.
- * Hinweis: crypto.subtle ist nur in sicheren Kontexten verfügbar (HTTPS oder localhost).
- */
-const hashPassword = async (pw: string): Promise<string> => {
-  const data = new TextEncoder().encode(pw);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, "0"))
-    .join("");
-};
 
 export interface IUserStore {
   userName: string | null;
