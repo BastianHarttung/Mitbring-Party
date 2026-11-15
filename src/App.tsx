@@ -1,4 +1,5 @@
 import "./App.scss";
+import { useEffect } from "react";
 import { observer } from "mobx-react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RiUserSettingsLine } from "react-icons/ri";
@@ -27,6 +28,7 @@ function App(): JSX.Element {
     popupStyle,
     isSettingsOpen,
     openSettings,
+    starteAutoAktualisierung,
   } = globalStore;
   const {
     isModalUserNameOpen,
@@ -35,6 +37,9 @@ function App(): JSX.Element {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Daten alle 3 Minuten und beim Zurückkehren in den Tab neu laden
+  useEffect(() => starteAutoAktualisierung(), [starteAutoAktualisierung]);
 
   const handleOpenSettings = () => {
     navigate("/profil");

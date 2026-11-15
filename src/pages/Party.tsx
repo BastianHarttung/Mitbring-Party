@@ -28,6 +28,7 @@ const Party = () => {
     speichereEssen,
     findKategorien,
     throwPopupMessage,
+    setUngespeicherteAuswahl,
   } = globalStore;
 
   const {userName, isAdmin} = userStore;
@@ -68,13 +69,18 @@ const Party = () => {
       newChecked = newChecked.filter((item) => item !== essenName);
     }
     setCheckedEssen(newChecked);
+    // Verhindert, dass der Hintergrund-Refresh die noch nicht gespeicherten Häkchen zurücksetzt
+    setUngespeicherteAuswahl(true);
   }
 
-  function auswahlSpeichern() {
-    if (userName && speichereAuswahl(checkedEssen, userName, party)) {
+  async function auswahlSpeichern() {
+    if (userName && await speichereAuswahl(checkedEssen, userName, party.id)) {
       throwPopupMessage("Auswahl gespeichert", "success");
     }
   }
+
+  // Beim Verlassen der Seite gibt es keine ungespeicherte Auswahl mehr
+  useEffect(() => () => setUngespeicherteAuswahl(false), [setUngespeicherteAuswahl]);
 
   const handleSaveNewFood = (foodObj: IEssen) => {
     speichereEssen(params.id, foodObj);
@@ -105,9 +111,11 @@ const Party = () => {
       speichereActiveId(params.id);
     }
     setCheckedEssen(userCheckedEssen)
+    // Auswahl entspricht jetzt wieder dem Server-Stand
+    setUngespeicherteAuswahl(false)
     speichereNotesCount(partyFind?.notizen?.length ?? 0)
     setParty(partyFind ? partyFind : emptyParty);
-  }, [partyFind, params.id, speichereActiveId, speichereNotesCount, userName]);
+  }, [partyFind, params.id, speichereActiveId, speichereNotesCount, setUngespeicherteAuswahl, userName]);
 
 
   if (isLoading) {

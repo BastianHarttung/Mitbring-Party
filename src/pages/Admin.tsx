@@ -40,7 +40,9 @@ const Admin = (): JSX.Element => {
   // Leer = Standard (1 Woche nach Party-Datum), passt sich also an, wenn das Datum geändert wird
   const [editEndDatum, setEditEndDatum] = useState<string>(partyFind?.editEndDatum ?? "");
   const [infos, setInfos] = useState<string>(partyFind?.infos ?? "");
-  const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
+  const [essen, setEssen] = useState<IEssen[]>(() => (partyFind?.essen ?? []).map((ess) => ({...ess})));
+  // Stand beim Öffnen: zeigt beim Speichern, welche "Wer bringt's" der Admin selbst geändert hat
+  const [originalEssen, setOriginalEssen] = useState<IEssen[]>(() => (partyFind?.essen ?? []).map((ess) => ({...ess})));
   // Gespeichert wird nur der Hash. Neues Passwort im Klartext; leer = bisheriges Passwort bleibt
   const [neuesPasswort, setNeuesPasswort] = useState<string>("");
   const [isPasswortEntfernt, setIsPasswortEntfernt] = useState<boolean>(false);
@@ -49,8 +51,8 @@ const Admin = (): JSX.Element => {
   const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
 
   function handleChangeEssen(event: ChangeEvent<HTMLInputElement>, index: number, mod: TEssen): void {
-    let neuesEssen = [...essen];
-    neuesEssen[index][mod] = event.target.value;
+    const neuesEssen = [...essen];
+    neuesEssen[index] = {...neuesEssen[index], [mod]: event.target.value};
     setEssen(neuesEssen);
   }
 
@@ -71,7 +73,7 @@ const Admin = (): JSX.Element => {
           return;
         }
       }
-      updatePartyBackend({
+      const gespeichert = await updatePartyBackend({
         id,
         partyName,
         ort,
@@ -83,7 +85,12 @@ const Admin = (): JSX.Element => {
         infos,
         essen,
         notizen: partyFind?.notizen ?? [],
-      });
+      }, originalEssen);
+      if (!gespeichert) return;
+      // Formular auf den gespeicherten Stand bringen (inkl. "Wer bringt's", das andere inzwischen eingetragen haben)
+      const gespeicherteEssen = globalStore.partyCollection.find((part) => part.id === id)?.essen ?? essen;
+      setEssen(gespeicherteEssen.map((ess) => ({...ess})));
+      setOriginalEssen(gespeicherteEssen.map((ess) => ({...ess})));
       setNeuesPasswort("");
       setIsPasswortEntfernt(false);
       throwPopupMessage("Party gespeichert", "success");
