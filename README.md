@@ -3,17 +3,17 @@
 Ein Doodle-Clon für die Organisation einer Mitbring-Party. Wer bringt was zum Essen mit?\
 Test the App: https://mitbring-party.bastian-harttung-projekte.de/
 
-![Wahl_Big.png](src/assets/img/readme/wahl_big.png)
+![mitbring-party.bastian-harttung-projekte.de_party_(Mockup - mobile).png](src/assets/img/readme/mitbring-party.bastian-harttung-projekte.de_party_%28Mockup%20-%20mobile%29.png)
 
 ### Übersicht
 
 Eine, bei Übergröße, scrollbare Übersicht mit allen Namen und Essen, die vorhanden sind.
 
-![uebersicht.png](src/assets/img/readme/uebersicht.png)
+![mitbring-party.bastian-harttung-projekte.de_uebersicht_(Mockup - tablet).png](src/assets/img/readme/mitbring-party.bastian-harttung-projekte.de_uebersicht_%28Mockup%20-%20tablet%29.png)
 
 ### - Handy kompatibel
 
-![Handy_Wahl.png](src/assets/img/readme/Handy_Wahl.png)
+![mitbring-party.bastian-harttung-projekte.de_uebersicht_(Mockup - mobile).png](src/assets/img/readme/mitbring-party.bastian-harttung-projekte.de_uebersicht_%28Mockup%20-%20mobile%29.png)
 
 #### Infos
 
