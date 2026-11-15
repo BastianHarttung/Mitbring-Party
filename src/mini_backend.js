@@ -1,8 +1,12 @@
 let jsonFromServer = {};
 let BASE_SERVER_URL;
+let isLoadedFromServer = false;
 
 export const backend = {
     setItem: function(key, item) {
+        if (!isLoadedFromServer) {
+            return Promise.reject('database.json not loaded yet - refusing to save');
+        }
         jsonFromServer[key] = item;
         return saveJSONToServer();
     },
@@ -13,6 +17,9 @@ export const backend = {
         return jsonFromServer[key];
     },
     deleteItem: function(key) {
+        if (!isLoadedFromServer) {
+            return Promise.reject('database.json not loaded yet - refusing to save');
+        }
         delete jsonFromServer[key];
         return saveJSONToServer();
     }
@@ -25,7 +32,8 @@ window.onload = async function() {
 export async function downloadFromServer() {
     let result = await loadJSONFromServer();
     jsonFromServer = JSON.parse(result);
-    console.log('Loaded', jsonFromServer);
+    isLoadedFromServer = true;
+    console.log('Loaded', jsonFromServer.partyCollection);
 }
 
 export function setURL(url) {

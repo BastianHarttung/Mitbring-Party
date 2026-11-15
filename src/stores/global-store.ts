@@ -31,7 +31,8 @@ class GlobalStore {
   }
 
   initBackend = () => {
-    setURL("https://bastian-harttung-projekte.de/MitbringParty/smallest_backend_ever");
+    // Ohne REACT_APP_BACKEND_URL wird das Backend relativ zur App geladen (liegt auf dem Server neben index.html)
+    setURL(process.env.REACT_APP_BACKEND_URL || "/smallest_backend_ever");
   };
 
   initFromServer = (): void => {
@@ -164,6 +165,10 @@ class GlobalStore {
   savePartyToBackend = () => {
     backend.setItem("partyCollection", this.partyCollection)
       .then(() => console.log("Saved Parties"))
+      .catch(error => {
+        this.throwPopupMessage("Speichern fehlgeschlagen", "error")
+        console.log(error)
+      })
   };
 
   openSettings = (url: string) => {
