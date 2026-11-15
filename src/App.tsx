@@ -2,7 +2,6 @@ import "./App.scss";
 import { observer } from "mobx-react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RiUserSettingsLine } from "react-icons/ri";
-
 import Wahl from "./pages/Wahl";
 import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
