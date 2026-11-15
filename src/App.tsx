@@ -1,9 +1,9 @@
 import "./App.scss";
+import { useEffect } from "react";
 import { observer } from "mobx-react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RiUserSettingsLine } from "react-icons/ri";
-
-import Wahl from "./pages/Wahl";
+import Party from "./pages/Party";
 import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
@@ -18,6 +18,7 @@ import PopupMessage from "./components/popup-message";
 import ModalUserName from "./components/modals/modalUserName";
 import ModalPassword from "./components/modals/modalPassword";
 import ButtonCircle from "./ui-components/Button-Circle";
+import PartyPasswordGuard from "./components/partyPasswordGuard";
 
 
 function App(): JSX.Element {
@@ -27,6 +28,7 @@ function App(): JSX.Element {
     popupStyle,
     isSettingsOpen,
     openSettings,
+    starteAutoAktualisierung,
   } = globalStore;
   const {
     isModalUserNameOpen,
@@ -35,6 +37,9 @@ function App(): JSX.Element {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Daten alle 3 Minuten und beim Zurückkehren in den Tab neu laden
+  useEffect(() => starteAutoAktualisierung(), [starteAutoAktualisierung]);
 
   const handleOpenSettings = () => {
     navigate("/profil");
@@ -58,17 +63,13 @@ function App(): JSX.Element {
           <Route path="/"
                  element={<Start/>}
           />
-          <Route path="wahl/:id"
-                 element={<Wahl/>}
-          />
-          <Route path="uebersicht/:id"
-                 element={<Uebersicht/>}
-          />
+          <Route element={<PartyPasswordGuard/>}>
+            <Route path="party/:id" element={<Party/>}/>
+            <Route path="uebersicht/:id" element={<Uebersicht/>}/>
+            <Route path="notizen/:id" element={<Notizen/>}/>
+          </Route>
           <Route path="admin/:id"
                  element={<Admin/>}
-          />
-          <Route path="notizen/:id"
-                 element={<Notizen/>}
           />
           <Route path="profil"
                  element={<Profil/>}

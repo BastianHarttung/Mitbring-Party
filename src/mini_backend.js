@@ -1,8 +1,12 @@
 let jsonFromServer = {};
 let BASE_SERVER_URL;
+let isLoadedFromServer = false;
 
 export const backend = {
     setItem: function(key, item) {
+        if (!isLoadedFromServer) {
+            return Promise.reject('database.json not loaded yet - refusing to save');
+        }
         jsonFromServer[key] = item;
         return saveJSONToServer();
     },
@@ -13,19 +17,22 @@ export const backend = {
         return jsonFromServer[key];
     },
     deleteItem: function(key) {
+        if (!isLoadedFromServer) {
+            return Promise.reject('database.json not loaded yet - refusing to save');
+        }
         delete jsonFromServer[key];
         return saveJSONToServer();
     }
 };
 
-window.onload = async function() {
-    await downloadFromServer();
-}
-
 export async function downloadFromServer() {
     let result = await loadJSONFromServer();
-    jsonFromServer = JSON.parse(result);
-    console.log('Loaded', jsonFromServer);
+    try {
+        jsonFromServer = JSON.parse(result);
+    } catch (e) {
+        throw new Error('Backend lieferte kein JSON (falsche REACT_APP_BACKEND_URL?): ' + BASE_SERVER_URL);
+    }
+    isLoadedFromServer = true;
 }
 
 export function setURL(url) {
@@ -39,8 +46,10 @@ export function setURL(url) {
 
 async function loadJSONFromServer() {
     let response = await fetch(BASE_SERVER_URL + '/nocors.php?json=database&noache=' + (new Date().getTime()));
+    if (!response.ok) {
+        throw new Error('Backend nicht erreichbar: ' + response.status + ' ' + response.statusText);
+    }
     return await response.text();
-
 }
 
 /**

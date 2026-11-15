@@ -1,8 +1,8 @@
 {
   "name": "mitbring-party",
-  "version": "1.3.1",
+  "version": "26.11.0",
   "private": true,
-  "homepage": "/MitbringParty",
+  "homepage": "/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",

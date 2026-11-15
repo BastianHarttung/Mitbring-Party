@@ -7,6 +7,7 @@ export class Party {
   ort: string;
   datum: string;
   zeit: string;
+  passwortHash?: string;  // SHA-256 (hex) des optionalen Party-Passworts
   infos: string;
   essen: IEssen[];
   notizen: INotiz[];

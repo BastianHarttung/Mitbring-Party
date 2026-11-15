@@ -1,5 +1,9 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
+import {backend, downloadFromServer} from "../mini_backend";
+import {hashPassword} from "../helper-functions/helper-functions";
 
+
+const ADMIN_PASSWORD_KEY = "adminPassword";
 
 export interface IUserStore {
   userName: string | null;
@@ -40,15 +44,35 @@ class UserStore {
     localStorage.setItem("userName", name)
   }
 
-  checkIfAdmin = (pw: string): boolean => {
-    if (pw === "BastiDev") {
-      this.isAdmin = true
-      localStorage.setItem("isAdmin", "true")
-      return true
-    } else {
-      return false
+  /**
+   * Prüft das Passwort gegen den SHA-256-Hash "adminPassword" aus der database.json.
+   * Lädt vorher die aktuelle database.json vom Server.
+   */
+  checkIfAdmin = async (pw: string): Promise<boolean> => {
+    await downloadFromServer();
+    const storedHash: string | null = backend.getItem(ADMIN_PASSWORD_KEY);
+    if (!storedHash) {
+      console.error(`Kein "${ADMIN_PASSWORD_KEY}" in der database.json gefunden`);
+      return false;
     }
-    //else this.throwErrorMessage("Passwort falsch"); TODO
+    const isCorrect = (await hashPassword(pw)) === storedHash.toLowerCase();
+    if (isCorrect) {
+      runInAction(() => {
+        this.isAdmin = true;
+      });
+      localStorage.setItem("isAdmin", "true");
+    }
+    return isCorrect;
+  };
+
+  /**
+   * Setzt ein neues Admin-Passwort (nur als Admin). Gespeichert wird nur der SHA-256-Hash.
+   * Da mini_backend immer die komplette database.json schreibt, bleiben alle anderen Einträge erhalten.
+   */
+  setAdminPassword = async (newPw: string): Promise<void> => {
+    if (!this.isAdmin) throw new Error("Nur Admins dürfen das Passwort ändern");
+    await downloadFromServer();
+    await backend.setItem(ADMIN_PASSWORD_KEY, await hashPassword(newPw));
   };
 
   adminLogout = (): void => {

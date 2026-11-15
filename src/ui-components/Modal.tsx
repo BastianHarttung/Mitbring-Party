@@ -10,9 +10,10 @@ interface ModalProps {
   closeable?: boolean;
   onClose: () => void;
   heading?: string;
+  dark?: boolean;   // fast schwarzer Hintergrund, verdeckt die Seite dahinter
 }
 
-const Modal = ({children, isOpen, closeable = true, onClose, heading}: ModalProps) => {
+const Modal = ({children, isOpen, closeable = true, onClose, heading, dark = false}: ModalProps) => {
 
   const handleClose = () => {
     if (closeable) onClose()
@@ -21,7 +22,7 @@ const Modal = ({children, isOpen, closeable = true, onClose, heading}: ModalProp
   return (
     <>
       {isOpen && ReactDom.createPortal(
-        <div className={classes.modal}
+        <div className={`${classes.modal} ${dark ? classes.dark : ""}`}
              onClick={handleClose}>
           <div className={classes.inputContainer}
                onClick={(event) => event.stopPropagation()}>

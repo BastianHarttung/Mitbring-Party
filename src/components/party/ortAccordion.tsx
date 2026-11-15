@@ -31,7 +31,7 @@ const OrtAccordion = ({party}: OrtAccordionProps) => {
           style={{border: 0}}
           loading="lazy"
           allowFullScreen
-          src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_API_Key}&q=${party.ortCoordinates ? party.ortCoordinates : party.ort}`}>
+          src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_MAPS_API_KEY}&q=${party.ortCoordinates ? party.ortCoordinates : party.ort}`}>
         </iframe>
       </details>
     </div>

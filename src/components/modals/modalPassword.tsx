@@ -17,8 +17,13 @@ const ModalPassword = ({isOpen, closeable = true}: ModalPasswordProps) => {
 
   const [password, setPassword] = useState("");
 
-  const checkPwAndContinue = () => {
-    const isCorrectPw = checkIfAdmin(password);
+  const checkPwAndContinue = async () => {
+    let isCorrectPw = false;
+    try {
+      isCorrectPw = await checkIfAdmin(password);
+    } catch (error) {
+      console.log(error);
+    }
     if (isCorrectPw) {
       handleCloseModal();
     } else {

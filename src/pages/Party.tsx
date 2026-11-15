@@ -1,4 +1,4 @@
-import classes from "./Wahl.module.scss";
+import classes from "./Party.module.scss";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
@@ -11,13 +11,13 @@ import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import Loading from "../ui-components/Loading";
 import ModalNewFood from "../components/modals/modalNewFood";
-import OrtAccordion from "../components/wahl/ortAccordion";
-import FoodCheck from "../components/wahl/foodCheck";
+import OrtAccordion from "../components/party/ortAccordion";
+import FoodCheck from "../components/party/foodCheck";
 import NoParty from "../components/noParty";
-import { datumZuLocalString } from "../helper-functions/helper-functions";
+import { datumZuLocalString, getEditEndDatum, isPartyGesperrt } from "../helper-functions/helper-functions";
 
 
-const Wahl = () => {
+const Party = () => {
 
   const {
     partyCollection,
@@ -28,9 +28,10 @@ const Wahl = () => {
     speichereEssen,
     findKategorien,
     throwPopupMessage,
+    setUngespeicherteAuswahl,
   } = globalStore;
 
-  const {userName} = userStore;
+  const {userName, isAdmin} = userStore;
 
   const params = useParams();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
@@ -68,14 +69,18 @@ const Wahl = () => {
       newChecked = newChecked.filter((item) => item !== essenName);
     }
     setCheckedEssen(newChecked);
+    // Verhindert, dass der Hintergrund-Refresh die noch nicht gespeicherten Häkchen zurücksetzt
+    setUngespeicherteAuswahl(true);
   }
 
-  function auswahlSpeichern() {
-    if (userName) {
-      speichereAuswahl(checkedEssen, userName, party);
+  async function auswahlSpeichern() {
+    if (userName && await speichereAuswahl(checkedEssen, userName, party.id)) {
       throwPopupMessage("Auswahl gespeichert", "success");
     }
   }
+
+  // Beim Verlassen der Seite gibt es keine ungespeicherte Auswahl mehr
+  useEffect(() => () => setUngespeicherteAuswahl(false), [setUngespeicherteAuswahl]);
 
   const handleSaveNewFood = (foodObj: IEssen) => {
     speichereEssen(params.id, foodObj);
@@ -106,9 +111,11 @@ const Wahl = () => {
       speichereActiveId(params.id);
     }
     setCheckedEssen(userCheckedEssen)
+    // Auswahl entspricht jetzt wieder dem Server-Stand
+    setUngespeicherteAuswahl(false)
     speichereNotesCount(partyFind?.notizen?.length ?? 0)
     setParty(partyFind ? partyFind : emptyParty);
-  }, [partyFind, params.id, speichereActiveId, speichereNotesCount, userName]);
+  }, [partyFind, params.id, speichereActiveId, speichereNotesCount, setUngespeicherteAuswahl, userName]);
 
 
   if (isLoading) {
@@ -119,6 +126,10 @@ const Wahl = () => {
     return <NoParty/>;
   }
 
+  const istGesperrt = isPartyGesperrt(party);
+  // Der Admin darf auch nach dem Enddatum noch ändern
+  const istReadOnly = istGesperrt && !isAdmin;
+
   return (
     <section>
       <ModalNewFood isOpen={isModalNewFoodOpen}
@@ -127,6 +138,12 @@ const Wahl = () => {
                     categories={findKategorien(party)}/>
 
       <h3 className={classes.partyName}>{party.partyName}</h3>
+
+      {istGesperrt &&
+          <div className="gesperrt-hinweis">
+              Bearbeitung beendet seit {datumZuLocalString(getEditEndDatum(party))}.
+            {isAdmin ? " Nur du als Admin kannst noch etwas ändern." : " Es kann nichts mehr geändert werden."}
+          </div>}
 
       <div className={classes.datumContainer}><b>Datum:</b><br/>
         <div id="datum" className="datum">{datumZuLocalString(party.datum)}</div>
@@ -150,27 +167,30 @@ const Wahl = () => {
           <FoodCheck key={index}
                      essen={ess}
                      onChecked={handleChecked}
-                     checkedEssen={checkedEssen}/>))}
+                     checkedEssen={checkedEssen}
+                     readOnly={istReadOnly}/>))}
       </div>
 
-      <div id="essenBtnContainer"
-           className={classes.essenBtnContainer}>
-        <ButtonCircle
-          onClick={() => setIsModalNewFoodOpen(true)}
-          icon={<FiPlus/>}
-          btnStyle="primary"
-          size="18px"/>
-      </div>
+      {!istReadOnly && <>
+          <div id="essenBtnContainer"
+               className={classes.essenBtnContainer}>
+              <ButtonCircle
+                  onClick={() => setIsModalNewFoodOpen(true)}
+                  icon={<FiPlus/>}
+                  btnStyle="primary"
+                  size="18px"/>
+          </div>
 
-      <div className={classes.nameSpeichernContainer}>
-        <Button onClick={auswahlSpeichern}>
-          Auswahl speichern
-        </Button>
-      </div>
+          <div className={classes.nameSpeichernContainer}>
+              <Button onClick={auswahlSpeichern}>
+                  Auswahl speichern
+              </Button>
+          </div>
+      </>}
 
     </section>
   );
 
 };
 
-export default observer(Wahl);
+export default observer(Party);

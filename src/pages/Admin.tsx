@@ -13,6 +13,7 @@ import FoodRow from "../components/admin/foodRow";
 import NoParty from "../components/noParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
+import { datumZuLocalString, hashPassword, standardEditEndDatum } from "../helper-functions/helper-functions";
 
 
 const Admin = (): JSX.Element => {
@@ -36,14 +37,22 @@ const Admin = (): JSX.Element => {
   const [ortCoordinates, setOrtCoordinates] = useState<string>(partyFind?.ortCoordinates ?? "");
   const [datum, setDatum] = useState<string>(partyFind?.datum ?? "");
   const [zeit, setZeit] = useState<string>(partyFind?.zeit ?? "");
+  // Leer = Standard (1 Woche nach Party-Datum), passt sich also an, wenn das Datum geändert wird
+  const [editEndDatum, setEditEndDatum] = useState<string>(partyFind?.editEndDatum ?? "");
   const [infos, setInfos] = useState<string>(partyFind?.infos ?? "");
-  const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
+  const [essen, setEssen] = useState<IEssen[]>(() => (partyFind?.essen ?? []).map((ess) => ({...ess})));
+  // Stand beim Öffnen: zeigt beim Speichern, welche "Wer bringt's" der Admin selbst geändert hat
+  const [originalEssen, setOriginalEssen] = useState<IEssen[]>(() => (partyFind?.essen ?? []).map((ess) => ({...ess})));
+  // Gespeichert wird nur der Hash. Neues Passwort im Klartext; leer = bisheriges Passwort bleibt
+  const [neuesPasswort, setNeuesPasswort] = useState<string>("");
+  const [isPasswortEntfernt, setIsPasswortEntfernt] = useState<boolean>(false);
+  const hatPasswort = !!partyFind?.passwortHash && !isPasswortEntfernt;
 
   const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
 
   function handleChangeEssen(event: ChangeEvent<HTMLInputElement>, index: number, mod: TEssen): void {
-    let neuesEssen = [...essen];
-    neuesEssen[index][mod] = event.target.value;
+    const neuesEssen = [...essen];
+    neuesEssen[index] = {...neuesEssen[index], [mod]: event.target.value};
     setEssen(neuesEssen);
   }
 
@@ -52,19 +61,38 @@ const Admin = (): JSX.Element => {
     setEssen(neu);
   }
 
-  function saveParty(): void {
+  async function saveParty(): Promise<void> {
     if (id !== undefined) {
-      updatePartyBackend({
+      let passwortHash: string | undefined = isPasswortEntfernt ? undefined : partyFind?.passwortHash;
+      if (neuesPasswort.trim() !== "") {
+        try {
+          passwortHash = await hashPassword(neuesPasswort);
+        } catch (error) {
+          console.log(error);
+          throwPopupMessage("Passwort konnte nicht gespeichert werden", "error");
+          return;
+        }
+      }
+      const gespeichert = await updatePartyBackend({
         id,
         partyName,
         ort,
         ortCoordinates,
         datum,
         zeit,
+        ...(editEndDatum ? {editEndDatum} : {}),
+        ...(passwortHash ? {passwortHash} : {}),
         infos,
         essen,
-        notizen: [],
-      });
+        notizen: partyFind?.notizen ?? [],
+      }, originalEssen);
+      if (!gespeichert) return;
+      // Formular auf den gespeicherten Stand bringen (inkl. "Wer bringt's", das andere inzwischen eingetragen haben)
+      const gespeicherteEssen = globalStore.partyCollection.find((part) => part.id === id)?.essen ?? essen;
+      setEssen(gespeicherteEssen.map((ess) => ({...ess})));
+      setOriginalEssen(gespeicherteEssen.map((ess) => ({...ess})));
+      setNeuesPasswort("");
+      setIsPasswortEntfernt(false);
       throwPopupMessage("Party gespeichert", "success");
     }
   }
@@ -119,6 +147,55 @@ const Admin = (): JSX.Element => {
               <input type="time"
                      value={zeit}
                      onChange={(e) => setZeit(e.target.value)}/>
+              <div className={classes.editEndContainer}>
+                  <span>Bearbeitbar bis (einschließlich):</span>
+                  <div className={classes.editEndRow}>
+                      <input type="date"
+                             value={editEndDatum}
+                             onChange={(e) => setEditEndDatum(e.target.value)}/>
+                    {editEndDatum &&
+                        <Button btnStyle="secondary"
+                                style={{fontSize: "0.9em"}}
+                                onClick={() => setEditEndDatum("")}>
+                            Standard
+                        </Button>}
+                  </div>
+                  <small>
+                    {editEndDatum
+                      ? "Danach sieht nur noch der Admin die Party."
+                      : standardEditEndDatum(datum)
+                        ? `Standard: 1 Woche nach der Party (${datumZuLocalString(standardEditEndDatum(datum))}). Danach sieht nur noch der Admin die Party.`
+                        : "Standard: 1 Woche nach der Party. Ohne Party-Datum gibt es kein Ende."}
+                  </small>
+              </div>
+              <div className={classes.editEndContainer}>
+                  <span>Passwort (optional):</span>
+                  <div className={classes.editEndRow}>
+                      <input type="text"
+                             autoComplete="off"
+                             placeholder={hatPasswort ? "Neues Passwort" : "Kein Passwort"}
+                             value={neuesPasswort}
+                             onChange={(e) => setNeuesPasswort(e.target.value)}/>
+                    {(hatPasswort || neuesPasswort) &&
+                        <Button btnStyle="secondary"
+                                style={{fontSize: "0.9em"}}
+                                onClick={() => {
+                                  setNeuesPasswort("");
+                                  setIsPasswortEntfernt(true);
+                                }}>
+                            Entfernen
+                        </Button>}
+                  </div>
+                  <small>
+                    {neuesPasswort
+                      ? "Nach dem Speichern brauchen alle das neue Passwort, das alte gilt nicht mehr."
+                      : hatPasswort
+                        ? "Die Party ist passwortgeschützt. Leer lassen, um das Passwort zu behalten."
+                        : isPasswortEntfernt
+                          ? "Das Passwort wird beim Speichern entfernt."
+                          : "Ohne Passwort kann jeder mit dem Link die Party öffnen."}
+                  </small>
+              </div>
               <textarea value={infos}
                         placeholder="Infos"
                         onChange={(e) => setInfos(e.target.value)}/>

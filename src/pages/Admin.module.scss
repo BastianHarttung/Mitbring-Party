@@ -50,3 +50,25 @@
   }
 }
 
+
+.editEndContainer {
+  width: clamp(200px, 100%, 460px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .editEndRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    input {
+      flex: 1;
+      width: auto;
+    }
+  }
+
+  small {
+    color: gray;
+  }
+}
