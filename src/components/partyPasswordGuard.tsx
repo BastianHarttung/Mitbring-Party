@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
@@ -7,15 +7,12 @@ import { isPartyFreigeschaltet } from "../helper-functions/helper-functions";
 import ModalPartyPassword from "./modals/modalPartyPassword";
 
 
-interface PartyPasswordGuardProps {
-  children: JSX.Element;
-}
-
 /**
- * Zeigt die Party-Seite erst an, wenn das (optionale) Party-Passwort eingegeben wurde.
+ * Layout-Route: Zeigt die Kind-Route (Party, Übersicht, Notizen) erst an,
+ * wenn das (optionale) Party-Passwort eingegeben wurde.
  * Der Admin braucht kein Party-Passwort.
  */
-const PartyPasswordGuard = ({children}: PartyPasswordGuardProps): JSX.Element => {
+const PartyPasswordGuard = (): JSX.Element => {
 
   const {partyCollection, isLoading} = globalStore;
   const {isAdmin} = userStore;
@@ -28,7 +25,7 @@ const PartyPasswordGuard = ({children}: PartyPasswordGuardProps): JSX.Element =>
 
   // Laden / unbekannte Party behandelt die Seite selbst
   if (isLoading || !partyFind || isAdmin || isPartyFreigeschaltet(partyFind)) {
-    return children;
+    return <Outlet/>;
   }
 
   return <ModalPartyPassword party={partyFind}

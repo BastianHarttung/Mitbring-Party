@@ -58,15 +58,11 @@ function App(): JSX.Element {
           <Route path="/"
                  element={<Start/>}
           />
-          <Route path="party/:id"
-                 element={<PartyPasswordGuard><Party/></PartyPasswordGuard>}
-          />
-          <Route path="uebersicht/:id"
-                 element={<PartyPasswordGuard><Uebersicht/></PartyPasswordGuard>}
-          />
-          <Route path="notizen/:id"
-                 element={<PartyPasswordGuard><Notizen/></PartyPasswordGuard>}
-          />
+          <Route element={<PartyPasswordGuard/>}>
+            <Route path="party/:id" element={<Party/>}/>
+            <Route path="uebersicht/:id" element={<Uebersicht/>}/>
+            <Route path="notizen/:id" element={<Notizen/>}/>
+          </Route>
           <Route path="admin/:id"
                  element={<Admin/>}
           />
