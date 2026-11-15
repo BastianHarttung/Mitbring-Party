@@ -4,6 +4,18 @@ import {backend, downloadFromServer} from "../mini_backend";
 
 const ADMIN_PASSWORD_KEY = "adminPassword";
 
+/**
+ * Erzeugt einen SHA-256-Hash (hex) des übergebenen Strings.
+ * Hinweis: crypto.subtle ist nur in sicheren Kontexten verfügbar (HTTPS oder localhost).
+ */
+const hashPassword = async (pw: string): Promise<string> => {
+  const data = new TextEncoder().encode(pw);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+};
+
 export interface IUserStore {
   userName: string | null;
   isAdmin: boolean;
@@ -44,17 +56,17 @@ class UserStore {
   }
 
   /**
-   * Prüft das Passwort gegen "adminPassword" aus der database.json.
+   * Prüft das Passwort gegen den SHA-256-Hash "adminPassword" aus der database.json.
    * Lädt vorher die aktuelle database.json vom Server.
    */
   checkIfAdmin = async (pw: string): Promise<boolean> => {
     await downloadFromServer();
-    const storedPassword: string | null = backend.getItem(ADMIN_PASSWORD_KEY);
-    if (!storedPassword) {
+    const storedHash: string | null = backend.getItem(ADMIN_PASSWORD_KEY);
+    if (!storedHash) {
       console.error(`Kein "${ADMIN_PASSWORD_KEY}" in der database.json gefunden`);
       return false;
     }
-    const isCorrect = pw === storedPassword;
+    const isCorrect = (await hashPassword(pw)) === storedHash.toLowerCase();
     if (isCorrect) {
       runInAction(() => {
         this.isAdmin = true;
@@ -65,13 +77,13 @@ class UserStore {
   };
 
   /**
-   * Setzt ein neues Admin-Passwort (nur als Admin).
+   * Setzt ein neues Admin-Passwort (nur als Admin). Gespeichert wird nur der SHA-256-Hash.
    * Da mini_backend immer die komplette database.json schreibt, bleiben alle anderen Einträge erhalten.
    */
   setAdminPassword = async (newPw: string): Promise<void> => {
     if (!this.isAdmin) throw new Error("Nur Admins dürfen das Passwort ändern");
     await downloadFromServer();
-    await backend.setItem(ADMIN_PASSWORD_KEY, newPw);
+    await backend.setItem(ADMIN_PASSWORD_KEY, await hashPassword(newPw));
   };
 
   adminLogout = (): void => {
