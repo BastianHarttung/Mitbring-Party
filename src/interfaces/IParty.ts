@@ -5,6 +5,7 @@ export interface IParty {
   ortCoordinates?: string,  // Coordinates or Address for Google Maps
   datum: string,
   zeit: string,
+  editEndDatum?: string,  // ISO "YYYY-MM-DD"; leer = Standard (1 Woche nach datum). Danach nur noch Admin
   infos: string,
   essen: IEssen[],
   notizen: INotiz[],

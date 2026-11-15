@@ -6,6 +6,8 @@ import { FiPlus } from "react-icons/fi";
 import { INotiz, IParty } from "../interfaces/IParty";
 import { emptyParty } from "../mockup/testConstants";
 import globalStore from "../stores/global-store";
+import userStore from "../stores/user-store";
+import { datumZuLocalString, getEditEndDatum, isPartyGesperrt } from "../helper-functions/helper-functions";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewNote from "../components/modals/modalNewNote";
 import Loading from "../ui-components/Loading";
@@ -65,6 +67,11 @@ const Notizen = () => {
     return <Loading/>
   }
 
+  const {isAdmin} = userStore;
+  const istGesperrt = isPartyGesperrt(party);
+  // Der Admin darf auch nach dem Enddatum noch Notizen anlegen/löschen
+  const istReadOnly = istGesperrt && !isAdmin;
+
   return (
     <section className={classes.notizenSection}>
       <ModalNewNote isOpen={isModalNewNoteOpen}
@@ -78,18 +85,25 @@ const Notizen = () => {
 
       <div className="flex-center" style={{width: "100%"}}>
         <h3>Notizen zu {party.partyName}</h3>
-        <ButtonCircle
-          onClick={() => setIsModalNewNoteOpen(true)}
-          icon={<FiPlus/>}
-          btnStyle="primary"
-          size="18px"/>
+        {!istReadOnly && <ButtonCircle
+            onClick={() => setIsModalNewNoteOpen(true)}
+            icon={<FiPlus/>}
+            btnStyle="primary"
+            size="18px"/>}
       </div>
+
+      {istGesperrt &&
+          <div className="gesperrt-hinweis">
+              Bearbeitung beendet seit {datumZuLocalString(getEditEndDatum(party))}.
+            {isAdmin ? " Nur du als Admin kannst noch Notizen ändern." : " Notizen können nicht mehr hinzugefügt oder gelöscht werden."}
+          </div>}
 
       <div className={classes.notizen_container}>
         {party.notizen && party.notizen.map((notiz) =>
           <Notiz key={notiz.id}
                  notiz={notiz}
-                 onDelete={handleClickDelete}/>
+                 onDelete={handleClickDelete}
+                 readOnly={istReadOnly}/>
         )}
       </div>
 

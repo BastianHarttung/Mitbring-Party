@@ -18,6 +18,10 @@ const faq = [
     antwort: "Ja, über das Mülleimer-Symbol unter deiner Notiz. Das geht aber nur bei Notizen, die unter deinem Namen geschrieben wurden.",
   },
   {
+    frage: "Warum kann ich bei einer Feier nichts mehr ändern?",
+    antwort: "Jede Feier ist nur bis zu einem bestimmten Datum bearbeitbar, normalerweise bis 1 Woche nach der Feier. Danach kannst du nichts mehr auswählen und keine Notizen mehr schreiben oder löschen. Die Feier verschwindet dann auch von der Startseite.",
+  },
+  {
     frage: "Wird mein Name irgendwo veröffentlicht?",
     antwort: "Nein. Er wird nur auf deinem Gerät gespeichert und bei deiner Auswahl und deinen Notizen angezeigt, damit die anderen wissen, wer was mitbringt.",
   },

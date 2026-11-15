@@ -8,16 +8,18 @@ interface FoodCheckProps {
   essen: IEssen;
   onChecked: (event: ChangeEvent<HTMLInputElement>) => void;
   checkedEssen: string[];
+  readOnly?: boolean;
 }
 
-const FoodCheck = ({essen, onChecked, checkedEssen}: FoodCheckProps) => {
+const FoodCheck = ({essen, onChecked, checkedEssen, readOnly = false}: FoodCheckProps) => {
   const {userName} = userStore;
 
   const [isChecked, setIsChecked] = useState(false);
 
   const userHasChecked = essen.werBringts === userName;
 
-  const isDisabled = !!essen.werBringts && !userHasChecked
+  const isVergeben = !!essen.werBringts && !userHasChecked
+  const isDisabled = isVergeben || readOnly
   const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
     onChecked(event);
     setIsChecked(prevState => !prevState);
@@ -40,7 +42,7 @@ const FoodCheck = ({essen, onChecked, checkedEssen}: FoodCheckProps) => {
                checked={isChecked}
                disabled={isDisabled}/>
         <label htmlFor={essen.essenName}
-               className={isDisabled ? classes.food_disabled : ""}>{essen.essenName}</label>
+               className={isVergeben ? classes.food_disabled : ""}>{essen.essenName}</label>
       </div>
       {essen.werBringts && <div className={classes.werBringts}><i>({essen.werBringts})</i></div>}
     </div>

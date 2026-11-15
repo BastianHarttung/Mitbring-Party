@@ -5,6 +5,8 @@ import { IEssen } from "../interfaces/IParty";
 import { IPartyApp } from "../interfaces/IParty";
 import { downloadFromServer, backend, setURL } from "../mini_backend";
 import { TPopupStyle } from "../interfaces/Types";
+import { isPartyGesperrt } from "../helper-functions/helper-functions";
+import userStore from "./user-store";
 
 
 class GlobalStore {
@@ -70,9 +72,19 @@ class GlobalStore {
     this.initFromServer();
   };
 
+  /**
+   * Nach dem Edit-Enddatum darf nur noch der Admin etwas ändern.
+   * Gibt true zurück (und zeigt eine Meldung), wenn die Änderung blockiert ist.
+   */
+  istBearbeitungGesperrt = (party: IParty): boolean => {
+    if (userStore.isAdmin || !isPartyGesperrt(party)) return false;
+    this.throwPopupMessage("Diese Party kann nicht mehr bearbeitet werden", "error");
+    return true;
+  };
+
   speichereEssen = (id: string | undefined, essen: IEssen) => {
     const partyFind = this.partyCollection.find((part) => part.id === id);
-    if (!!partyFind) {
+    if (!!partyFind && !this.istBearbeitungGesperrt(partyFind)) {
       partyFind.essen.push(essen)
       partyFind.essen.sort((a, b) => {
         if (a.kategorie < b.kategorie) return -1
@@ -89,7 +101,7 @@ class GlobalStore {
 
   speichereNotiz = (id: string | undefined, note: INotiz) => {
     const partyFind = this.partyCollection.find((party) => party.id === id);
-    if (!!partyFind) {
+    if (!!partyFind && !this.istBearbeitungGesperrt(partyFind)) {
       partyFind.notizen.push(note)
       partyFind.notizen.sort((a, b) => new Date(b.datum).getTime() - new Date(a.datum).getTime())
       this.notesCount = partyFind.notizen.length
@@ -99,7 +111,7 @@ class GlobalStore {
 
   deleteNote = (id: string | undefined, note: INotiz) => {
     const partyFind = this.partyCollection.find((party) => party.id === id);
-    if (!!partyFind) {
+    if (!!partyFind && !this.istBearbeitungGesperrt(partyFind)) {
       partyFind.notizen = partyFind.notizen.filter((notiz) => notiz.id !== note.id)
       this.notesCount = partyFind.notizen.length
       this.savePartyToBackend()
@@ -112,7 +124,8 @@ class GlobalStore {
    * @param {string} neuerName
    * @param {object} partyObject Object of active Party
    */
-  speichereAuswahl = (checkedEssen: string[], neuerName: string, partyObject: IParty): void => {
+  speichereAuswahl = (checkedEssen: string[], neuerName: string, partyObject: IParty): boolean => {
+    if (this.istBearbeitungGesperrt(partyObject)) return false;
     const newPartyCollection = this.partyCollection.map((party) => {
       if (party.id === partyObject.id) {
         const newParty = {...party};
@@ -133,6 +146,7 @@ class GlobalStore {
     });
     this.partyCollection = newPartyCollection;
     this.savePartyToBackend();
+    return true;
   };
 
   addTeilnehmer = (party: IParty): IPartyApp => {

@@ -8,13 +8,14 @@ import userStore from "../../stores/user-store";
 interface NotizProps {
   notiz: INotiz
   onDelete: (note: INotiz) => void;
+  readOnly?: boolean;
 }
 
-const Notiz = ({notiz, onDelete}: NotizProps) => {
+const Notiz = ({notiz, onDelete, readOnly = false}: NotizProps) => {
 
   const {isAdmin, userName} = userStore
 
-  const canDelete = isAdmin || userName === notiz.name
+  const canDelete = !readOnly && (isAdmin || userName === notiz.name)
 
 
   return (

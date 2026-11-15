@@ -8,7 +8,7 @@ import userStore from "../stores/user-store";
 import {Party} from "../models/party";
 import Button from "../ui-components/Button";
 import Loading from "../ui-components/Loading";
-import {datumZuLocalString} from "../helper-functions/helper-functions";
+import {datumZuLocalString, isPartyGesperrt} from "../helper-functions/helper-functions";
 
 
 const Start = (): JSX.Element => {
@@ -62,6 +62,9 @@ const Start = (): JSX.Element => {
   };
 
 
+  // Nach dem Edit-Enddatum sieht nur noch der Admin die Party
+  const sichtbarePartys = partyCollection.filter((party) => isAdmin || !isPartyGesperrt(party));
+
   if (isLoading) {
     return <Loading/>
   }
@@ -72,14 +75,17 @@ const Start = (): JSX.Element => {
       <h3>Mitbringparty:</h3>
 
       <div className={classes.partyCollectionContainer}>
-        {partyCollection.map((party, index) => (
-            <div key={index}
+        {sichtbarePartys.map((party) => (
+            <div key={party.id}
                  className={`${classes.partyContainer} ${isGone(party.datum) ? classes.gone : ""}`}>
               <Link to={"/wahl/" + party.id}
                     onClick={() => speichereActiveId(party.id)}
                     className={classes.partyBox}>
                 <div className={classes.partyName_container}>
-                  <div className={classes.date}>{datumZuLocalString(party.datum)}</div>
+                  <div className={classes.date}>
+                    {datumZuLocalString(party.datum)}
+                    {isPartyGesperrt(party) && <span className={classes.gesperrt}> · gesperrt</span>}
+                  </div>
                   <div className={classes.partyName}>{party.partyName}</div>
                 </div>
               </Link>

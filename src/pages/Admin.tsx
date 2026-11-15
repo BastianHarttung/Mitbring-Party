@@ -13,6 +13,7 @@ import FoodRow from "../components/admin/foodRow";
 import NoParty from "../components/noParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
+import { datumZuLocalString, standardEditEndDatum } from "../helper-functions/helper-functions";
 
 
 const Admin = (): JSX.Element => {
@@ -36,6 +37,8 @@ const Admin = (): JSX.Element => {
   const [ortCoordinates, setOrtCoordinates] = useState<string>(partyFind?.ortCoordinates ?? "");
   const [datum, setDatum] = useState<string>(partyFind?.datum ?? "");
   const [zeit, setZeit] = useState<string>(partyFind?.zeit ?? "");
+  // Leer = Standard (1 Woche nach Party-Datum), passt sich also an, wenn das Datum geändert wird
+  const [editEndDatum, setEditEndDatum] = useState<string>(partyFind?.editEndDatum ?? "");
   const [infos, setInfos] = useState<string>(partyFind?.infos ?? "");
   const [essen, setEssen] = useState<IEssen[]>(partyFind?.essen ?? []);
 
@@ -61,9 +64,10 @@ const Admin = (): JSX.Element => {
         ortCoordinates,
         datum,
         zeit,
+        ...(editEndDatum ? {editEndDatum} : {}),
         infos,
         essen,
-        notizen: [],
+        notizen: partyFind?.notizen ?? [],
       });
       throwPopupMessage("Party gespeichert", "success");
     }
@@ -119,6 +123,27 @@ const Admin = (): JSX.Element => {
               <input type="time"
                      value={zeit}
                      onChange={(e) => setZeit(e.target.value)}/>
+              <div className={classes.editEndContainer}>
+                  <span>Bearbeitbar bis (einschließlich):</span>
+                  <div className={classes.editEndRow}>
+                      <input type="date"
+                             value={editEndDatum}
+                             onChange={(e) => setEditEndDatum(e.target.value)}/>
+                    {editEndDatum &&
+                        <Button btnStyle="secondary"
+                                style={{fontSize: "0.9em"}}
+                                onClick={() => setEditEndDatum("")}>
+                            Standard
+                        </Button>}
+                  </div>
+                  <small>
+                    {editEndDatum
+                      ? "Danach sieht nur noch der Admin die Party."
+                      : standardEditEndDatum(datum)
+                        ? `Standard: 1 Woche nach der Party (${datumZuLocalString(standardEditEndDatum(datum))}). Danach sieht nur noch der Admin die Party.`
+                        : "Standard: 1 Woche nach der Party. Ohne Party-Datum gibt es kein Ende."}
+                  </small>
+              </div>
               <textarea value={infos}
                         placeholder="Infos"
                         onChange={(e) => setInfos(e.target.value)}/>

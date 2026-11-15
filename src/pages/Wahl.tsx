@@ -14,7 +14,7 @@ import ModalNewFood from "../components/modals/modalNewFood";
 import OrtAccordion from "../components/wahl/ortAccordion";
 import FoodCheck from "../components/wahl/foodCheck";
 import NoParty from "../components/noParty";
-import { datumZuLocalString } from "../helper-functions/helper-functions";
+import { datumZuLocalString, getEditEndDatum, isPartyGesperrt } from "../helper-functions/helper-functions";
 
 
 const Wahl = () => {
@@ -30,7 +30,7 @@ const Wahl = () => {
     throwPopupMessage,
   } = globalStore;
 
-  const {userName} = userStore;
+  const {userName, isAdmin} = userStore;
 
   const params = useParams();
   const partyFind = partyCollection.find((part) => part.id.toString() === params.id);
@@ -71,8 +71,7 @@ const Wahl = () => {
   }
 
   function auswahlSpeichern() {
-    if (userName) {
-      speichereAuswahl(checkedEssen, userName, party);
+    if (userName && speichereAuswahl(checkedEssen, userName, party)) {
       throwPopupMessage("Auswahl gespeichert", "success");
     }
   }
@@ -119,6 +118,10 @@ const Wahl = () => {
     return <NoParty/>;
   }
 
+  const istGesperrt = isPartyGesperrt(party);
+  // Der Admin darf auch nach dem Enddatum noch ändern
+  const istReadOnly = istGesperrt && !isAdmin;
+
   return (
     <section>
       <ModalNewFood isOpen={isModalNewFoodOpen}
@@ -127,6 +130,12 @@ const Wahl = () => {
                     categories={findKategorien(party)}/>
 
       <h3 className={classes.partyName}>{party.partyName}</h3>
+
+      {istGesperrt &&
+          <div className="gesperrt-hinweis">
+              Bearbeitung beendet seit {datumZuLocalString(getEditEndDatum(party))}.
+            {isAdmin ? " Nur du als Admin kannst noch etwas ändern." : " Es kann nichts mehr geändert werden."}
+          </div>}
 
       <div className={classes.datumContainer}><b>Datum:</b><br/>
         <div id="datum" className="datum">{datumZuLocalString(party.datum)}</div>
@@ -150,23 +159,26 @@ const Wahl = () => {
           <FoodCheck key={index}
                      essen={ess}
                      onChecked={handleChecked}
-                     checkedEssen={checkedEssen}/>))}
+                     checkedEssen={checkedEssen}
+                     readOnly={istReadOnly}/>))}
       </div>
 
-      <div id="essenBtnContainer"
-           className={classes.essenBtnContainer}>
-        <ButtonCircle
-          onClick={() => setIsModalNewFoodOpen(true)}
-          icon={<FiPlus/>}
-          btnStyle="primary"
-          size="18px"/>
-      </div>
+      {!istReadOnly && <>
+          <div id="essenBtnContainer"
+               className={classes.essenBtnContainer}>
+              <ButtonCircle
+                  onClick={() => setIsModalNewFoodOpen(true)}
+                  icon={<FiPlus/>}
+                  btnStyle="primary"
+                  size="18px"/>
+          </div>
 
-      <div className={classes.nameSpeichernContainer}>
-        <Button onClick={auswahlSpeichern}>
-          Auswahl speichern
-        </Button>
-      </div>
+          <div className={classes.nameSpeichernContainer}>
+              <Button onClick={auswahlSpeichern}>
+                  Auswahl speichern
+              </Button>
+          </div>
+      </>}
 
     </section>
   );
