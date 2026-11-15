@@ -2,7 +2,7 @@ import "./App.scss";
 import { observer } from "mobx-react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { RiUserSettingsLine } from "react-icons/ri";
-import Wahl from "./pages/Wahl";
+import Party from "./pages/Party";
 import Start from "./pages/Start";
 import Uebersicht from "./pages/Uebersicht";
 import Admin from "./pages/Admin";
@@ -57,8 +57,8 @@ function App(): JSX.Element {
           <Route path="/"
                  element={<Start/>}
           />
-          <Route path="wahl/:id"
-                 element={<Wahl/>}
+          <Route path="party/:id"
+                 element={<Party/>}
           />
           <Route path="uebersicht/:id"
                  element={<Uebersicht/>}

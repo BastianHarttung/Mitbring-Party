@@ -78,7 +78,7 @@ const Start = (): JSX.Element => {
         {sichtbarePartys.map((party) => (
             <div key={party.id}
                  className={`${classes.partyContainer} ${isGone(party.datum) ? classes.gone : ""}`}>
-              <Link to={"/wahl/" + party.id}
+              <Link to={"/party/" + party.id}
                     onClick={() => speichereActiveId(party.id)}
                     className={classes.partyBox}>
                 <div className={classes.partyName_container}>

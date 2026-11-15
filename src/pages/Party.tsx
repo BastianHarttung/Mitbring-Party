@@ -1,4 +1,4 @@
-import classes from "./Wahl.module.scss";
+import classes from "./Party.module.scss";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react";
@@ -11,13 +11,13 @@ import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import Loading from "../ui-components/Loading";
 import ModalNewFood from "../components/modals/modalNewFood";
-import OrtAccordion from "../components/wahl/ortAccordion";
-import FoodCheck from "../components/wahl/foodCheck";
+import OrtAccordion from "../components/party/ortAccordion";
+import FoodCheck from "../components/party/foodCheck";
 import NoParty from "../components/noParty";
 import { datumZuLocalString, getEditEndDatum, isPartyGesperrt } from "../helper-functions/helper-functions";
 
 
-const Wahl = () => {
+const Party = () => {
 
   const {
     partyCollection,
@@ -185,4 +185,4 @@ const Wahl = () => {
 
 };
 
-export default observer(Wahl);
+export default observer(Party);

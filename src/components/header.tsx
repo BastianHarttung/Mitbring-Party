@@ -26,7 +26,7 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-  const isLinkActive = cleanLocation === "/wahl" || cleanLocation === "/uebersicht" || cleanLocation === "/notizen";
+  const isLinkActive = cleanLocation === "/party" || cleanLocation === "/uebersicht" || cleanLocation === "/notizen";
 
   const handleBackBtnClick = () => {
     navigate(beforeUrl)
@@ -59,7 +59,7 @@ const Header = () => {
         <div className={classes.pages}>
           {isLinkActive &&
               <>
-                  <NavLink to={"wahl/" + activeId}
+                  <NavLink to={"party/" + activeId}
                            className={({isActive}) => `${classes.link} ${isActive ? classes.link_active : ""}`}>
                       Wahl
                   </NavLink>
