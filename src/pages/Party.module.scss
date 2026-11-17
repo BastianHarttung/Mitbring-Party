@@ -4,6 +4,17 @@
   text-align: center;
 }
 
+.shareBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .infosContainer,
 .datumContainer,
 .zeitContainer {

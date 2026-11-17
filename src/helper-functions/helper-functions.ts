@@ -84,7 +84,7 @@ export const getEditEndDatum = (party: Pick<IParty, "datum" | "editEndDatum">): 
  * Party ist gesperrt, wenn das Enddatum vorbei ist.
  * Am Enddatum selbst kann noch bearbeitet werden.
  */
-export const isPartyGesperrt = (party: Pick<IParty, "datum" | "editEndDatum">): boolean => {
+export const isPartyLocked = (party: Pick<IParty, "datum" | "editEndDatum">): boolean => {
   const editEnde = getEditEndDatum(party);
   return !!editEnde && heuteIsoDatum() > editEnde;
 };

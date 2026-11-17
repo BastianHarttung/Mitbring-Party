@@ -8,7 +8,7 @@ import userStore from "../stores/user-store";
 import {Party} from "../models/party";
 import Button from "../ui-components/Button";
 import Loading from "../ui-components/Loading";
-import {datumZuLocalString, hashPassword, isPartyGesperrt} from "../helper-functions/helper-functions";
+import {datumZuLocalString, hashPassword, isPartyLocked} from "../helper-functions/helper-functions";
 
 
 const Start = (): JSX.Element => {
@@ -75,7 +75,7 @@ const Start = (): JSX.Element => {
 
 
   // Nach dem Edit-Enddatum sieht nur noch der Admin die Party
-  const sichtbarePartys = partyCollection.filter((party) => isAdmin || !isPartyGesperrt(party));
+  const sichtbarePartys = partyCollection.filter((party) => isAdmin || !isPartyLocked(party));
 
   if (isLoading) {
     return <Loading/>
@@ -96,7 +96,7 @@ const Start = (): JSX.Element => {
                 <div className={classes.partyName_container}>
                   <div className={classes.date}>
                     {datumZuLocalString(party.datum)}
-                    {isPartyGesperrt(party) && <span className={classes.gesperrt}> · gesperrt</span>}
+                    {isPartyLocked(party) && <span className={classes.gesperrt}> · gesperrt</span>}
                   </div>
                   <div className={classes.partyName}>{party.partyName}</div>
                 </div>
