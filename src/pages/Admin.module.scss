@@ -11,6 +11,25 @@
   }
 }
 
+.linkBtnContainer {
+  width: 100%;
+  display: flex;
+
+  .linkBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--primary-color)
+    }
+  }
+}
+
 .essenContainer {
   width: 100%;
   display: flex;
@@ -19,6 +38,10 @@
 
   .essenName {
     width: clamp(50px, 97%, 460px);
+
+    &::placeholder {
+      color: lightgray;
+    }
   }
 
   .input_second_row {
@@ -30,11 +53,19 @@
     .kategorie {
       width: clamp(50px, 97%, 460px);
       min-width: 50px;
+
+      &::placeholder {
+        color: lightgray;
+      }
     }
 
     .werBringts {
       width: clamp(50px, 97%, 460px);
       min-width: 50px;
+
+      &::placeholder {
+        color: lightgray;
+      }
     }
   }
 

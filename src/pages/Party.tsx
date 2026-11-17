@@ -1,9 +1,10 @@
 import classes from "./Party.module.scss";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { observer } from "mobx-react";
 import { FiPlus } from "react-icons/fi";
 import { IoShareSocialOutline } from "react-icons/io5";
+import { FaRegEdit } from "react-icons/fa";
 import ModalNewFood from "../components/modals/modalNewFood";
 import OrtAccordion from "../components/party/ortAccordion";
 import FoodCheck from "../components/party/foodCheck";
@@ -185,13 +186,20 @@ const Party = () => {
 
       <h3 className={classes.partyName}>{party.partyName}</h3>
 
-      <button type="button"
-              className={classes.shareBtn}
-              onClick={linkTeilen}
-              aria-label="Link zur Party teilen"
-              title="Link teilen">
-        <IoShareSocialOutline size={24}/>
-      </button>
+      <div className={classes.actionBtnContainer}>
+        <button type="button"
+                className={classes.shareBtn}
+                onClick={linkTeilen}
+                aria-label="Link zur Party teilen"
+                title="Link teilen">
+          <IoShareSocialOutline size={24}/>
+        </button>
+
+        {isAdmin && <Link to={"/admin/" + party.id}
+                          className={classes.editLink}>
+          <FaRegEdit size={24}/>
+        </Link>}
+      </div>
 
       {isLocked &&
         <div className="gesperrt-hinweis">

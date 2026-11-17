@@ -4,15 +4,34 @@
   text-align: center;
 }
 
-.shareBtn {
+.actionBtnContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border: none;
-  background: none;
-  color: inherit;
-  cursor: pointer;
+  gap: 1rem;
+
+  .shareBtn {
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  .editLink {
+    color: inherit;
+
+    svg {
+      height: 24px;
+
+      &:hover {
+        fill: var(--primary-color);
+      }
+    }
+  }
 }
 
 .infosContainer,

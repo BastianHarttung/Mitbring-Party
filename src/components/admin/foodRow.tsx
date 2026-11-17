@@ -17,16 +17,19 @@ const FoodRow = ({essen, index, onChange, onDelete}: FoodRowProps) => {
     <div className={classes.essenContainer}>
       <input type="text"
              className={classes.essenName}
+             placeholder="Essen"
              value={essen.essenName}
              onChange={(event) => onChange(event, index, "essenName")}/>
 
       <div className={classes.input_second_row}>
         <input type="text"
                className={classes.kategorie}
+               placeholder="Kategorie"
                value={essen.kategorie}
                onChange={(event) => onChange(event, index, "kategorie")}/>
         <input type="text"
                className={classes.werBringts}
+               placeholder="Wer bringts"
                value={essen.werBringts}
                onChange={(event) => onChange(event, index, "werBringts")}/>
         <MdDelete onClick={() => onDelete(essen)}/>

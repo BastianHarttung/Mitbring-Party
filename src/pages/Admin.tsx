@@ -15,6 +15,7 @@ import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import { datumZuLocalString, hashPassword, standardEditEndDatum } from "../helper-functions/helper-functions";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import { IoLink, IoShareSocialOutline } from "react-icons/io5";
 
 
 const Admin = (): JSX.Element => {
@@ -52,6 +53,11 @@ const Admin = (): JSX.Element => {
   const hatPasswort = !!partyFind?.passwortHash && !isPasswortEntfernt;
 
   const [isModalConfirmDeleteOpen, setIsModalConfirmDeleteOpen] = useState(false);
+
+  function navToParty() {
+    if (partyFind) navigate(`/party/${partyFind.id}`)
+    else console.error("Keine id in Url von Party")
+  }
 
   function handleChangeEssen(event: ChangeEvent<HTMLInputElement>, index: number, mod: TEssen): void {
     const neuesEssen = [...essen];
@@ -131,102 +137,112 @@ const Admin = (): JSX.Element => {
 
 
       {(isAdmin && partyFind) &&
-          <section className={classes.adminSection}>
-              <input type="text"
-                     placeholder="Party Name"
-                     value={partyName}
-                     onChange={(e) => setPartyName(e.target.value)}/>
-              <input type="text"
-                     placeholder="Ort"
-                     value={ort}
-                     onChange={(e) => setOrt(e.target.value)}/>
-              <input type="text"
-                     placeholder="Koordinaten oder Adresse"
-                     value={ortCoordinates}
-                     onChange={(e) => setOrtCoordinates(e.target.value)}/>
+        <section className={classes.adminSection}>
+          <div className={classes.linkBtnContainer}>
+            <button type="button"
+                    className={classes.linkBtn}
+                    onClick={navToParty}
+                    aria-label="Direkt zur Party"
+                    title="Direkt zur Party">
+              <IoLink size={24}/>
+            </button>
+          </div>
+
+          <input type="text"
+                 placeholder="Party Name"
+                 value={partyName}
+                 onChange={(e) => setPartyName(e.target.value)}/>
+          <input type="text"
+                 placeholder="Ort"
+                 value={ort}
+                 onChange={(e) => setOrt(e.target.value)}/>
+          <input type="text"
+                 placeholder="Koordinaten oder Adresse"
+                 value={ortCoordinates}
+                 onChange={(e) => setOrtCoordinates(e.target.value)}/>
+          <input type="date"
+                 value={datum}
+                 onChange={(e) => setDatum(e.target.value)}/>
+          <input type="time"
+                 value={zeit}
+                 onChange={(e) => setZeit(e.target.value)}/>
+          <div className={classes.editEndContainer}>
+            <span>Bearbeitbar bis (einschließlich):</span>
+            <div className={classes.editEndRow}>
               <input type="date"
-                     value={datum}
-                     onChange={(e) => setDatum(e.target.value)}/>
-              <input type="time"
-                     value={zeit}
-                     onChange={(e) => setZeit(e.target.value)}/>
-              <div className={classes.editEndContainer}>
-                  <span>Bearbeitbar bis (einschließlich):</span>
-                  <div className={classes.editEndRow}>
-                      <input type="date"
-                             value={editEndDatum}
-                             onChange={(e) => setEditEndDatum(e.target.value)}/>
-                    {editEndDatum &&
-                        <Button btnStyle="secondary"
-                                style={{fontSize: "0.9em"}}
-                                onClick={() => setEditEndDatum("")}>
-                            Standard
-                        </Button>}
-                  </div>
-                  <small>
-                    {editEndDatum
-                      ? "Danach sieht nur noch der Admin die Party."
-                      : standardEditEndDatum(datum)
-                        ? `Standard: 1 Woche nach der Party (${datumZuLocalString(standardEditEndDatum(datum))}). Danach sieht nur noch der Admin die Party.`
-                        : "Standard: 1 Woche nach der Party. Ohne Party-Datum gibt es kein Ende."}
-                  </small>
-              </div>
-              <div className={classes.editEndContainer}>
-                  <span>Passwort (optional):</span>
-                  <div className={classes.editEndRow}>
-                      <input type="text"
-                             autoComplete="off"
-                             placeholder={hatPasswort ? "Neues Passwort" : "Kein Passwort"}
-                             value={neuesPasswort}
-                             onChange={(e) => setNeuesPasswort(e.target.value)}/>
-                    {(hatPasswort || neuesPasswort) &&
-                        <Button btnStyle="secondary"
-                                style={{fontSize: "0.9em"}}
-                                onClick={() => {
-                                  setNeuesPasswort("");
-                                  setIsPasswortEntfernt(true);
-                                }}>
-                            Entfernen
-                        </Button>}
-                  </div>
-                  <small>
-                    {neuesPasswort
-                      ? "Nach dem Speichern brauchen alle das neue Passwort, das alte gilt nicht mehr."
-                      : hatPasswort
-                        ? "Die Party ist passwortgeschützt. Leer lassen, um das Passwort zu behalten."
-                        : isPasswortEntfernt
-                          ? "Das Passwort wird beim Speichern entfernt."
-                          : "Ohne Passwort kann jeder mit dem Link die Party öffnen."}
-                  </small>
-              </div>
-              <textarea value={infos}
-                        placeholder="Infos"
-                        onChange={(e) => setInfos(e.target.value)}/>
-            {essen.map((ess, index) => (
-              <FoodRow key={index}
-                       essen={ess}
-                       index={index}
-                       onChange={handleChangeEssen}
-                       onDelete={loescheEssen}/>)
-            )}
+                     value={editEndDatum}
+                     onChange={(e) => setEditEndDatum(e.target.value)}/>
+              {editEndDatum &&
+                <Button btnStyle="secondary"
+                        style={{fontSize: "0.9em"}}
+                        onClick={() => setEditEndDatum("")}>
+                  Standard
+                </Button>}
+            </div>
+            <small>
+              {editEndDatum
+                ? "Danach sieht nur noch der Admin die Party."
+                : standardEditEndDatum(datum)
+                  ? `Standard: 1 Woche nach der Party (${datumZuLocalString(standardEditEndDatum(datum))}). Danach sieht nur noch der Admin die Party.`
+                  : "Standard: 1 Woche nach der Party. Ohne Party-Datum gibt es kein Ende."}
+            </small>
+          </div>
+          <div className={classes.editEndContainer}>
+            <span>Passwort (optional):</span>
+            <div className={classes.editEndRow}>
+              <input type="text"
+                     autoComplete="off"
+                     placeholder={hatPasswort ? "Neues Passwort" : "Kein Passwort"}
+                     value={neuesPasswort}
+                     onChange={(e) => setNeuesPasswort(e.target.value)}/>
+              {(hatPasswort || neuesPasswort) &&
+                <Button btnStyle="secondary"
+                        style={{fontSize: "0.9em"}}
+                        onClick={() => {
+                          setNeuesPasswort("");
+                          setIsPasswortEntfernt(true);
+                        }}>
+                  Entfernen
+                </Button>}
+            </div>
+            <small>
+              {neuesPasswort
+                ? "Nach dem Speichern brauchen alle das neue Passwort, das alte gilt nicht mehr."
+                : hatPasswort
+                  ? "Die Party ist passwortgeschützt. Leer lassen, um das Passwort zu behalten."
+                  : isPasswortEntfernt
+                    ? "Das Passwort wird beim Speichern entfernt."
+                    : "Ohne Passwort kann jeder mit dem Link die Party öffnen."}
+            </small>
+          </div>
+          <textarea value={infos}
+                    placeholder="Infos"
+                    onChange={(e) => setInfos(e.target.value)}/>
+          {essen.map((ess, index) => (
+            <FoodRow key={index}
+                     essen={ess}
+                     index={index}
+                     onChange={handleChangeEssen}
+                     onDelete={loescheEssen}/>)
+          )}
 
-              <ButtonCircle
-                  onClick={handleAddNewChoice}
-                  icon={<FiPlus/>}
-                  btnStyle="primary"
-                  size="14px"/>
+          <ButtonCircle
+            onClick={handleAddNewChoice}
+            icon={<FiPlus/>}
+            btnStyle="primary"
+            size="14px"/>
 
-              <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
-                      onClick={() => setIsModalConfirmDeleteOpen(true)}>
-                  Party löschen
-              </Button>
+          <Button style={{backgroundColor: "red", fontSize: "1em", marginTop: "10px"}}
+                  onClick={() => setIsModalConfirmDeleteOpen(true)}>
+            Party löschen
+          </Button>
 
-              <Button style={{fontSize: "1em", marginTop: "10px"}}
-                      onClick={saveParty}>
-                  Speichern
-              </Button>
+          <Button style={{fontSize: "1em", marginTop: "10px"}}
+                  onClick={saveParty}>
+            Speichern
+          </Button>
 
-          </section>}
+        </section>}
     </>
   );
 };

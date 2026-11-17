@@ -20,17 +20,14 @@
 }
 
 .editLink {
+  color: inherit;
   position: absolute;
   top: 8px;
   right: 8px;
   padding: 0;
 
-  svg {
-    height: 24px;
-
-    &:hover {
-      fill: var(--primary-color);
-    }
+  &:hover {
+    color: var(--primary-color);
   }
 }
 
