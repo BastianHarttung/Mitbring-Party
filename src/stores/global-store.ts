@@ -5,7 +5,7 @@ import { IEssen } from "../interfaces/IParty";
 import { IPartyApp } from "../interfaces/IParty";
 import { downloadFromServer, backend, setURL } from "../mini_backend";
 import { TPopupStyle } from "../interfaces/Types";
-import { isPartyGesperrt } from "../helper-functions/helper-functions";
+import { isPartyLocked } from "../helper-functions/helper-functions";
 import userStore from "./user-store";
 
 /** So oft werden die Daten im Hintergrund neu geladen (nur solange der Tab sichtbar ist) */
@@ -194,7 +194,7 @@ class GlobalStore {
    * Gibt true zurück (und zeigt eine Meldung), wenn die Änderung blockiert ist.
    */
   istBearbeitungGesperrt = (party: IParty): boolean => {
-    if (userStore.isAdmin || !isPartyGesperrt(party)) return false;
+    if (userStore.isAdmin || !isPartyLocked(party)) return false;
     this.throwPopupMessage("Diese Party kann nicht mehr bearbeitet werden", "error");
     return true;
   };

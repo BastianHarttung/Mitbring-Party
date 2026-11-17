@@ -5,6 +5,7 @@ import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
 import { isPartyFreigeschaltet } from "../helper-functions/helper-functions";
 import ModalPartyPassword from "./modals/modalPartyPassword";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 
 /**
@@ -19,6 +20,9 @@ const PartyPasswordGuard = (): JSX.Element => {
 
   const params = useParams();
   const partyFind = partyCollection.find((party) => party.id.toString() === params.id);
+
+  // Party-Name im Browser-Tab anzeigen (gilt für Party, Übersicht und Notizen)
+  useDocumentTitle(partyFind?.partyName);
 
   // Nur zum Neu-Rendern nach erfolgreicher Eingabe (der Hash liegt im localStorage)
   const [, setFreigeschaltetCount] = useState(0);

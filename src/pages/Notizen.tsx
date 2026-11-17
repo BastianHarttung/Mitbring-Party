@@ -7,7 +7,7 @@ import { INotiz, IParty } from "../interfaces/IParty";
 import { emptyParty } from "../mockup/testConstants";
 import globalStore from "../stores/global-store";
 import userStore from "../stores/user-store";
-import { datumZuLocalString, getEditEndDatum, isPartyGesperrt } from "../helper-functions/helper-functions";
+import { datumZuLocalString, getEditEndDatum, isPartyLocked } from "../helper-functions/helper-functions";
 import ButtonCircle from "../ui-components/Button-Circle";
 import ModalNewNote from "../components/modals/modalNewNote";
 import Loading from "../ui-components/Loading";
@@ -68,7 +68,7 @@ const Notizen = () => {
   }
 
   const {isAdmin} = userStore;
-  const istGesperrt = isPartyGesperrt(party);
+  const istGesperrt = isPartyLocked(party);
   // Der Admin darf auch nach dem Enddatum noch Notizen anlegen/löschen
   const istReadOnly = istGesperrt && !isAdmin;
 
