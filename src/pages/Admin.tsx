@@ -14,6 +14,7 @@ import NoParty from "../components/noParty";
 import Button from "../ui-components/Button";
 import ButtonCircle from "../ui-components/Button-Circle";
 import { datumZuLocalString, hashPassword, standardEditEndDatum } from "../helper-functions/helper-functions";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 
 const Admin = (): JSX.Element => {
@@ -31,6 +32,8 @@ const Admin = (): JSX.Element => {
   const navigate = useNavigate();
 
   const partyFind: IParty | undefined = partyCollection.find((part) => part.id === id);
+
+  useDocumentTitle(partyFind?.partyName);
 
   const [partyName, setPartyName] = useState<string>(partyFind?.partyName ?? "");
   const [ort, setOrt] = useState<string>(partyFind?.ort ?? "");
